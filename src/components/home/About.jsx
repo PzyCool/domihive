@@ -61,11 +61,14 @@ const About = () => {
           {features.map((feature) => (
             <div 
               key={feature.id}
-              className="feature-card bg-white p-8 rounded-xl text-center shadow-lg transition-all duration-400 hover:-translate-y-2 hover:shadow-xl"
+              className="feature-card bg-white p-8 rounded-xl text-center shadow-lg transition-all duration-400 hover:-translate-y-3 hover:shadow-2xl relative overflow-hidden group"
             >
-              {/* Feature Icon - Exact same as original */}
-              <div className="feature-icon w-20 h-20 bg-gradient-to-br from-[#0E1F42] to-[#1a2d5f] rounded-full flex items-center justify-center mx-auto mb-6 transition-all duration-400 group-hover:bg-gradient-to-br group-hover:from-[#9F7539] group-hover:to-[#b58a4a] group-hover:scale-110">
-                <i className={`${feature.icon} text-2xl text-white`}></i>
+              {/* Top accent border on hover - EXACT SAME AS ORIGINAL */}
+              <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-[#9F7539] to-[#0E1F42] transform scale-x-0 transition-transform duration-400 group-hover:scale-x-100"></div>
+              
+              {/* Feature Icon - EXACT SAME ANIMATIONS */}
+              <div className="feature-icon w-20 h-20 bg-gradient-to-br from-[#0E1F42] to-[#1a2d5f] rounded-full flex items-center justify-center mx-auto mb-6 transition-all duration-400 group-hover:bg-gradient-to-br group-hover:from-[#9F7539] group-hover:to-[#b58a4a] group-hover:scale-110 group-hover:rotate-3">
+                <i className={`${feature.icon} text-2xl text-white transition-all duration-400`}></i>
               </div>
               
               {/* Feature Content */}
