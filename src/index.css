@@ -11,20 +11,16 @@ body {
   font-family: 'Manrope', sans-serif;
 }
 
-/*Final CTA Animation*/
+/*Our Security barge*/
 @keyframes float {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-10px); }
+  0%, 100% { 
+    transform: translateY(0px); 
+  }
+  50% { 
+    transform: translateY(-10px); 
+  }
 }
 
 .animate-float {
-  animation: float 8s ease-in-out infinite;
-}
-
-.animation-delay-2000 {
-  animation-delay: 2s;
-}
-
-.animation-delay-4000 {
-  animation-delay: 4s;
+  animation: float 3s ease-in-out infinite;
 }
