@@ -4,6 +4,7 @@ import Header from './components/home/layout/Header';
 import Footer from './components/home/layout/Footer';
 // import Hero from './components/home/Hero';
 import About from './components/home/About';
+import FinalCta from './components/home/FinalCta';
 // import Properties from './components/Properties/Properties';
 // import HowItWorks from './components/home/HowItWorks';
 // import OurSecurity from './components/home/OurSecurity';
@@ -24,6 +25,7 @@ function App() {
               {/* <HowItWorks /> */}
               {/* <OurSecurity /> */}
               {/* <GetApp /> */}
+              <FinalCta />
             </>
           } />
           <Route path="/signup" element={<div>Sign Up Page - To be built</div>} />
