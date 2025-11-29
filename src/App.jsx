@@ -1,3 +1,4 @@
+// src/App.jsx
 import { Routes, Route } from 'react-router-dom';
 import Header from './components/home/layout/Header';
 import Footer from './components/home/layout/Footer';
@@ -7,22 +8,13 @@ function App() {
   return (
     <div className="App">
       <Header />
-
       <main>
         <Routes>
-          <Route
-            path="/"
-            element={
-              <div className="min-h-screen flex items-center justify-center">
-                <h1 className="text-3xl font-bold text-primary-color">
-                  DomiHive - Home Page Coming Soon
-                </h1>
-              </div>
-            }
-          />
+          <Route path="/" element={<></>} />
+          <Route path="/signup" element={<div>Sign Up Page - To be built</div>} />
+          <Route path="/login" element={<div>Login Page - To be built</div>} />
         </Routes>
       </main>
-
       <Footer />
     </div>
   );
