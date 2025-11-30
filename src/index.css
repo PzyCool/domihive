@@ -10,3 +10,17 @@ body {
 .navbar {
   font-family: 'Manrope', sans-serif;
 }
+
+/* Flaoting card from the Hero Section */
+.animate-float {
+  animation: float 3s ease-in-out infinite;
+}
+
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
