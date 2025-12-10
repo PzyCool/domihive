@@ -35,9 +35,9 @@ const Footer = () => {
   const socialLinks = [
     { icon: 'fab fa-linkedin', url: 'https://linkedin.com/company/domihive', title: 'LinkedIn', color: 'text-[#f8f9fa]' },
     { icon: 'fab fa-youtube', url: 'https://youtube.com/c/domihive', title: 'YouTube', color: 'text-[#f8f9fa]' },
-    { icon: 'fab fa-facebook', url: 'https://facebook.com/domihive', title: 'Facebook', color: 'text-[#f8f9fa]' },
-    { icon: 'fab fa-instagram', url: 'https://instagram.com/domihive', title: 'Instagram', color: 'text-[#f8f9fa]' },
-    { icon: 'fab fa-twitter', url: 'https://twitter.com/domihive', title: 'Twitter', color: 'text-[#f8f9fa]' },
+    { icon: 'fab fa-facebook', url: 'https://www.facebook.com/profile.php?id=61584608503599', title: 'Facebook', color: 'text-[#f8f9fa]' },
+    { icon: 'fab fa-instagram', url: 'https://instagram.com/domihiveofficial', title: 'Instagram', color: 'text-[#f8f9fa]' },
+    { icon: 'fab fa-twitter', url: 'https://x.com/domihiveofcl', title: 'Twitter', color: 'text-[#f8f9fa]' },
   ];
 
   // Quick links structure

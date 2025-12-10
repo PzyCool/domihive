@@ -16,9 +16,12 @@ export default function Hero() {
             Rent with Confidence on a Trusted Property Platform
           </p>
           <p className="text-white/90 md:text-lg/7 max-w-xl">
-            DomiHive simplifies renting through verified listings, secure escrow
-            payments, and reliable property management support.
-          </p>
+             No agents. No stress. No palava. No caution fee. 
+             DomiHive gives you verified listings, smooth applications, 
+             secure payments, and professional property management — 
+             all in one seamless experience.
+           </p>
+
 
           {/* CTAs */}
           <div className="flex flex-col w-full md:flex-row gap-4 py-6">
