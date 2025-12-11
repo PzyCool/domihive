@@ -1,7 +1,7 @@
 // src/components/home/layout/Header.jsx
 import React, { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import logo from '../../../assets/domihive-logo-2.png';
+import logo from '../../../assets/domihive-logo.png';
 
 const Header = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);

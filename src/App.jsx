@@ -5,7 +5,7 @@ import Footer from './components/home/layout/Footer';
 import Hero from './components/home/Hero';
 import About from './components/home/About';
 import FinalCta from './components/home/FinalCta';
-// import Properties from './components/Properties/Properties';
+import Properties from './components/home/Properties';
 import HowItWorks from './components/home/HowItWorks';
 import OurSecurity from './components/home/OurSecurity';
 // import GetApp from './components/home/GetApp';
@@ -21,7 +21,7 @@ function App() {
             <>
               <Hero />
               <About />
-              {/* <Properties /> */}
+              <Properties />
               <HowItWorks />
               <OurSecurity />
               {/* <GetApp /> */}
