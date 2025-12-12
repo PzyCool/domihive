@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import PropertyGrid from "./properties/components/PropertyGrid/PropertyGrid";
 import SearchHeader from "./properties/components/SearchHeader/SearchHeader";
-// import PropertyDetailsModal from "./properties/components/PropertyDetailsModal/PropertyDetailsModal";
+import PropertyDetailsPage from "./properties/components/PropertyDetailsPage/PropertyDetailsPage";
 // import BookInspectionPage from "./properties/components/BookInspectionPage/BookInspectionPage";
 import { generateNigerianProperties } from "./properties/components/utils/propertyData";
 
@@ -204,11 +204,11 @@ const Properties = () => {
           </div>
         ) : showPropertyDetails ? (
           <div className="property-details-container">
-            {/* <PropertyDetailsModal
+            <PropertyDetailsPage
               propertyId={selectedPropertyId}
               isOpen={showPropertyDetails}
               onClose={() => setShowPropertyDetails(false)}
-            /> */}
+            />
           </div>
         ) : (
           <>
