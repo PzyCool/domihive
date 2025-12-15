@@ -1,13 +1,13 @@
 // src/components/home/properties/components/SearchHeader/AdvancedFilterOverlay/ForSales/ForSalesOverlay.jsx
 import React from 'react';
 import HorizontalScroll from './components/HorizontalScroll';
-// import PriceSlider from './components/PriceSlider';
-// import BedroomCheckboxes from './components/BedroomCheckboxes';
-// import BathroomCheckboxes from './components/BathroomCheckboxes';
+import PriceSlider from './components/PriceSlider';
+import BedroomCheckboxes from './components/BedroomCheckboxes';
+import BathroomCheckboxes from './components/BathroomCheckboxes';
 // import PropertyTypeMultiSelect from './components/PropertyTypeMultiSelect';
-// import AmenitiesGrid from './components/AmenitiesGrid';
+import AmenitiesGrid from './components/AmenitiesGrid';
 // import ParkingSpaces from './components/ParkingSpaces';
-// import PropertyAgeSelect from './components/PropertyAgeSelect';
+import PropertyAgeSelect from './components/PropertyAgeSelect';
 // import LandSizeSlider from './components/LandSizeSlider';
 // import YearBuiltFilter from './components/YearBuiltFilter';
 
@@ -47,25 +47,25 @@ const ForSalesOverlay = ({
       <div className="px-6 py-4">
         <HorizontalScroll>
           <div className="filter-section min-w-[220px] p-4">
-            {/* <PriceSlider
+            <PriceSlider
               min={filters.priceMin || 0}
               max={filters.priceMax || 10000000}
               onPriceChange={(min, max) => onFilterChange({ priceMin: min, priceMax: max })}
-            /> */}
+            />
           </div>
           
           <div className="filter-section min-w-[180px] p-4">
-            {/* <BedroomCheckboxes
+            <BedroomCheckboxes
               selected={filters.bedrooms || []}
               onChange={(bedrooms) => onFilterChange({ bedrooms })}
-            /> */}
+            />
           </div>
 
           <div className="filter-section min-w-[180px] p-4">
-            {/* <BathroomCheckboxes
+            <BathroomCheckboxes
               selected={filters.bathrooms || []}
               onChange={(bathrooms) => onFilterChange({ bathrooms })}
-            /> */}
+            />
           </div>
           
           <div className="filter-section min-w-[200px] p-4">
@@ -76,7 +76,7 @@ const ForSalesOverlay = ({
           </div>
           
           <div className="filter-section min-w-[220px] p-4">
-            {/* <AmenitiesGrid
+            <AmenitiesGrid
               selected={filters.amenities || []}
               onToggle={(amenityId) => {
                 const current = filters.amenities || [];
@@ -85,7 +85,7 @@ const ForSalesOverlay = ({
                   : [...current, amenityId];
                 onFilterChange({ amenities: newAmenities });
               }}
-            /> */}
+            />
           </div>
           
           <div className="filter-section min-w-[180px] p-4">
@@ -96,10 +96,10 @@ const ForSalesOverlay = ({
           </div>
           
           <div className="filter-section min-w-[200px] p-4">
-            {/* <PropertyAgeSelect
+            <PropertyAgeSelect
               age={filters.propertyAge || ''}
               onChange={(propertyAge) => onFilterChange({ propertyAge })}
-            /> */}
+            />
           </div>
 
           <div className="filter-section min-w-[220px] p-4">

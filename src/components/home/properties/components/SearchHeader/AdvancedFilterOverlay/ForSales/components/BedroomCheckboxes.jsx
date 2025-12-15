@@ -1,33 +1,33 @@
 import React from 'react';
 
-const BathroomCheckboxes = ({ selected = [], onChange }) => {
-  const bathroomOptions = [
-    { id: '1', label: '1', icon: 'bath' },
-    { id: '2', label: '2', icon: 'bath' },
-    { id: '3', label: '3', icon: 'bath' },
-    { id: '4', label: '4+', icon: 'bath' }
+const BedroomCheckboxes = ({ selected = [], onChange }) => {
+  const bedroomOptions = [
+    { id: '1', label: '1', icon: 'bed' },
+    { id: '2', label: '2', icon: 'bed' },
+    { id: '3', label: '3', icon: 'bed' },
+    { id: '4', label: '4+', icon: 'bed' }
   ];
 
-  const handleToggle = (bathroomId) => {
+  const handleToggle = (bedroomId) => {
     let newSelected;
-    if (selected.includes(bathroomId)) {
-      newSelected = selected.filter(id => id !== bathroomId);
+    if (selected.includes(bedroomId)) {
+      newSelected = selected.filter(id => id !== bedroomId);
     } else {
-      newSelected = [...selected, bathroomId];
+      newSelected = [...selected, bedroomId];
     }
     
     if (onChange) onChange(newSelected);
   };
 
   return (
-    <div className="bathroom-checkboxes">
+    <div className="bedroom-checkboxes">
       <p className="font-medium text-gray-700 mb-3 flex items-center gap-2 text-sm">
-        <i className="fas fa-bath text-[#9f7539]"></i>
-        Bathrooms
+        <i className="fas fa-bed text-[#9f7539]"></i>
+        Bedrooms
       </p>
       
       <div className="grid grid-cols-2 gap-2">
-        {bathroomOptions.map((option) => {
+        {bedroomOptions.map((option) => {
           const isChecked = selected.includes(option.id);
           
           return (
@@ -54,4 +54,4 @@ const BathroomCheckboxes = ({ selected = [], onChange }) => {
   );
 };
 
-export default BathroomCheckboxes;
+export default BedroomCheckboxes;

@@ -3,11 +3,11 @@ import React from 'react';
 import HorizontalScroll from './components/HorizontalScroll';
 import PriceSlider from './components/PriceSlider';
 import BedroomCheckboxes from './components/BedroomCheckboxes';
-// import BathroomCheckboxes from './components/BathroomCheckboxes';
-// import FurnishingOptions from './components/FurnishingOptions';
-// import AmenitiesGrid from './components/AmenitiesGrid';
-// import PetPolicyToggle from './components/PetPolicyToggle';
-// import PropertyAgeSelect from './components/PropertyAgeSelect';
+import BathroomCheckboxes from './components/BathroomCheckboxes';
+import FurnishingOptions from './components/FurnishingOptions';
+import AmenitiesGrid from './components/AmenitiesGrid';
+import PetPolicyToggle from './components/PetPolicyToggle';
+import PropertyAgeSelect from './components/PropertyAgeSelect';
 
 const ForRentOverlay = ({
   isOpen,
@@ -60,21 +60,21 @@ const ForRentOverlay = ({
           </div>
 
           <div className="filter-section min-w-[180px] p-4">
-            {/* <BathroomCheckboxes
+            <BathroomCheckboxes
               selected={filters.bathrooms || []}
               onChange={(bathrooms) => onFilterChange({ bathrooms })}
-            /> */}
+            />
           </div>
           
           <div className="filter-section min-w-[200px] p-4">
-            {/* <FurnishingOptions
+            <FurnishingOptions
               selected={filters.furnishing || ''}
               onChange={(furnishing) => onFilterChange({ furnishing })}
-            /> */}
+            />
           </div>
           
           <div className="filter-section min-w-[220px] p-4">
-            {/* <AmenitiesGrid
+            <AmenitiesGrid
               selected={filters.amenities || []}
               onToggle={(amenityId) => {
                 const current = filters.amenities || [];
@@ -83,21 +83,21 @@ const ForRentOverlay = ({
                   : [...current, amenityId];
                 onFilterChange({ amenities: newAmenities });
               }}
-            /> */}
+            />
           </div>
           
           <div className="filter-section min-w-[180px] p-4">
-            {/* <PetPolicyToggle
+            <PetPolicyToggle
               allowed={filters.petsAllowed || false}
               onChange={(petsAllowed) => onFilterChange({ petsAllowed })}
-            /> */}
+            />
           </div>
           
           <div className="filter-section min-w-[200px] p-4">
-            {/* <PropertyAgeSelect
+            <PropertyAgeSelect
               age={filters.propertyAge || ''}
               onChange={(propertyAge) => onFilterChange({ propertyAge })}
-            /> */}
+            />
           </div>
         </HorizontalScroll>
       </div>
