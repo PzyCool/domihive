@@ -9,16 +9,19 @@ import Properties from './components/home/Properties';
 import HowItWorks from './components/home/HowItWorks';
 import OurSecurity from './components/home/OurSecurity';
 // import GetApp from './components/home/GetApp';
+import Signup from './components/auth/Signup';
+import Login from './components/auth/Login';
 import './App.css';
 
 function App() {
   return (
     <div className="App">
-      <Header />
-      <main>
-        <Routes>
-          <Route path="/" element={
-            <>
+      <Routes>
+        {/* Homepage with Header and Footer */}
+        <Route path="/" element={
+          <>
+            <Header />
+            <main>
               <Hero />
               <About />
               <Properties />
@@ -26,13 +29,15 @@ function App() {
               <OurSecurity />
               {/* <GetApp /> */}
               <FinalCta />
-            </>
-          } />
-          <Route path="/signup" element={<div>Sign Up Page - To be built</div>} />
-          <Route path="/login" element={<div>Login Page - To be built</div>} />
-        </Routes>
-      </main>
-      <Footer />
+            </main>
+            <Footer />
+          </>
+        } />
+        
+        {/* Auth pages without Header/Footer */}
+        <Route path="/signup" element={<Signup />} />
+        <Route path="/login" element={<Login />} />
+      </Routes>
     </div>
   );
 }
