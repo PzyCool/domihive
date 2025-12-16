@@ -39,7 +39,7 @@ const PrimaryRow = ({
   };
 
   return (
-    <div className="primary-row flex items-center justify-between px-4 lg:px-6 py-3 border-b border-gray-100">
+    <div className="primary-row flex items-center justify-between px-4 lg:px-6 py-3 border-b border-[#0e1f42]/10">
       <div className="flex items-center gap-3 lg:gap-4 flex-1">
         <div className="flex-1 max-w-md">
           <SearchBar
@@ -90,11 +90,11 @@ const PrimaryRow = ({
         )}
       </div>
       
-      <div className="flex items-center gap-2 lg:gap-3">
-        <ViewToggle
+      <div className="flex items-center gap-15">
+        {/* <ViewToggle
           currentView={viewType}
           onChange={handleViewChange}
-        />
+        /> */}
         
         <ManagementDropdown
           value={filters.managementType || 'all'}

@@ -64,7 +64,7 @@ const SearchHeader = ({
   };
   
   return (
-    <div className="search-header bg-white border-b border-gray-200 transition-all duration-300 ease-in-out">
+    <div className="search-header bg-white border-b-2 border-[#9f7539] shadow-sm transition-all duration-300 ease-in-out">
       <PrimaryRow
         filters={filters}
         onFilterChange={handleFilterChange}
