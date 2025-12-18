@@ -8,9 +8,8 @@ import FinalCta from './components/home/FinalCta';
 import Properties from './components/home/Properties';
 import HowItWorks from './components/home/HowItWorks';
 import OurSecurity from './components/home/OurSecurity';
-// import GetApp from './components/home/GetApp';
-// import Signup from './components/auth/Signup';
-// import Login from './components/auth/Login';
+import SignupPage from './components/auth/pages/SignupPage';
+// import LoginPage from './components/auth/pages/LoginPage';
 import './App.css';
 
 function App() {
@@ -27,7 +26,6 @@ function App() {
               <Properties />
               <HowItWorks />
               <OurSecurity />
-              {/* <GetApp /> */}
               <FinalCta />
             </main>
             <Footer />
@@ -35,8 +33,8 @@ function App() {
         } />
         
         {/* Auth pages without Header/Footer */}
-        {/* <Route path="/signup" element={<Signup />} /> */}
-        {/* <Route path="/login" element={<Login />} /> */}
+        <Route path="/signup" element={<SignupPage />} />
+        {/* <Route path="/login" element={<LoginPage />} /> */}
       </Routes>
     </div>
   );
