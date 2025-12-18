@@ -9,7 +9,7 @@ import Properties from './components/home/Properties';
 import HowItWorks from './components/home/HowItWorks';
 import OurSecurity from './components/home/OurSecurity';
 import SignupPage from './components/auth/pages/SignupPage';
-// import LoginPage from './components/auth/pages/LoginPage';
+import LoginPage from './components/auth/pages/LoginPage';
 import './App.css';
 
 function App() {
@@ -34,7 +34,7 @@ function App() {
         
         {/* Auth pages without Header/Footer */}
         <Route path="/signup" element={<SignupPage />} />
-        {/* <Route path="/login" element={<LoginPage />} /> */}
+        <Route path="/login" element={<LoginPage />} />
       </Routes>
     </div>
   );

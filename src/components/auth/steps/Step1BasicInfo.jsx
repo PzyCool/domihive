@@ -1,30 +1,47 @@
 // src/components/auth/steps/Step1BasicInfo.jsx
-import React, { useState } from 'react';
+import React from 'react';
 import PhoneInput from '../forms/PhoneInput';
-// import PasswordInput from '../forms/PasswordInput';
-// import SocialButtons from '../forms/SocialButtons';
+import PasswordInput from '../forms/PasswordInput';
+import SocialButtons from '../forms/SocialButtons';
+import { IMAGES } from '../utils/constants';
 
 const Step1BasicInfo = ({ 
   formData, 
   errors, 
   loading, 
   handleChange, 
-  goToLogin 
+  goToLogin,
+  onSubmit 
 }) => {
-  const [showPassword, setShowPassword] = useState(false);
-
   const handleLocalChange = (e) => {
     const { name, value, type, checked } = e.target;
     handleChange(name, type === 'checkbox' ? checked : value);
+  };
+
+  const handlePhoneChange = (phone, countryCode) => {
+    handleChange('phone', phone);
+    handleChange('countryCode', countryCode);
+  };
+
+  const handlePasswordChange = (value) => {
+    handleChange('password', value);
+  };
+
+  const handleFormSubmit = (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    if (onSubmit) onSubmit(e);
   };
 
   return (
     <>
       <div className="mb-8">
         <div className="flex items-center gap-3 mb-4">
-          <div className="h-10 w-10 bg-[#9F7539] rounded-lg flex items-center justify-center">
-            <i className="fas fa-user-plus text-white text-lg"></i>
-          </div>
+          <img 
+            src={IMAGES.icon}
+            alt="DomiHive Icon"
+            className="h-10 w-10"
+          />
           <h2 className="text-2xl font-bold text-gray-900">
             Create Your Account
           </h2>
@@ -40,7 +57,7 @@ const Step1BasicInfo = ({
         </div>
       )}
 
-      <div className="space-y-5">
+      <form onSubmit={handleFormSubmit} className="space-y-5" noValidate>
         {/* Full Name */}
         <div>
           <label
@@ -65,57 +82,21 @@ const Step1BasicInfo = ({
           )}
         </div>
 
-        {/* Phone Number */}
+        {/* Phone Number Component */}
         <PhoneInput
           value={formData.phone}
           countryCode={formData.countryCode}
-          onChange={(phone, countryCode) => {
-            handleChange('phone', phone);
-            handleChange('countryCode', countryCode);
-          }}
+          onChange={handlePhoneChange}
           error={errors.phone}
         />
 
-        {/* Password */}
-        <div>
-          <label
-            htmlFor="password"
-            className="block text-sm font-medium text-gray-700 mb-2"
-          >
-            Password
-          </label>
-          <div className="relative">
-            <input
-              type={showPassword ? "text" : "password"}
-              id="password"
-              name="password"
-              value={formData.password}
-              onChange={handleLocalChange}
-              className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-[#9F7539] focus:border-transparent transition-colors pr-12 ${
-                errors.password ? "border-red-500" : "border-gray-300"
-              }`}
-              placeholder="••••••••"
-              minLength="6"
-            />
-            <button
-              type="button"
-              onClick={() => setShowPassword(!showPassword)}
-              className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-500 hover:text-gray-700 focus:outline-none"
-            >
-              {showPassword ? (
-                <i className="fas fa-eye-slash text-lg"></i>
-              ) : (
-                <i className="fas fa-eye text-lg"></i>
-              )}
-            </button>
-          </div>
-          {errors.password && (
-            <p className="mt-1 text-sm text-red-600">{errors.password}</p>
-          )}
-          <p className="mt-1 text-xs text-gray-500">
-            Minimum 6 characters
-          </p>
-        </div>
+        {/* Password Component */}
+        <PasswordInput
+          value={formData.password}
+          onChange={handlePasswordChange}
+          error={errors.password}
+          showStrength={true}
+        />
 
         {/* Terms Agreement */}
         <div className="flex items-start gap-3">
@@ -167,8 +148,8 @@ const Step1BasicInfo = ({
           </div>
         </div>
 
-        {/* Social Login Buttons */}
-        {/* <SocialButtons /> */}
+        {/* Social Login Buttons Component */}
+        <SocialButtons />
 
         {/* Login Link */}
         <div className="text-center pt-4 border-t">
@@ -183,7 +164,7 @@ const Step1BasicInfo = ({
             </button>
           </p>
         </div>
-      </div>
+      </form>
     </>
   );
 };
