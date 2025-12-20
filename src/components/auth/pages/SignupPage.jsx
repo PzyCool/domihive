@@ -8,7 +8,7 @@ import ProgressSteps from "../forms/ProgressSteps";
 import Step1BasicInfo from "../steps/Step1BasicInfo";
 import Step2OTPVerification from "../steps/Step2OTPVerification";
 import Step3ProfileSetup from "../steps/Step3ProfileSetup";
-// import { showNotification } from "../utils/notifications";
+import { showNotification } from "../utils/notifications";
 
 const SignupPage = () => {
   const navigate = useNavigate();
@@ -75,7 +75,7 @@ const SignupPage = () => {
     try {
       await new Promise((resolve) => setTimeout(resolve, 1000));
       setStep(2);
-      // showNotification("OTP sent to your phone number", "success");
+      showNotification("OTP sent to your phone number", "success");
     } catch {
       setErrors({ general: "Failed to send OTP. Please try again." });
     } finally {
@@ -116,7 +116,7 @@ const SignupPage = () => {
       });
 
       if (result.success) {
-        // showNotification("Account created successfully!", "success");
+        showNotification("Account created successfully!", "success");
         setTimeout(() => navigate("/"), 1500);
       } else {
         setErrors({
@@ -181,7 +181,7 @@ const SignupPage = () => {
   loading={loading}
   handleChange={handleChange}
   handleBack={handleBack}
-  onSubmit={handleSubmitStep2}  // ← Add this
+  onSubmit={handleSubmitStep2} 
 />
       )}
 
@@ -195,7 +195,7 @@ const SignupPage = () => {
   handleBack={handleBack}
   handleSkip={handleSkip}
   goToLogin={goToLogin}
-  onSubmit={handleSubmitStep3}  // ← Add this
+  onSubmit={handleSubmitStep3}
 />
       )}
     </div>
@@ -204,8 +204,6 @@ const SignupPage = () => {
       </div>
     </AuthLayout>
   );
-
-  return <div>Signup Page Component - Under Construction</div>;
 };
 
 export default SignupPage;

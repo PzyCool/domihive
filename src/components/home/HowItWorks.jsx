@@ -1,7 +1,9 @@
 // src/components/home/HowItWorks.jsx
 import React from 'react';
-
+import { useListingType } from "../../context/ListingTypeContext";
 const HowItWorks = () => {
+  const { setListingType } = useListingType();
+  
   const scrollToSection = (sectionId) => {
     const element = document.getElementById(sectionId);
     if (element) {
@@ -11,6 +13,16 @@ const HowItWorks = () => {
         behavior: 'smooth'
       });
     }
+  };
+
+  const handleTenantClick = () => {
+    setListingType('rent');
+    scrollToSection('properties');
+  };
+
+  const handleBuyerClick = () => {
+    setListingType('buy');
+    scrollToSection('properties');
   };
 
   const processSteps = [
@@ -55,7 +67,7 @@ const HowItWorks = () => {
       ],
       buttonText: 'Browse Properties',
       buttonType: 'primary',
-      onClick: () => scrollToSection('properties')
+      onClick: handleTenantClick
     },
     {
       user: 'buyer',
@@ -71,7 +83,7 @@ const HowItWorks = () => {
       ],
       buttonText: 'Explore Properties for Sale',
       buttonType: 'accent',
-      onClick: () => scrollToSection('properties')
+      onClick: handleBuyerClick
     }
   ];
 
@@ -150,8 +162,8 @@ const HowItWorks = () => {
                   </div>
                   <h3 className="text-2xl font-bold text-white mb-4">{user.title}</h3>
                   <div className="user-badge inline-block px-5 py-2 bg-[#0E1F42] bg-opacity-20 text-white rounded-full font-semibold text-sm">
-  {user.badge}
-</div>
+                    {user.badge}
+                  </div>
                 </div>
 
                 {/* User Content - EXACT SAME AS ORIGINAL */}

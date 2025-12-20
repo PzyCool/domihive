@@ -1,7 +1,10 @@
 // src/components/home/FinalCta.jsx
 import React from 'react';
+import { useListingType } from '../../context/ListingTypeContext';
 
 const FinalCta = () => {
+  const { setListingType } = useListingType();
+  
   // Handle smooth scroll to sections
   const scrollToSection = (sectionId) => {
     const element = document.getElementById(sectionId);
@@ -14,6 +17,21 @@ const FinalCta = () => {
     }
   };
 
+  const handleTenantClick = () => {
+    setListingType('rent');
+    scrollToSection('properties');
+  };
+
+  const handleBuyerClick = () => {
+    setListingType('buy');
+    scrollToSection('properties');
+  };
+
+  const handleAppClick = () => {
+    // Get The App button - scroll to download section or handle app download
+    scrollToSection('download');
+  };
+
   // CTA cards data
   const ctaCards = [
     {
@@ -24,7 +42,7 @@ const FinalCta = () => {
       buttonText: 'Browse Properties',
       buttonIcon: 'fas fa-arrow-right',
       buttonType: 'primary',
-      onClick: () => scrollToSection('properties')
+      onClick: handleTenantClick
     },
     {
       id: 'buyer',
@@ -34,7 +52,7 @@ const FinalCta = () => {
       buttonText: 'Explore Properties',
       buttonIcon: 'fas fa-arrow-right',
       buttonType: 'accent',
-      onClick: () => scrollToSection('properties')
+      onClick: handleBuyerClick
     },
     {
       id: 'app',
@@ -44,7 +62,7 @@ const FinalCta = () => {
       buttonText: 'Download App',
       buttonIcon: 'fas fa-download',
       buttonType: 'secondary',
-      onClick: () => scrollToSection('download')
+      onClick: handleAppClick
     }
   ];
 

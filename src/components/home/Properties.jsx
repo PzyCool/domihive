@@ -1,5 +1,6 @@
 // src/components/home/Properties.jsx
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
+import { useListingType } from '../../context/ListingTypeContext';
 import PropertyGrid from "./properties/components/PropertyGrid/PropertyGrid";
 import SearchHeader from "./properties/components/SearchHeader/SearchHeader";
 import PropertyDetailsPage from "./properties/components/PropertyDetailsPage/PropertyDetailsPage";
@@ -7,6 +8,10 @@ import PropertyDetailsPage from "./properties/components/PropertyDetailsPage/Pro
 import { generateNigerianProperties } from "./properties/components/utils/propertyData";
 
 const Properties = () => {
+  const { listingType } = useListingType();
+  const lastListingTypeRef = useRef('rent');
+  const isManualToggleRef = useRef(false);
+  
   const [allProperties, setAllProperties] = useState([]);
   const [filteredProperties, setFilteredProperties] = useState([]);
   const [displayedProperties, setDisplayedProperties] = useState([]);
@@ -32,6 +37,18 @@ const Properties = () => {
   const [totalPages, setTotalPages] = useState(1);
   const [isLoading, setIsLoading] = useState(true);
   
+  // Handle context changes (from HowItWorks/FinalCta buttons)
+  useEffect(() => {
+    // Only update if listingType changed AND it's not from a manual toggle
+    if (listingType && listingType !== lastListingTypeRef.current && !isManualToggleRef.current) {
+      setFilters(prev => ({
+        ...prev,
+        listingType: listingType
+      }));
+      lastListingTypeRef.current = listingType;
+    }
+  }, [listingType]);
+  
   useEffect(() => {
     const loadProperties = () => {
       setIsLoading(true);
@@ -50,6 +67,8 @@ const Properties = () => {
     };
     
     loadProperties();
+    // Initialize lastListingTypeRef
+    lastListingTypeRef.current = filters.listingType;
   }, []);
   
   const updateDisplayedProperties = (properties, page) => {
@@ -59,6 +78,15 @@ const Properties = () => {
   };
   
   const handleFilterChange = (newFilters) => {
+    // Check if this is a listingType change from manual toggle
+    if (newFilters.listingType && newFilters.listingType !== filters.listingType) {
+      isManualToggleRef.current = true;
+      setTimeout(() => {
+        isManualToggleRef.current = false;
+      }, 100);
+      lastListingTypeRef.current = newFilters.listingType;
+    }
+    
     setFilters(prev => ({ ...prev, ...newFilters }));
     setCurrentPage(1);
   };
@@ -176,6 +204,8 @@ const Properties = () => {
       listingType: 'rent',
       isExpanded: false
     });
+    lastListingTypeRef.current = 'rent';
+    isManualToggleRef.current = false;
   };
 
   if (isLoading) {

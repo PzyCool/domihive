@@ -7,7 +7,7 @@ import PhoneInput from '../forms/PhoneInput';
 import PasswordInput from '../forms/PasswordInput';
 import SocialButtons from '../forms/SocialButtons';
 import { IMAGES, LOGIN_FEATURES } from '../utils/constants';
-// import { showNotification } from '../utils/notifications';
+import { showNotification } from '../utils/notifications';
 
 const LoginPage = () => {
   const navigate = useNavigate();
@@ -104,7 +104,7 @@ const LoginPage = () => {
       const result = await login(fullPhone, formData.password);
       
       if (result.success) {
-        // showNotification('Login successful!', 'success');
+        showNotification('Login successful!', 'success');
         setTimeout(() => {
           navigate('/');
         }, 1000);
@@ -130,7 +130,7 @@ const LoginPage = () => {
       return;
     }
     
-    // showNotification('Password reset link sent to your phone', 'success');
+    showNotification('Password reset link sent to your phone', 'success');
   };
 
   return (
