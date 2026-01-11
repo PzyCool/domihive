@@ -69,21 +69,9 @@ const PropertyCard = ({ property, onViewDetails, onToggleFavorite, onBookNowClic
   
   return (
     <div 
-      className="property-card bg-white rounded-xl shadow-md border border-gray-200 overflow-hidden hover:shadow-lg transition-all duration-300 hover:translate-y-[-2px] cursor-pointer group flex flex-col"
-      style={{
-        width: '100%',
-        maxWidth: '640px',
-        minHeight: '300px',
-        height: 'auto',
-      }}
+      className="property-card w-full max-w-none md:max-w-[640px] md:min-h-[300px] bg-white rounded-xl shadow-md border border-gray-200 overflow-hidden hover:shadow-lg transition-all duration-300 hover:translate-y-[-2px] cursor-pointer group flex flex-col"
     >
-      <div 
-        className="relative"
-        style={{
-          height: '190px',
-          flexShrink: 0
-        }}
-      >
+      <div className="relative h-48 md:h-[190px] flex-shrink-0">
         <img
           src={property.images?.[currentImageIndex] || 'https://images.unsplash.com/photo-1560448204-603b3fc33ddc?w=800&h=600&fit=crop'}
           alt={property.title}
@@ -132,14 +120,14 @@ const PropertyCard = ({ property, onViewDetails, onToggleFavorite, onBookNowClic
       
       <div className="p-3 flex-1 flex flex-col">
         <div className="mb-2 min-h-[24px]">
-          <h3 className="text-sm font-bold text-gray-900 mb-1 line-clamp-2 leading-snug">
+          <h3 className="text-sm md:text-base font-bold text-gray-900 mb-1 line-clamp-2 leading-snug">
             {property.title}
           </h3>
           <div className="flex items-start gap-2">
             <i className="fas fa-map-marker-alt text-[#9f7539] mt-0.5 flex-shrink-0 text-xs"></i>
             <div className="min-h-[32px]">
-              <span className="text-xs text-gray-700 font-medium block line-clamp-2">{property.location}</span>
-              <div className="text-[11px] text-gray-500 mt-0.5">
+              <span className="text-xs md:text-sm text-gray-700 font-medium block line-clamp-2">{property.location}</span>
+              <div className="hidden sm:block text-[11px] text-gray-500 mt-0.5">
                 <i className="fas fa-clock mr-1"></i>
                 Listed {new Date(property.dateAdded).toLocaleDateString('en-NG', { 
                   month: 'short', 
@@ -154,17 +142,17 @@ const PropertyCard = ({ property, onViewDetails, onToggleFavorite, onBookNowClic
         <div className="grid grid-cols-3 gap-2 mb-3">
           <div className="flex flex-col items-center p-1.5 bg-gray-50 rounded-lg">
             <i className="fas fa-bed text-[#9f7539] text-xs mb-0.5"></i>
-            <span className="text-xs font-bold text-gray-900">{property.bedrooms}</span>
+            <span className="text-xs md:text-sm font-bold text-gray-900">{property.bedrooms}</span>
             <span className="text-[11px] text-gray-600 font-medium">Beds</span>
           </div>
           <div className="flex flex-col items-center p-1.5 bg-gray-50 rounded-lg">
             <i className="fas fa-bath text-[#9f7539] text-xs mb-0.5"></i>
-            <span className="text-xs font-bold text-gray-900">{property.bathrooms}</span>
+            <span className="text-xs md:text-sm font-bold text-gray-900">{property.bathrooms}</span>
             <span className="text-[11px] text-gray-600 font-medium">Baths</span>
           </div>
           <div className="flex flex-col items-center p-1.5 bg-gray-50 rounded-lg">
             <i className="fas fa-ruler-combined text-[#9f7539] text-xs mb-0.5"></i>
-            <span className="text-xs font-bold text-gray-900">{property.size}</span>
+            <span className="text-xs md:text-sm font-bold text-gray-900">{property.size}</span>
             <span className="text-[11px] text-gray-600 font-medium">Size</span>
           </div>
         </div>
@@ -174,12 +162,12 @@ const PropertyCard = ({ property, onViewDetails, onToggleFavorite, onBookNowClic
             <i className="fas fa-align-left text-[#9f7539] text-[11px]"></i>
             <div className="text-[11px] font-semibold text-gray-800">About this property:</div>
           </div>
-          <div className="text-xs text-gray-600 line-clamp-2 leading-relaxed">
+          <div className="text-xs md:text-sm text-gray-600 line-clamp-2 leading-relaxed">
             {`Modern ${property.bedrooms}-bed property in ${property.location} with ${property.bathrooms} bath${property.bathrooms > 1 ? 's' : ''}.`}
           </div>
         </div>
         
-        <div className="mb-1 flex items-center justify-between min-h-[16px]">
+        <div className="mb-1 flex items-center justify-between min-h-[16px] hidden sm:flex">
           <div className="flex items-center gap-2">
             <div>
               <div className="text-[11px] text-gray-500">{estateTypeInfo.label}</div>

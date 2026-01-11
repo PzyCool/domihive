@@ -39,58 +39,60 @@ const PrimaryRow = ({
   };
 
   return (
-    <div className="primary-row flex items-center justify-between px-4 lg:px-6 py-3 border-b border-[#0e1f42]/10">
-      <div className="flex items-center gap-3 lg:gap-4 flex-1">
-        <div className="flex-1 max-w-md">
+    <div className="primary-row flex flex-col md:flex-row md:items-center md:justify-between px-4 lg:px-6 py-3 border-b border-[#0e1f42]/10 gap-3 md:gap-0">
+      <div className="flex flex-col md:flex-row md:items-center gap-3 lg:gap-4 flex-1 w-full">
+        <div className="flex-1 w-full md:max-w-md">
           <SearchBar
             value={filters.searchQuery || ''}
             onChange={handleSearch}
           />
         </div>
         
-        <FilterBadge
-          count={activeFiltersCount}
-          onClick={onToggleExpand}
-        />
+        <div className="flex items-center gap-3 flex-wrap">
+          <FilterBadge
+            count={activeFiltersCount}
+            onClick={onToggleExpand}
+          />
 
-        {/* Listing Type Toggle */}
-        <div className="flex items-center gap-1 bg-gray-100 rounded-lg p-1">
-          <button
-            onClick={handleListingTypeToggle}
-            className={`px-3 py-1.5 rounded text-sm font-medium transition-all ${
-              filters.listingType === 'rent' 
-                ? 'bg-white shadow-sm text-[#9f7539]' 
-                : 'hover:bg-gray-200 text-gray-700'
-            }`}
-          >
-            For Rent
-          </button>
-          <button
-            onClick={handleListingTypeToggle}
-            className={`px-3 py-1.5 rounded text-sm font-medium transition-all ${
-              filters.listingType === 'buy' 
-                ? 'bg-white shadow-sm text-[#9f7539]' 
-                : 'hover:bg-gray-200 text-gray-700'
-            }`}
-          >
-            For Sale
-          </button>
+          {/* Listing Type Toggle */}
+          <div className="flex items-center gap-1 bg-gray-100 rounded-lg p-1">
+            <button
+              onClick={handleListingTypeToggle}
+              className={`px-3 py-1.5 rounded text-sm font-medium transition-all ${
+                filters.listingType === 'rent' 
+                  ? 'bg-white shadow-sm text-[#9f7539]' 
+                  : 'hover:bg-gray-200 text-gray-700'
+              }`}
+            >
+              For Rent
+            </button>
+            <button
+              onClick={handleListingTypeToggle}
+              className={`px-3 py-1.5 rounded text-sm font-medium transition-all ${
+                filters.listingType === 'buy' 
+                  ? 'bg-white shadow-sm text-[#9f7539]' 
+                  : 'hover:bg-gray-200 text-gray-700'
+              }`}
+            >
+              For Sale
+            </button>
+          </div>
+
+          {filters.listingType === 'rent' ? (
+            <ForRentOverlayIcon
+              isActive={showAdvancedFilters}
+              onClick={onAdvancedToggle}
+            />
+          ) : (
+            <ForSalesOverlayIcon
+              isActive={showAdvancedFilters}
+              onClick={onAdvancedToggle}
+            />
+          )}
         </div>
-
-        {filters.listingType === 'rent' ? (
-          <ForRentOverlayIcon
-            isActive={showAdvancedFilters}
-            onClick={onAdvancedToggle}
-          />
-        ) : (
-          <ForSalesOverlayIcon
-            isActive={showAdvancedFilters}
-            onClick={onAdvancedToggle}
-          />
-        )}
       </div>
       
-      <div className="flex items-center gap-15">
+      <div className="hidden md:flex items-center gap-15">
         {/* <ViewToggle
           currentView={viewType}
           onChange={handleViewChange}

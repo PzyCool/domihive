@@ -244,9 +244,9 @@ const Properties = () => {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100">
-      <section id="properties" className="properties-section p-4 md:p-6">
-        <div className="bg-white rounded-lg shadow-md border border-[#e2e8f0] p-4 md:p-6">
+    <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 overflow-x-hidden">
+      <section id="properties" className="properties-section px-3 py-4 md:p-6">
+        <div className="bg-white rounded-lg shadow-md border border-[#e2e8f0] p-3 md:p-6">
           {showBookInspection ? (
             <div className="book-inspection-container">
               {/* <BookInspectionPage propertyId={selectedPropertyForBooking} /> */}
@@ -262,19 +262,15 @@ const Properties = () => {
             </div>
           ) : (
             <>
-              <div className="relative mb-8">
-                <SearchHeader 
-                  filters={filters}
-                  onFilterChange={handleFilterChange}
-                  viewType={viewType}
-                  onViewToggle={handleViewToggle}
-                />
-                
-                <div 
-                  className={`transition-all duration-300 ease-out ${
-                    filters.isExpanded ? 'h-24' : 'h-0'
-                  }`}
-                ></div>
+              <div className="relative mb-6 md:mb-8">
+                <div className="sticky top-0 z-40 -mx-3 md:mx-0 bg-white/95 backdrop-blur md:static md:bg-transparent">
+                  <SearchHeader 
+                    filters={filters}
+                    onFilterChange={handleFilterChange}
+                    viewType={viewType}
+                    onViewToggle={handleViewToggle}
+                  />
+                </div>
               </div>
               
               <div className="mb-8">
@@ -287,7 +283,7 @@ const Properties = () => {
                 </p>
               </div>
               
-              <div className="mb-10">
+              <div className="mb-8 md:mb-10">
                 <PropertyGrid 
                   properties={displayedProperties}
                   onPropertyClick={handlePropertyClick}

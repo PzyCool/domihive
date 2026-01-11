@@ -23,9 +23,9 @@ const PropertyGrid = ({
   }
   
   return (
-    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
+    <div className="flex gap-3 overflow-x-auto pb-3 -mx-3 px-3 snap-x snap-mandatory sm:-mx-0 sm:px-0 sm:grid sm:grid-cols-2 lg:grid-cols-3 sm:gap-6 sm:overflow-visible">
       {properties.map((property) => (
-        <div key={property.id} className="flex justify-center">
+        <div key={property.id} className="w-[85%] flex-shrink-0 snap-start sm:w-full">
           <PropertyCard
             property={property}
             onViewDetails={() => onPropertyClick?.(property.id)}

@@ -43,39 +43,39 @@ const About = () => {
   ];
 
   return (
-    <section id="features" className="features-section py-24 bg-gradient-to-br from-[#f8f9fa] to-white">
-      <div className="container max-w-[1200px] mx-auto px-8">
+    <section id="features" className="features-section py-16 md:py-24 bg-gradient-to-br from-[#f8f9fa] to-white">
+      <div className="container max-w-[1200px] mx-auto px-4 md:px-8">
         
         {/* Section Header - Exact same as original */}
-        <div className="section-header text-center mb-16">
-          <h2 className="text-4xl font-bold text-[#0E1F42] mb-4">
+        <div className="section-header text-center mb-10 md:mb-16">
+          <h2 className="text-2xl md:text-4xl font-bold text-[#0E1F42] mb-3 md:mb-4">
             Why Choose DomiHive?
           </h2>
-          <p className="text-xl text-[#6c757d] max-w-2xl mx-auto leading-relaxed">
+          <p className="text-base md:text-xl text-[#6c757d] max-w-2xl mx-auto leading-relaxed">
             Professional property management that puts your peace of mind first
           </p>
         </div>
 
         {/* Features Grid - Exact same layout as original CSS */}
-        <div className="features-grid grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
+        <div className="features-grid flex gap-4 overflow-x-auto pb-3 -mx-4 px-4 md:mx-0 md:px-0 md:grid md:grid-cols-2 lg:grid-cols-3 md:gap-10">
           {features.map((feature) => (
             <div 
               key={feature.id}
-              className="feature-card bg-white p-8 rounded-xl text-center shadow-lg transition-all duration-400 hover:-translate-y-3 hover:shadow-2xl relative overflow-hidden group"
+              className="feature-card w-[260px] flex-shrink-0 bg-white p-5 md:p-8 rounded-xl text-center shadow-lg transition-all duration-400 hover:-translate-y-3 hover:shadow-2xl relative overflow-hidden group md:w-auto"
             >
               {/* Top accent border on hover - EXACT SAME AS ORIGINAL */}
               <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-[#9F7539] to-[#0E1F42] transform scale-x-0 transition-transform duration-400 group-hover:scale-x-100"></div>
               
               {/* Feature Icon - EXACT SAME ANIMATIONS */}
-              <div className="feature-icon w-20 h-20 bg-gradient-to-br from-[#0E1F42] to-[#1a2d5f] rounded-full flex items-center justify-center mx-auto mb-6 transition-all duration-400 group-hover:bg-gradient-to-br group-hover:from-[#9F7539] group-hover:to-[#b58a4a] group-hover:scale-110 group-hover:rotate-3">
-                <i className={`${feature.icon} text-2xl text-white transition-all duration-400`}></i>
+              <div className="feature-icon w-14 h-14 md:w-20 md:h-20 bg-gradient-to-br from-[#0E1F42] to-[#1a2d5f] rounded-full flex items-center justify-center mx-auto mb-4 md:mb-6 transition-all duration-400 group-hover:bg-gradient-to-br group-hover:from-[#9F7539] group-hover:to-[#b58a4a] group-hover:scale-110 group-hover:rotate-3">
+                <i className={`${feature.icon} text-lg md:text-2xl text-white transition-all duration-400`}></i>
               </div>
               
               {/* Feature Content */}
-              <h3 className="text-xl font-semibold text-[#0E1F42] mb-4">
+              <h3 className="text-lg md:text-xl font-semibold text-[#0E1F42] mb-2 md:mb-4">
                 {feature.title}
               </h3>
-              <p className="text-[#6c757d] leading-relaxed">
+              <p className="text-sm md:text-base text-[#6c757d] leading-relaxed">
                 {feature.description}
               </p>
             </div>

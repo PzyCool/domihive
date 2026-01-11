@@ -22,15 +22,15 @@ const ForSalesOverlay = ({
   if (!isOpen) return null;
 
   return (
-    <div className="advanced-filter-overlay w-full bg-white border-t border-gray-200 shadow-lg">
+    <div className="advanced-filter-overlay fixed inset-0 z-50 bg-white flex flex-col md:static md:w-full md:border-t md:border-gray-200 md:shadow-lg">
       {/* Header */}
-      <div className="flex items-center justify-between px-6 py-4 border-b border-gray-200">
+      <div className="flex items-center justify-between px-4 md:px-6 py-3 md:py-4 border-b border-gray-200">
         <div>
           <h3 className="text-lg font-bold text-[#0e1f42]">
             <i className="fas fa-filter mr-2 text-[#0e1f42]"></i>
             Advanced Sales Filters
           </h3>
-          <p className="text-sm text-gray-600">
+          <p className="text-sm text-gray-600 hidden md:block">
             Select multiple options to narrow your search for properties to buy
           </p>
         </div>
@@ -43,8 +43,43 @@ const ForSalesOverlay = ({
         </button>
       </div>
       
-      {/* Horizontal Scroll Area */}
-      <div className="px-6 py-4">
+      {/* Mobile Stack */}
+      <div className="px-4 py-4 space-y-6 overflow-y-auto md:hidden">
+        <PriceSlider
+          min={filters.priceMin || 0}
+          max={filters.priceMax || 10000000}
+          onPriceChange={(min, max) => onFilterChange({ priceMin: min, priceMax: max })}
+        />
+        
+        <BedroomCheckboxes
+          selected={filters.bedrooms || []}
+          onChange={(bedrooms) => onFilterChange({ bedrooms })}
+        />
+
+        <BathroomCheckboxes
+          selected={filters.bathrooms || []}
+          onChange={(bathrooms) => onFilterChange({ bathrooms })}
+        />
+        
+        <AmenitiesGrid
+          selected={filters.amenities || []}
+          onToggle={(amenityId) => {
+            const current = filters.amenities || [];
+            const newAmenities = current.includes(amenityId)
+              ? current.filter(id => id !== amenityId)
+              : [...current, amenityId];
+            onFilterChange({ amenities: newAmenities });
+          }}
+        />
+        
+        <PropertyAgeSelect
+          age={filters.propertyAge || ''}
+          onChange={(propertyAge) => onFilterChange({ propertyAge })}
+        />
+      </div>
+
+      {/* Horizontal Scroll Area (Desktop) */}
+      <div className="px-6 py-4 hidden md:block">
         <HorizontalScroll>
           <div className="filter-section min-w-[220px] p-4">
             <PriceSlider
@@ -119,8 +154,24 @@ const ForSalesOverlay = ({
         </HorizontalScroll>
       </div>
       
-      {/* Action Buttons */}
-      <div className="px-6 py-4 border-t border-gray-200 bg-gray-50 flex justify-between">
+      {/* Action Buttons (Mobile) */}
+      <div className="mt-auto px-4 py-3 border-t border-gray-200 bg-white flex gap-3 md:hidden">
+        <button
+          onClick={onClearFilters}
+          className="flex-1 px-4 py-2.5 border border-gray-300 rounded-lg hover:bg-gray-100 font-medium"
+        >
+          Clear
+        </button>
+        <button
+          onClick={onApplyFilters}
+          className="flex-1 px-4 py-2.5 bg-[#0e1f42] text-white rounded-lg hover:bg-[#1a2d5f] font-medium"
+        >
+          Apply
+        </button>
+      </div>
+
+      {/* Action Buttons (Desktop) */}
+      <div className="px-6 py-4 border-t border-gray-200 bg-gray-50 hidden md:flex justify-between">
         <button
           onClick={onClearFilters}
           className="px-5 py-2.5 border border-gray-300 rounded-lg hover:bg-gray-100 font-medium"
