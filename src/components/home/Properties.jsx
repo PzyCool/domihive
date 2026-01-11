@@ -185,7 +185,12 @@ const Properties = () => {
   const handlePageChange = (page) => {
     setCurrentPage(page);
     updateDisplayedProperties(filteredProperties, page);
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+    const section = document.getElementById('properties');
+    if (section) {
+      section.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    } else {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
   };
   
   const handleViewToggle = (type) => {
@@ -305,15 +310,28 @@ const Properties = () => {
                     Previous
                   </button>
                   
-                  {Array.from({ length: Math.min(5, totalPages) }, (_, i) => i + 1).map(page => (
-                    <button
-                      key={page}
-                      onClick={() => handlePageChange(page)}
-                      className={`w-10 h-10 rounded-lg ${currentPage === page ? 'bg-[#0E1F42] text-white' : 'bg-gray-100 hover:bg-gray-200'}`}
-                    >
-                      {page}
-                    </button>
-                  ))}
+                  {(() => {
+                    const windowSize = 5;
+                    const half = Math.floor(windowSize / 2);
+                    let start = Math.max(1, currentPage - half);
+                    let end = Math.min(totalPages, start + windowSize - 1);
+                    start = Math.max(1, end - windowSize + 1);
+
+                    const pages = Array.from(
+                      { length: end - start + 1 },
+                      (_, i) => start + i
+                    );
+
+                    return pages.map(page => (
+                      <button
+                        key={page}
+                        onClick={() => handlePageChange(page)}
+                        className={`w-10 h-10 rounded-lg ${currentPage === page ? 'bg-[#1a2d5f] text-white' : 'bg-gray-100 hover:bg-gray-200 text-gray-700'}`}
+                      >
+                        {page}
+                      </button>
+                    ));
+                  })()}
                   
                   <button
                     onClick={() => handlePageChange(Math.min(totalPages, currentPage + 1))}
