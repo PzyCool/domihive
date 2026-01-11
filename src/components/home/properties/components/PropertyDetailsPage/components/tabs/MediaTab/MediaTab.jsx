@@ -4,7 +4,7 @@ import RoomGallery from './RoomGallery';
 import VideoSection from './VideoSection';
 import ActionSection from '../../ActionSection/ActionSection';
 
-const MediaTab = ({ property, listingType }) => {
+const MediaTab = ({ property, listingType, onBookInspection }) => {
   return (
     <div className="media-tab space-y-8">
       <div>
@@ -25,8 +25,8 @@ const MediaTab = ({ property, listingType }) => {
       {/* Action Section */}
       <div className="mt-8">
         <ActionSection 
-          property={property} 
-          listingType={listingType} 
+          property={property}
+          onBookInspection={onBookInspection}
         />
       </div>
       

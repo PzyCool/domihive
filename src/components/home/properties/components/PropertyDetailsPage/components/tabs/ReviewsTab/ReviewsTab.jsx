@@ -5,7 +5,7 @@ import RatingSummary from './RatingSummary';
 // import ReviewFilters from './ReviewFilters';
 import ActionSection from '../../ActionSection/ActionSection';
 
-const ReviewsTab = ({ property, listingType }) => {
+const ReviewsTab = ({ property, listingType, onBookInspection }) => {
   const [filter, setFilter] = useState('all');
 
   return (
@@ -58,7 +58,7 @@ const ReviewsTab = ({ property, listingType }) => {
       <div className="mt-8">
         <ActionSection 
           property={property}
-          listingType={listingType}
+          onBookInspection={onBookInspection}
         />
       </div>
     </div>

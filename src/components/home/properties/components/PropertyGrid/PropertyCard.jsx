@@ -7,51 +7,6 @@ const PropertyCard = ({ property, onViewDetails, onToggleFavorite, onBookNowClic
   
   if (!property) return null;
   
-  const getPropertyTypeInfo = () => {
-    const types = {
-      'luxury_apartment': { 
-        icon: 'fas fa-crown', 
-        label: 'Luxury Apartment',
-        color: '#9f7539'
-      },
-      'apartment': { 
-        icon: 'fas fa-building', 
-        label: 'Apartment',
-        color: '#0e1f42'
-      },
-      'flat': { 
-        icon: 'fas fa-home', 
-        label: 'Flat',
-        color: '#10b981'
-      },
-      'duplex': { 
-        icon: 'fas fa-hotel', 
-        label: 'Duplex',
-        color: '#3b82f6'
-      },
-      'penthouse': { 
-        icon: 'fas fa-star', 
-        label: 'Penthouse',
-        color: '#8b5cf6'
-      },
-      'townhouse': { 
-        icon: 'fas fa-city', 
-        label: 'Townhouse',
-        color: '#ef4444'
-      },
-      'house': { 
-        icon: 'fas fa-house', 
-        label: 'House',
-        color: '#f59e0b'
-      }
-    };
-    
-    const typeKey = property.propertyType?.toLowerCase() || 'apartment';
-    return types[typeKey] || types['apartment'];
-  };
-  
-  const propertyTypeInfo = getPropertyTypeInfo();
-  
   const formatPrice = (price) => {
     if (price >= 1000000) {
       return `₦${(price / 1000000).toFixed(1)}M/year`;
@@ -117,15 +72,15 @@ const PropertyCard = ({ property, onViewDetails, onToggleFavorite, onBookNowClic
       className="property-card bg-white rounded-xl shadow-md border border-gray-200 overflow-hidden hover:shadow-lg transition-all duration-300 hover:translate-y-[-2px] cursor-pointer group flex flex-col"
       style={{
         width: '100%',
-        maxWidth: '465px',
-        minHeight: '580px',
+        maxWidth: '640px',
+        minHeight: '300px',
         height: 'auto',
       }}
     >
       <div 
         className="relative"
         style={{
-          height: '220px',
+          height: '190px',
           flexShrink: 0
         }}
       >
@@ -148,21 +103,6 @@ const PropertyCard = ({ property, onViewDetails, onToggleFavorite, onBookNowClic
             <i className="fas fa-chevron-right text-gray-700 text-sm"></i>
           </button>
         )}
-        
-        <div className="absolute top-3 left-3 flex flex-col gap-1">
-          <div 
-            className="px-3 py-1.5 rounded-lg text-white text-xs font-bold shadow-md flex items-center gap-1.5"
-            style={{ backgroundColor: propertyTypeInfo.color }}
-          >
-            <i className={propertyTypeInfo.icon}></i>
-            <span>{propertyTypeInfo.label}</span>
-          </div>
-          
-          <div className={`px-3 py-1.5 ${propertyStatus.color} rounded-lg text-white text-xs font-bold shadow-md flex items-center gap-1.5`}>
-            <i className={propertyStatus.icon}></i>
-            <span>{propertyStatus.label}</span>
-          </div>
-        </div>
         
         <button
           onClick={handleFavoriteClick}
@@ -190,16 +130,16 @@ const PropertyCard = ({ property, onViewDetails, onToggleFavorite, onBookNowClic
         </div>
       </div>
       
-      <div className="p-4 flex-1 flex flex-col">
-        <div className="mb-3 min-h-[80px]">
-          <h3 className="text-base font-bold text-gray-900 mb-2 line-clamp-2 leading-snug">
+      <div className="p-3 flex-1 flex flex-col">
+        <div className="mb-2 min-h-[24px]">
+          <h3 className="text-sm font-bold text-gray-900 mb-1 line-clamp-2 leading-snug">
             {property.title}
           </h3>
           <div className="flex items-start gap-2">
-            <i className="fas fa-map-marker-alt text-[#9f7539] mt-0.5 flex-shrink-0"></i>
-            <div className="min-h-[40px]">
-              <span className="text-sm text-gray-700 font-medium block line-clamp-2">{property.location}</span>
-              <div className="text-xs text-gray-500 mt-0.5">
+            <i className="fas fa-map-marker-alt text-[#9f7539] mt-0.5 flex-shrink-0 text-xs"></i>
+            <div className="min-h-[32px]">
+              <span className="text-xs text-gray-700 font-medium block line-clamp-2">{property.location}</span>
+              <div className="text-[11px] text-gray-500 mt-0.5">
                 <i className="fas fa-clock mr-1"></i>
                 Listed {new Date(property.dateAdded).toLocaleDateString('en-NG', { 
                   month: 'short', 
@@ -211,75 +151,56 @@ const PropertyCard = ({ property, onViewDetails, onToggleFavorite, onBookNowClic
           </div>
         </div>
         
-        <div className="grid grid-cols-3 gap-2 mb-4">
-          <div className="flex flex-col items-center p-2 bg-gray-50 rounded-lg">
-            <i className="fas fa-bed text-[#9f7539] text-sm mb-1"></i>
-            <span className="text-sm font-bold text-gray-900">{property.bedrooms}</span>
-            <span className="text-xs text-gray-600 font-medium">Beds</span>
+        <div className="grid grid-cols-3 gap-2 mb-3">
+          <div className="flex flex-col items-center p-1.5 bg-gray-50 rounded-lg">
+            <i className="fas fa-bed text-[#9f7539] text-xs mb-0.5"></i>
+            <span className="text-xs font-bold text-gray-900">{property.bedrooms}</span>
+            <span className="text-[11px] text-gray-600 font-medium">Beds</span>
           </div>
-          <div className="flex flex-col items-center p-2 bg-gray-50 rounded-lg">
-            <i className="fas fa-bath text-[#9f7539] text-sm mb-1"></i>
-            <span className="text-sm font-bold text-gray-900">{property.bathrooms}</span>
-            <span className="text-xs text-gray-600 font-medium">Baths</span>
+          <div className="flex flex-col items-center p-1.5 bg-gray-50 rounded-lg">
+            <i className="fas fa-bath text-[#9f7539] text-xs mb-0.5"></i>
+            <span className="text-xs font-bold text-gray-900">{property.bathrooms}</span>
+            <span className="text-[11px] text-gray-600 font-medium">Baths</span>
           </div>
-          <div className="flex flex-col items-center p-2 bg-gray-50 rounded-lg">
-            <i className="fas fa-ruler-combined text-[#9f7539] text-sm mb-1"></i>
-            <span className="text-sm font-bold text-gray-900">{property.size}</span>
-            <span className="text-xs text-gray-600 font-medium">Size</span>
-          </div>
-        </div>
-        
-        <div className="mb-4 min-h-[70px]">
-          <div className="flex items-center gap-2 mb-2">
-            <i className="fas fa-align-left text-[#9f7539] text-xs"></i>
-            <div className="text-xs font-semibold text-gray-800">About this property:</div>
-          </div>
-          <div className="text-sm text-gray-600 line-clamp-3 leading-relaxed">
-            {`Beautiful ${propertyTypeInfo.label.toLowerCase()} in ${property.location}. 
-            ${property.bedrooms} bedroom${property.bedrooms > 1 ? 's' : ''}, ${property.bathrooms} bathroom${property.bathrooms > 1 ? 's' : ''}, ${property.size} of elegant living space. 
-            Modern design with premium finishes and amenities.`}
+          <div className="flex flex-col items-center p-1.5 bg-gray-50 rounded-lg">
+            <i className="fas fa-ruler-combined text-[#9f7539] text-xs mb-0.5"></i>
+            <span className="text-xs font-bold text-gray-900">{property.size}</span>
+            <span className="text-[11px] text-gray-600 font-medium">Size</span>
           </div>
         </div>
         
-        <div className="mb-4 flex items-center justify-between min-h-[40px]">
+        <div className="mb-2 min-h-[16px]">
+          <div className="flex items-center gap-2 mb-1">
+            <i className="fas fa-align-left text-[#9f7539] text-[11px]"></i>
+            <div className="text-[11px] font-semibold text-gray-800">About this property:</div>
+          </div>
+          <div className="text-xs text-gray-600 line-clamp-2 leading-relaxed">
+            {`Modern ${property.bedrooms}-bed property in ${property.location} with ${property.bathrooms} bath${property.bathrooms > 1 ? 's' : ''}.`}
+          </div>
+        </div>
+        
+        <div className="mb-1 flex items-center justify-between min-h-[16px]">
           <div className="flex items-center gap-2">
-            <div 
-              className="w-7 h-7 rounded-lg flex items-center justify-center"
-              style={{ backgroundColor: `${propertyTypeInfo.color}20` }}
-            >
-              <i 
-                className={propertyTypeInfo.icon} 
-                style={{ color: propertyTypeInfo.color }}
-              ></i>
-            </div>
             <div>
-              <div className="text-xs font-semibold text-gray-900">{propertyTypeInfo.label}</div>
-              <div className="text-xs text-gray-500">{estateTypeInfo.label}</div>
-            </div>
-          </div>
-          
-          <div className="px-2 py-1 bg-[#f8f3ed] rounded-lg border border-[#e9d9c5]">
-            <div className="flex items-center gap-1">
-              <i className="fas fa-shield-alt text-[#9f7539] text-xs"></i>
-              <span className="text-xs font-bold text-[#9f7539]">DomiHive Managed</span>
+              <div className="text-[11px] text-gray-500">{estateTypeInfo.label}</div>
             </div>
           </div>
         </div>
         
-        <div className="mt-auto pt-3 border-t border-gray-100">
+        <div className="mt-auto pt-2 border-t border-gray-100">
           <div className="flex gap-2">
             <button
               onClick={handleViewDetails}
-              className="flex-1 bg-[#0e1f42] text-white font-semibold py-2.5 rounded-lg hover:bg-[#1a2d5f] transition-colors flex items-center justify-center gap-2 text-sm shadow-sm hover:shadow"
+              className="flex-1 bg-[#0e1f42] text-white font-semibold py-2 rounded-lg hover:bg-[#1a2d5f] transition-colors flex items-center justify-center gap-2 text-xs shadow-sm hover:shadow"
             >
-              <i className="fas fa-eye text-xs"></i>
+              <i className="fas fa-eye text-[11px]"></i>
               View Details
             </button>
             <button
               onClick={handleBookNowClick}
-              className="flex-1 bg-gradient-to-r from-[#9f7539] to-[#b58a4a] text-white font-semibold py-2.5 rounded-lg hover:from-[#b58a4a] hover:to-[#9f7539] transition-all flex items-center justify-center gap-2 text-sm shadow-sm hover:shadow"
+              className="flex-1 bg-gradient-to-r from-[#9f7539] to-[#b58a4a] text-white font-semibold py-2 rounded-lg hover:from-[#b58a4a] hover:to-[#9f7539] transition-all flex items-center justify-center gap-2 text-xs shadow-sm hover:shadow"
             >
-              <i className="fas fa-calendar-check text-xs"></i>
+              <i className="fas fa-calendar-check text-[11px]"></i>
               Book Now
             </button>
           </div>

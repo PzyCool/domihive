@@ -4,7 +4,7 @@ import MediaTab from '../tabs/MediaTab/MediaTab';
 import ReviewsTab from '../tabs/ReviewsTab/ReviewsTab';
 import LocationTab from '../tabs/LocationTab/LocationTab';
 
-const PropertyTabs = ({ property }) => {
+const PropertyTabs = ({ property, listingType, onBookInspection }) => {
   const [activeTab, setActiveTab] = useState('media');
 
   const tabs = [
@@ -41,7 +41,7 @@ const PropertyTabs = ({ property }) => {
   return (
     <div className="property-tabs mt-8">
       {/* Sticky Tab Headers */}
-      <div className="sticky top-20 z-30 bg-white border-b border-[#e2e8f0] rounded-t-2xl shadow-sm">
+      <div className="sticky top-6 z-30 bg-white border-b border-[#e2e8f0] rounded-t-2xl shadow-sm">
         <div className="flex">
           {tabs.map((tab) => (
             <button
@@ -68,10 +68,16 @@ const PropertyTabs = ({ property }) => {
 
       {/* Tab Content with Animation */}
         <div className="py-8 animate-fadeIn">
-  {activeTab === 'media' && <MediaTab property={property} />}
-  {activeTab === 'reviews' && <ReviewsTab property={property} />}
+  {activeTab === 'media' && (
+    <MediaTab property={property} listingType={listingType} onBookInspection={onBookInspection} />
+  )}
+  {activeTab === 'reviews' && (
+    <ReviewsTab property={property} listingType={listingType} onBookInspection={onBookInspection} />
+  )}
 
-  {activeTab === 'location' && <LocationTab property={property} />}
+  {activeTab === 'location' && (
+    <LocationTab property={property} listingType={listingType} onBookInspection={onBookInspection} />
+  )}
 </div>
     </div>
   );

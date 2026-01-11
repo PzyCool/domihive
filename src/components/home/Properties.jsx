@@ -1,13 +1,16 @@
 // src/components/home/Properties.jsx
 import React, { useState, useEffect, useRef } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { useListingType } from '../../context/ListingTypeContext';
 import PropertyGrid from "./properties/components/PropertyGrid/PropertyGrid";
 import SearchHeader from "./properties/components/SearchHeader/SearchHeader";
 import PropertyDetailsPage from "./properties/components/PropertyDetailsPage/PropertyDetailsPage";
 // import BookInspectionPage from "./properties/components/BookInspectionPage/BookInspectionPage";
 import { generateNigerianProperties } from "./properties/components/utils/propertyData";
+import { showNotification } from '../auth/utils/notifications';
 
 const Properties = () => {
+  const navigate = useNavigate();
   const { listingType } = useListingType();
   const lastListingTypeRef = useRef('rent');
   const isManualToggleRef = useRef(false);
@@ -48,7 +51,20 @@ const Properties = () => {
       lastListingTypeRef.current = listingType;
     }
   }, [listingType]);
-  
+
+  useEffect(() => {
+    if (!showPropertyDetails) {
+      return;
+    }
+
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = 'hidden';
+
+    return () => {
+      document.body.style.overflow = previousOverflow || 'auto';
+    };
+  }, [showPropertyDetails]);
+
   useEffect(() => {
     const loadProperties = () => {
       setIsLoading(true);
@@ -187,9 +203,8 @@ const Properties = () => {
   };
   
   const handleBookNowClick = (propertyId) => {
-    setSelectedPropertyForBooking(propertyId);
-    setShowBookInspection(true);
-    setShowPropertyDetails(false);
+    showNotification('Please sign up first to book.', 'warning');
+    navigate('/signup');
   };
   
   const handleClearFilters = () => {
@@ -232,10 +247,11 @@ const Properties = () => {
               {/* <BookInspectionPage propertyId={selectedPropertyForBooking} /> */}
             </div>
           ) : showPropertyDetails ? (
-            <div className="property-details-container">
+            <div className="property-details-container fixed inset-0 z-50 overflow-y-auto bg-white">
               <PropertyDetailsPage
                 propertyId={selectedPropertyId}
                 isOpen={showPropertyDetails}
+                onBookInspection={handleBookNowClick}
                 onClose={() => setShowPropertyDetails(false)}
               />
             </div>

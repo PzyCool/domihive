@@ -4,7 +4,7 @@ import MapSection from './MapSection';
 // import NearbyAmenities from './NearbyAmenities';
 import ActionSection from '../../ActionSection/ActionSection';
 
-const LocationTab = ({ property, listingType }) => {
+const LocationTab = ({ property, listingType, onBookInspection }) => {
   return (
     <div className="location-tab space-y-8">
       <div>
@@ -48,7 +48,7 @@ const LocationTab = ({ property, listingType }) => {
       <div className="mt-8">
         <ActionSection 
           property={property}
-          listingType={listingType}
+          onBookInspection={onBookInspection}
         />
       </div>
     </div>

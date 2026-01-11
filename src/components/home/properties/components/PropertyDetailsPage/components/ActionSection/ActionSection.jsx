@@ -1,16 +1,17 @@
 // src/dashboards/rent/components/property-details/components/ActionSection/ActionSection.jsx
 import React, { useState } from 'react';
 
-const ActionSection = ({ propertyId, onBookInspection }) => {
+const ActionSection = ({ propertyId, property, onBookInspection }) => {
   const [isInterested, setIsInterested] = useState(false);
+  const resolvedPropertyId = propertyId ?? property?.id;
 
   const handleCheckboxChange = () => {
     setIsInterested(!isInterested);
   };
 
   const handleBookInspection = () => {
-    if (isInterested && onBookInspection) {
-      onBookInspection(propertyId);
+    if (isInterested && onBookInspection && resolvedPropertyId) {
+      onBookInspection(resolvedPropertyId);
     }
   };
 
@@ -55,7 +56,7 @@ const ActionSection = ({ propertyId, onBookInspection }) => {
                 : 'bg-[#f8fafc] text-[#64748b] cursor-not-allowed border border-[#e2e8f0]'
             }`}
           >
-            {isInterested ? 'Book Inspection →' : 'Select checkbox to book inspection'}
+            {isInterested ? 'Book Inspection' : 'Select checkbox to book inspection'}
           </button>
           
           {isInterested && (
