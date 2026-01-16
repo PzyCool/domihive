@@ -43,6 +43,14 @@ const SignupPage = () => {
     }
   };
 
+  const getDashboardPath = () => {
+    if (typeof window === "undefined") {
+      return "/dashboard/rent/overview";
+    }
+    const lastDashboard = localStorage.getItem("domihive_last_dashboard") || "rent";
+    return `/dashboard/${lastDashboard}/overview`;
+  };
+
   const validateStep1 = () => {
     const newErrors = {};
     if (!formData.name.trim()) newErrors.name = "Full name is required";
@@ -117,7 +125,8 @@ const SignupPage = () => {
 
       if (result.success) {
         showNotification("Account created successfully!", "success");
-        setTimeout(() => navigate("/"), 1500);
+        const dashboardPath = getDashboardPath();
+        setTimeout(() => navigate(dashboardPath, { replace: true }), 1500);
       } else {
         setErrors({
           general: result.error || "Account creation failed. Please try again.",
@@ -140,6 +149,10 @@ const SignupPage = () => {
   const goToLogin = () => {
     navigate("/login");
   };
+  
+  const goHome = () => {
+    navigate("/");
+  };
 
   const handleBack = () => {
     if (step > 1) {
@@ -155,7 +168,15 @@ const SignupPage = () => {
 
   return (
     <AuthLayout>
-      <div className="w-full lg:w-1/2 flex flex-col overflow-hidden">
+      <div className="relative w-full lg:w-1/2 flex flex-col overflow-hidden">
+        <button
+          onClick={goHome}
+          className="absolute left-4 top-4 flex items-center gap-2 text-sm text-[#0E1F42] hover:text-[#1a2d5f] transition-colors"
+        >
+          <i className="fas fa-arrow-left-alt"></i>
+          Back to Home
+        </button>
+
         <div className="pt-8 px-4 lg:px-8">
           <ProgressSteps currentStep={step} />
         </div>
