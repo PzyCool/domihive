@@ -5,10 +5,29 @@
 
 body {
   font-family: 'Manrope', sans-serif;
+  background: var(--page-bg, #f8f9fa);
+  color: var(--text-color, #0e1f42);
 }
 
 .navbar {
   font-family: 'Manrope', sans-serif;
+}
+
+:root {
+  --primary-color: #0E1F42;
+  --accent-color: #9F7539;
+  --accent-light: #b58a4a;
+  --page-bg: #f8f9fa;
+  --card-bg: #ffffff;
+  --text-color: #0e1f42;
+  --text-muted: #6c757d;
+  --white: #FFFFFF;
+  --light-gray: #f8f9fa;
+  --gray-light: #e2e8f0;
+  --gray: #6c757d;
+  --dark-gray: #343a40;
+  --success: #10b981;
+  --error: #dc2626;
 }
 
 /*Our Security barge*/

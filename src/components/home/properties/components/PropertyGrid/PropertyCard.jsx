@@ -1,8 +1,7 @@
 // src/components/home/properties/components/PropertyGrid/PropertyCard.jsx
 import React, { useState } from 'react';
 
-const PropertyCard = ({ property, onViewDetails, onToggleFavorite, onBookNowClick }) => {
-  const [isFavorite, setIsFavorite] = useState(false);
+const PropertyCard = ({ property, onViewDetails, onToggleFavorite, onBookNowClick, isFavorite = false }) => {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   
   if (!property) return null;
@@ -16,10 +15,7 @@ const PropertyCard = ({ property, onViewDetails, onToggleFavorite, onBookNowClic
   
   const handleFavoriteClick = (e) => {
     e.stopPropagation();
-    setIsFavorite(!isFavorite);
-    if (onToggleFavorite) {
-      onToggleFavorite(property.id, !isFavorite);
-    }
+    if (onToggleFavorite) onToggleFavorite(property, !isFavorite);
   };
   
   const handleViewDetails = (e) => {

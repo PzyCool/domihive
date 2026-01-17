@@ -1,15 +1,17 @@
 // src/dashboards/rent/pages/RentBrowse.jsx
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { generateNigerianProperties } from '../../../home/properties/components/utils/propertyData';
 import { VIEW_TYPES, SORT_OPTIONS, ITEMS_PER_PAGE } from '../components/browse-properties/utils/constants';
 import PropertyDetailsModal from '../components/property-details/PropertyDetailsModal';
 import BookInspectionPage from '../components/book-inspection/BookInspectionPage';
+import { useProperties } from '../contexts/PropertiesContext';
 
 // Correct imports based on your folder structure
 import SearchHeader from '../components/browse-properties/components/SearchHeader/SearchHeader';
 import PropertyGrid from '../components/browse-properties/components/PropertyGrid/PropertyGrid';
 
 const RentBrowse = () => {
+  const { toggleFavorite, isFavorite, favorites } = useProperties();
   // State for properties
   const [allProperties, setAllProperties] = useState([]);
   const [filteredProperties, setFilteredProperties] = useState([]);
@@ -211,9 +213,18 @@ const RentBrowse = () => {
   };
   
   // Handle favorite toggle
-  const handleFavoriteToggle = (propertyId, isFavorite) => {
-    console.log('Toggle favorite:', propertyId, isFavorite);
+  const handleFavoriteToggle = (property) => {
+    if (property) toggleFavorite(property);
   };
+
+  const displayedWithFavorites = useMemo(
+    () =>
+      displayedProperties.map((prop) => ({
+        ...prop,
+        isFavorite: isFavorite(prop.id || prop.propertyId)
+      })),
+    [displayedProperties, favorites, isFavorite]
+  );
   
   if (isLoading) {
     return (
@@ -282,7 +293,7 @@ const RentBrowse = () => {
               {/* Property Grid Section */}
               <div className="mb-10">
                 <PropertyGrid 
-                  properties={displayedProperties}
+                  properties={displayedWithFavorites}
                   viewType={viewType}
                   onPropertyClick={handlePropertyClick}
                   onFavoriteToggle={handleFavoriteToggle}

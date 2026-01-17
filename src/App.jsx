@@ -13,6 +13,21 @@ import LoginPage from './components/auth/pages/LoginPage';
 import RentOverview from './components/dashboard/rent/pages/RentOverview';
 import RentBrowse from './components/dashboard/rent/pages/RentBrowse';
 import DashboardLayout from './components/dashboard/layout/DashboardLayout';
+import RentApplications from './components/dashboard/rent/pages/RentApplications';
+import ApplicationStartPage from './components/dashboard/rent/pages/ApplicationStartPage';
+import ApplicationPaymentPage from './components/dashboard/rent/pages/ApplicationPaymentPage';
+import ApplicationTrackPage from './components/dashboard/rent/pages/ApplicationTrackPage';
+import MyProperties from './components/dashboard/rent/pages/MyProperties';
+import PropertyDashboard from './components/dashboard/rent/pages/PropertyDashboard';
+import PropertyPayments from './components/dashboard/rent/pages/PropertyPayments';
+import PropertyVacate from './components/dashboard/rent/pages/PropertyVacate';
+import MaintenancePage from './components/dashboard/rent/pages/MaintenancePage';
+import MaintenanceDetailPage from './components/dashboard/rent/pages/MaintenanceDetailPage';
+import MaintenancePolicyPage from './components/dashboard/rent/pages/MaintenancePolicyPage';
+import PaymentsPage from './components/dashboard/rent/pages/PaymentsPage';
+import MessagesPage from './components/dashboard/rent/pages/MessagesPage';
+import SettingsPage from './components/dashboard/pages/SettingsPage';
+import FavoritesPage from './components/dashboard/rent/pages/FavoritesPage';
 import './App.css';
 
 function App() {
@@ -41,10 +56,25 @@ function App() {
         {/* Dashboard routes */}
         <Route path="/dashboard" element={<DashboardLayout />}>
           <Route index element={<Navigate to="rent/overview" replace />} />
+          <Route path="settings" element={<SettingsPage />} />
           <Route path="rent">
             <Route index element={<Navigate to="overview" replace />} />
             <Route path="overview" element={<RentOverview />} />
             <Route path="browse" element={<RentBrowse />} />
+            <Route path="favorites" element={<FavoritesPage />} />
+            <Route path="applications" element={<RentApplications />} />
+            <Route path="applications/:applicationId/start" element={<ApplicationStartPage />} />
+            <Route path="applications/:applicationId/payment" element={<ApplicationPaymentPage />} />
+            <Route path="applications/:applicationId/track" element={<ApplicationTrackPage />} />
+            <Route path="my-properties" element={<MyProperties />} />
+            <Route path="my-properties/:propertyId" element={<PropertyDashboard />} />
+            <Route path="my-properties/:propertyId/payments" element={<PropertyPayments />} />
+            <Route path="my-properties/:propertyId/vacate" element={<PropertyVacate />} />
+            <Route path="maintenance" element={<MaintenancePage />} />
+            <Route path="maintenance/:ticketId" element={<MaintenanceDetailPage />} />
+            <Route path="maintenance/policy" element={<MaintenancePolicyPage />} />
+            <Route path="payments" element={<PaymentsPage />} />
+            <Route path="messages" element={<MessagesPage />} />
           </Route>
         </Route>
       </Routes>

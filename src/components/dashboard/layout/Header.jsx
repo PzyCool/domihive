@@ -99,17 +99,6 @@ const Header = ({ toggleSidebar, isMobile, sidebarState }) => {
             </button>
           )}
 
-          {/* Desktop Toggle Button (when sidebar is hidden) */}
-          {!isMobile && sidebarState === 'hidden' && (
-            <button
-              onClick={toggleSidebar}
-              className="desktop-toggle-btn p-2 rounded-lg hover:bg-gray-100 text-gray-700 hover:text-gray-900 transition-colors"
-              title="Show sidebar"
-            >
-              <i className="fas fa-bars text-lg"></i>
-            </button>
-          )}
-
           {/* Breadcrumb */}
           <div className="breadcrumb hidden lg:flex items-center gap-2 text-sm text-gray-600">
             <span className="font-medium text-gray-900">{getDashboardName()}</span>

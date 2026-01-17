@@ -27,8 +27,9 @@ const PropertyGrid = ({
           <PropertyCard
             property={property}
             onViewDetails={() => onPropertyClick?.(property.id)}
-            onToggleFavorite={(id, isFavorite) => onFavoriteToggle?.(id, isFavorite)}
+            onToggleFavorite={(prop, fav) => onFavoriteToggle?.(prop, fav)}
             onBookNowClick={onBookNowClick} // ADD THIS PROP
+            isFavorite={property.isFavorite}
           />
         </div>
       ))}

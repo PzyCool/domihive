@@ -35,9 +35,9 @@ const TopOverview = () => {
       value: `₦${stats.nextPaymentAmount}`,
       description: `Due in ${stats.daysUntilPayment} days`,
       icon: 'credit-card',
-      color: 'from-[#9f7539] to-[#b58a4a]',
+      color: 'from-[#0e1f42] to-[#1a2d5f]',
       badge: 'On Track',
-      badgeColor: 'bg-green-500',
+      badgeColor: 'bg-[#0e1f42]',
       onClick: () => navigate('/dashboard/rent/payments'),
       status: 'positive'
     },
@@ -47,9 +47,9 @@ const TopOverview = () => {
       value: `${stats.propertiesManaged}/${stats.activeProperties}`,
       description: 'By DomiHive',
       icon: 'user-tie',
-      color: 'from-green-500 to-green-600',
+      color: 'from-[#0e1f42] to-[#1a2d5f]',
       badge: `${stats.tenantRating}/5.0`,
-      badgeColor: 'bg-green-500',
+      badgeColor: 'bg-[#0e1f42]',
       onClick: () => navigate('/dashboard/rent/my-properties?managed=true'),
       rating: 4.7
     }

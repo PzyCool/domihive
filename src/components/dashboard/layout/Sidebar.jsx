@@ -9,6 +9,7 @@ const Sidebar = ({ sidebarState, toggleSidebar, closeMobileSidebar, isMobile, cu
   const location = useLocation();
   const sidebarNavRef = useRef(null);
   const activeLinkRef = useRef(null);
+  const [tooltip, setTooltip] = useState({ label: '', x: 0, y: 0, visible: false });
   
   // Image paths constants
   const IMAGES = {
@@ -25,7 +26,7 @@ const Sidebar = ({ sidebarState, toggleSidebar, closeMobileSidebar, isMobile, cu
         main: [
           { label: 'Overview', icon: 'chart-pie', path: '/dashboard/rent/overview' },
           { label: 'Browse Properties', icon: 'search', path: '/dashboard/rent/browse' },
-          { label: 'Favorites', icon: 'heart', path: '/dashboard/favorites' }, // FIXED: Changed to shared route
+          { label: 'Favorites', icon: 'heart', path: '/dashboard/rent/favorites' },
         ],
         applications: [
           { label: 'My Applications', icon: 'file-alt', path: '/dashboard/rent/applications', badge: 0 },
@@ -42,8 +43,10 @@ const Sidebar = ({ sidebarState, toggleSidebar, closeMobileSidebar, isMobile, cu
     
     return navConfigs[currentDashboard] || navConfigs.rent;
   };
-
+  
   const navItems = getDashboardNavItems();
+  const isExpanded = sidebarState === 'expanded';
+  const isCollapsed = sidebarState === 'collapsed';
 
   // Add CSS for scroll highlight effect - MOVE THIS HOOK BEFORE CONDITIONAL RETURN
   useEffect(() => {
@@ -178,38 +181,44 @@ const Sidebar = ({ sidebarState, toggleSidebar, closeMobileSidebar, isMobile, cu
     }
   };
 
+  useEffect(() => {
+    if (!isCollapsed && tooltip.visible) {
+      setTooltip((prev) => ({ ...prev, visible: false }));
+    }
+  }, [isCollapsed, tooltip.visible]);
+
+  const showTooltip = (label, event) => {
+    if (!isCollapsed) return;
+    const rect = event.currentTarget.getBoundingClientRect();
+    setTooltip({
+      label,
+      x: rect.right,
+      y: rect.top + rect.height / 2,
+      visible: true
+    });
+  };
+
+  const hideTooltip = () => {
+    setTooltip((prev) => ({ ...prev, visible: false }));
+  };
+
   // CRITICAL FIX: Move conditional return AFTER all hooks
   // Don't render sidebar if user not loaded
   if (!user) return null;
 
-  const isExpanded = sidebarState === 'expanded';
-  const isCollapsed = sidebarState === 'collapsed';
-  const isHidden = sidebarState === 'hidden';
-  const isMobileOpen = sidebarState === 'mobile-open';
-
   return (
     <>
-      {/* Mobile overlay */}
-      {(isMobile && isMobileOpen) && (
-        <div 
-          className="mobile-sidebar-overlay fixed inset-0 bg-black/50 z-40 lg:hidden"
-          onClick={closeMobileSidebar}
-        />
-      )}
-
       {/* Sidebar Container with Glassmorphism Effect */}
       <aside className={`
         dashboard-sidebar
         fixed top-0 left-0 h-screen z-50
         transition-all duration-300 ease-in-out
-        ${isMobile ? 'w-72' : isCollapsed ? 'w-20' : 'w-64'}
-        ${isMobile ? (isMobileOpen ? 'translate-x-0' : '-translate-x-full') : ''}
-        ${isHidden && !isMobile ? 'lg:-translate-x-full' : ''}
-        ${isExpanded ? 'lg:w-64' : ''}
+        ${isMobile ? (isCollapsed ? 'w-20' : 'w-72') : isCollapsed ? 'w-20' : 'w-64'}
         bg-white/80 backdrop-blur-lg backdrop-saturate-150 /* Glass effect */
         flex flex-col
         border-r border-white/30 /* Softer border for glass effect */
         shadow-lg shadow-black/5 /* Soft shadow */
+        overflow-x-hidden
       `}>
         
         {/* Sidebar Header with Logo - Glass effect */}
@@ -242,20 +251,25 @@ const Sidebar = ({ sidebarState, toggleSidebar, closeMobileSidebar, isMobile, cu
 
           {/* Desktop Toggle Button */}
           {!isMobile && (
-            <button 
-              onClick={toggleSidebar}
-              className="sidebar-toggle w-9 h-9 rounded-md hover:bg-white/30 flex items-center justify-center transition-colors text-[#64748b] hover:text-[#0e1f42] backdrop-blur-sm"
-              title={isCollapsed ? "Expand sidebar" : "Collapse sidebar"}
-            >
-              <i className={`fas fa-chevron-${isCollapsed ? 'right' : 'left'} text-sm`}></i>
-            </button>
+            <div className="relative group">
+              <button 
+                onClick={toggleSidebar}
+                aria-label={isCollapsed ? "Expand sidebar" : "Collapse sidebar"}
+                className="sidebar-toggle w-9 h-9 rounded-md hover:bg-white/30 flex items-center justify-center transition-colors text-[#64748b] hover:text-[#0e1f42] backdrop-blur-sm"
+              >
+                <i className={`fas fa-chevron-${isCollapsed ? 'right' : 'left'} text-sm`}></i>
+              </button>
+              <span className="pointer-events-none absolute left-full top-1/2 -translate-y-1/2 ml-2 whitespace-nowrap rounded bg-[#0e1f42] text-white text-xs px-2 py-1 opacity-0 group-hover:opacity-100 transition-opacity shadow-sm">
+                {isCollapsed ? 'Expand sidebar' : 'Collapse sidebar'}
+              </span>
+            </div>
           )}
         </div>
 
         {/* Sidebar Navigation - Scrollable */}
         <nav 
           ref={sidebarNavRef}
-          className="sidebar-nav flex-1 overflow-y-auto py-4"
+          className="sidebar-nav flex-1 overflow-y-auto overflow-x-hidden py-4"
           style={{ scrollbarWidth: 'thin', scrollbarColor: '#9f7539 transparent' }}
         >
           {/* MAIN Section - MATCHING HTML */}
@@ -271,22 +285,30 @@ const Sidebar = ({ sidebarState, toggleSidebar, closeMobileSidebar, isMobile, cu
                 <NavLink
                   key={item.path}
                   to={item.path}
+                  // No native title to avoid double tooltip
                   onClick={handleNavClick}
                   className={({ isActive }) => 
-                    `nav-link flex items-center gap-3 px-4 py-3 rounded-lg transition-all duration-200
-                    ${isCollapsed ? 'justify-center px-0' : ''}
+                    `nav-link group flex items-center gap-3 ${isCollapsed ? 'px-0 py-3' : 'px-4 py-3'} rounded-lg transition-all duration-200 relative
+                    ${isCollapsed ? 'justify-center' : ''}
                     ${isActive 
                       ? 'bg-white/60 text-[#0e1f42] border-l-3 border-[#9f7539] backdrop-blur-sm' 
                       : 'text-[#334155] hover:bg-white/40 hover:text-[#0e1f42] backdrop-blur-sm'
                     }
                     ${isCollapsed ? 'mx-2' : 'mx-3'}`
                   }
+                  onMouseEnter={(e) => showTooltip(item.label, e)}
+                  onMouseLeave={hideTooltip}
                 >
                   {({ isActive }) => (
                     <>
                       <i className={`fas fa-${item.icon} ${isCollapsed ? 'text-lg' : 'text-base'} w-5 text-center ${isActive ? 'text-[#9f7539]' : 'text-[#64748b]'}`}></i>
                       {!isCollapsed && (
                         <span className="nav-text font-medium text-sm">{item.label}</span>
+                      )}
+                      {isCollapsed && (
+                        <span className="pointer-events-none absolute left-full top-1/2 -translate-y-1/2 translate-x-3 whitespace-nowrap rounded bg-[#0e1f42] text-white text-xs px-2 py-1 opacity-0 group-hover:opacity-100 group-hover:delay-0 transition-opacity duration-75 shadow-sm z-30">
+                          {item.label}
+                        </span>
                       )}
                     </>
                   )}
@@ -308,16 +330,19 @@ const Sidebar = ({ sidebarState, toggleSidebar, closeMobileSidebar, isMobile, cu
                 <NavLink
                   key={item.path}
                   to={item.path}
+                  // No native title to avoid double tooltip
                   onClick={handleNavClick}
                   className={({ isActive }) => 
-                    `nav-link flex items-center gap-3 px-4 py-3 rounded-lg transition-all duration-200 relative
-                    ${isCollapsed ? 'justify-center px-0' : ''}
+                    `nav-link group flex items-center gap-3 ${isCollapsed ? 'px-0 py-3' : 'px-4 py-3'} rounded-lg transition-all duration-200 relative
+                    ${isCollapsed ? 'justify-center' : ''}
                     ${isActive 
                       ? 'bg-white/60 text-[#0e1f42] border-l-3 border-[#9f7539] backdrop-blur-sm' 
                       : 'text-[#334155] hover:bg-white/40 hover:text-[#0e1f42] backdrop-blur-sm'
                     }
                     ${isCollapsed ? 'mx-2' : 'mx-3'}`
                   }
+                  onMouseEnter={(e) => showTooltip(item.label, e)}
+                  onMouseLeave={hideTooltip}
                 >
                   {({ isActive }) => (
                     <>
@@ -336,6 +361,11 @@ const Sidebar = ({ sidebarState, toggleSidebar, closeMobileSidebar, isMobile, cu
                       {isCollapsed && item.badge > 0 && (
                         <span className="nav-badge absolute top-1 right-1 bg-[#9f7539] text-white text-[10px] font-semibold rounded-full w-4 h-4 flex items-center justify-center shadow-sm">
                           {item.badge > 9 ? '9+' : item.badge}
+                        </span>
+                      )}
+                      {isCollapsed && (
+                        <span className="pointer-events-none absolute left-full top-1/2 -translate-y-1/2 translate-x-3 whitespace-nowrap rounded bg-[#0e1f42] text-white text-xs px-2 py-1 opacity-0 group-hover:opacity-100 group-hover:delay-0 transition-opacity duration-75 shadow-sm z-30">
+                          {item.label}
                         </span>
                       )}
                     </>
@@ -358,22 +388,30 @@ const Sidebar = ({ sidebarState, toggleSidebar, closeMobileSidebar, isMobile, cu
                 <NavLink
                   key={item.path}
                   to={item.path}
+                  // No native title to avoid double tooltip
                   onClick={handleNavClick}
                   className={({ isActive }) => 
-                    `nav-link flex items-center gap-3 px-4 py-3 rounded-lg transition-all duration-200
-                    ${isCollapsed ? 'justify-center px-0' : ''}
+                    `nav-link group flex items-center gap-3 ${isCollapsed ? 'px-0 py-3' : 'px-4 py-3'} rounded-lg transition-all duration-200 relative
+                    ${isCollapsed ? 'justify-center' : ''}
                     ${isActive 
                       ? 'bg-white/60 text-[#0e1f42] border-l-3 border-[#9f7539] backdrop-blur-sm' 
                       : 'text-[#334155] hover:bg-white/40 hover:text-[#0e1f42] backdrop-blur-sm'
                     }
                     ${isCollapsed ? 'mx-2' : 'mx-3'}`
                   }
+                  onMouseEnter={(e) => showTooltip(item.label, e)}
+                  onMouseLeave={hideTooltip}
                 >
                   {({ isActive }) => (
                     <>
                       <i className={`fas fa-${item.icon} ${isCollapsed ? 'text-lg' : 'text-base'} w-5 text-center ${isActive ? 'text-[#9f7539]' : 'text-[#64748b]'}`}></i>
                       {!isCollapsed && (
                         <span className="nav-text font-medium text-sm">{item.label}</span>
+                      )}
+                      {isCollapsed && (
+                        <span className="pointer-events-none absolute left-full top-1/2 -translate-y-1/2 translate-x-3 whitespace-nowrap rounded bg-[#0e1f42] text-white text-xs px-2 py-1 opacity-0 group-hover:opacity-100 group-hover:delay-0 transition-opacity duration-75 shadow-sm z-30">
+                          {item.label}
+                        </span>
                       )}
                     </>
                   )}
@@ -459,6 +497,18 @@ const Sidebar = ({ sidebarState, toggleSidebar, closeMobileSidebar, isMobile, cu
           )}
         </div>
       </aside>
+      {isCollapsed && tooltip.visible && (
+        <div
+          className="fixed z-50 pointer-events-none rounded bg-[#0e1f42] text-white text-xs px-2 py-1 shadow-sm"
+          style={{
+            top: tooltip.y,
+            left: tooltip.x + 8,
+            transform: 'translateY(-50%)'
+          }}
+        >
+          {tooltip.label}
+        </div>
+      )}
     </>
   );
 };

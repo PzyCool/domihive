@@ -5,9 +5,14 @@ import { useAuth } from '../../../context/AuthContext';
 import { useDashboard } from '../../../context/DashboardContext';
 import Header from './Header';
 import Sidebar from './Sidebar';
+import { ApplicationsProvider } from '../rent/contexts/ApplicationsContext';
+import { PropertiesProvider } from '../rent/contexts/PropertiesContext';
+import { MaintenanceProvider } from '../rent/contexts/MaintenanceContext';
+import { PaymentsProvider } from '../rent/contexts/PaymentsContext';
+import { MessagesProvider } from '../rent/contexts/MessagesContext';
 
 const DashboardLayout = () => {
-  const [sidebarState, setSidebarState] = useState('expanded'); // 'expanded', 'collapsed', 'hidden'
+  const [sidebarState, setSidebarState] = useState('expanded'); // 'expanded' | 'collapsed'
   const [isMobile, setIsMobile] = useState(false);
   const { user } = useAuth();
   const { currentDashboard } = useDashboard();
@@ -25,14 +30,12 @@ const DashboardLayout = () => {
     const checkMobile = () => {
       const mobile = window.innerWidth <= 900;
       setIsMobile(mobile);
-      
+
       if (mobile) {
-        // On mobile, default to hidden sidebar
-        setSidebarState('hidden');
+        setSidebarState('collapsed');
       } else {
-        // On desktop, restore from localStorage or default to expanded
         const savedState = localStorage.getItem('domihive_sidebar_state');
-        if (savedState && ['expanded', 'collapsed', 'hidden'].includes(savedState)) {
+        if (savedState && ['expanded', 'collapsed'].includes(savedState)) {
           setSidebarState(savedState);
         } else {
           setSidebarState('expanded');
@@ -53,60 +56,57 @@ const DashboardLayout = () => {
   }, [sidebarState, isMobile]);
 
   const toggleSidebar = () => {
-    if (isMobile) {
-      // On mobile: hidden ↔ mobile-open
-      setSidebarState(sidebarState === 'hidden' ? 'mobile-open' : 'hidden');
-    } else {
-      // On desktop: cycle through expanded → collapsed → hidden → expanded
-      if (sidebarState === 'expanded') {
-        setSidebarState('collapsed');
-      } else if (sidebarState === 'collapsed') {
-        setSidebarState('hidden');
-      } else {
-        setSidebarState('expanded');
-      }
-    }
+    setSidebarState((prev) => (prev === 'expanded' ? 'collapsed' : 'expanded'));
   };
 
   const closeMobileSidebar = () => {
-    if (isMobile && sidebarState === 'mobile-open') {
-      setSidebarState('hidden');
+    if (isMobile) {
+      setSidebarState('collapsed');
     }
   };
 
   // Calculate main content margin based on sidebar state
   const getMainMargin = () => {
     if (isMobile) return 'ml-0';
-    
+
     if (sidebarState === 'expanded') return 'ml-64'; // w-64 = 256px
-    if (sidebarState === 'collapsed') return 'ml-20'; // w-20 = 80px
-    return 'ml-0'; // hidden
+    return 'ml-20'; // w-20 = 80px when collapsed
   };
 
   return (
     <div className="dashboard-layout flex min-h-screen bg-[var(--light-gray)]">
       {/* Sidebar - fixed position */}
-      <Sidebar 
+      <Sidebar
         sidebarState={sidebarState}
         toggleSidebar={toggleSidebar}
         closeMobileSidebar={closeMobileSidebar}
         isMobile={isMobile}
         currentDashboard={currentDashboard}
       />
-      
+
       {/* Main Content Area */}
       <div className={`dashboard-main flex-1 flex flex-col min-h-screen transition-all duration-300 ease-in-out ${getMainMargin()}`}>
         {/* Header - fixed at top */}
-        <Header 
+        <Header
           toggleSidebar={toggleSidebar}
           isMobile={isMobile}
           sidebarState={sidebarState}
         />
-        
+
         {/* Content Area - scrollable */}
-        <main className="dashboard-content flex-1 overflow-auto">
-          <Outlet />
-        </main>
+        <ApplicationsProvider>
+          <PropertiesProvider>
+            <MaintenanceProvider>
+              <PaymentsProvider>
+                <MessagesProvider>
+                  <main className="dashboard-content flex-1 overflow-auto">
+                    <Outlet />
+                  </main>
+                </MessagesProvider>
+              </PaymentsProvider>
+            </MaintenanceProvider>
+          </PropertiesProvider>
+        </ApplicationsProvider>
       </div>
     </div>
   );
