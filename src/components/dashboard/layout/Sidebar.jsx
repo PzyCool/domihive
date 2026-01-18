@@ -3,6 +3,8 @@ import React, { useState, useEffect, useRef } from 'react';
 import { NavLink, useLocation } from 'react-router-dom';
 import { useAuth } from '../../../context/AuthContext';
 import { useDashboard } from '../../../context/DashboardContext';
+import iconImage from '../../../assets/domihive-lcon.png';
+import logoImage from '../../../assets/domihive-logo.png';
 
 const Sidebar = ({ sidebarState, toggleSidebar, closeMobileSidebar, isMobile, currentDashboard }) => {
   const { user, logout } = useAuth();
@@ -13,8 +15,8 @@ const Sidebar = ({ sidebarState, toggleSidebar, closeMobileSidebar, isMobile, cu
   
   // Image paths constants
   const IMAGES = {
-    icon: "/src/assets/domihive-lcon.png",  // Fixed: lcon not icon
-    logo: "/src/assets/domihive-logo.png",
+    icon: iconImage,
+    logo: logoImage,
     placeholderIcon: 'https://via.placeholder.com/28?text=DH',
     placeholderLogo: 'https://via.placeholder.com/150x32?text=DomiHive'
   };
@@ -223,9 +225,9 @@ const Sidebar = ({ sidebarState, toggleSidebar, closeMobileSidebar, isMobile, cu
         
         {/* Sidebar Header with Logo - Glass effect */}
         <div className="sidebar-header px-6 py-5 flex items-center justify-between min-h-[80px] border-b border-white/30 bg-white/60 backdrop-blur-sm">
-            <div className="sidebar-logo flex items-center gap-3">
+          <div className="sidebar-logo relative flex items-center gap-3 group">
+            <div className={`transition-all duration-300 ${isCollapsed ? 'group-hover:opacity-0 group-hover:-translate-x-2' : ''}`}>
               {isCollapsed && !isMobile ? (
-                /* COLLAPSED STATE: Show icon logo */
                 <img 
                   src={IMAGES.icon}
                   alt="DomiHive Icon"
@@ -236,34 +238,35 @@ const Sidebar = ({ sidebarState, toggleSidebar, closeMobileSidebar, isMobile, cu
                   }}
                 />
               ) : (
-                /* EXPANDED STATE: Show full logo */
                 <img 
                   src={IMAGES.logo}
                   alt="DomiHive"
                   className="h-8 w-auto transition-all duration-300 object-contain"
                   onError={(e) => {
-                  e.target.onerror = null;
-                  e.target.src = IMAGES.placeholderLogo;
-                }}
-              />
-            )}
-          </div>
+                    e.target.onerror = null;
+                    e.target.src = IMAGES.placeholderLogo;
+                  }}
+                />
+              )}
+            </div>
 
-          {/* Desktop Toggle Button */}
-          {!isMobile && (
-            <div className="relative group">
+            {/* Desktop Toggle Button (shows on hover when collapsed) */}
+            {!isMobile && (
               <button 
                 onClick={toggleSidebar}
                 aria-label={isCollapsed ? "Expand sidebar" : "Collapse sidebar"}
-                className="sidebar-toggle w-9 h-9 rounded-md hover:bg-white/30 flex items-center justify-center transition-colors text-[#64748b] hover:text-[#0e1f42] backdrop-blur-sm"
+                className={`sidebar-toggle w-9 h-9 rounded-md flex items-center justify-center transition-all text-[var(--accent-color,#9F7539)] hover:text-[var(--primary-color,#0e1f42)] backdrop-blur-sm ${
+                  isCollapsed ? 'opacity-0 translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 absolute right-0 top-1/2 -translate-y-1/2 hover:bg-white/30' : 'ml-2 hover:bg-white/30'
+                }`}
               >
-                <i className={`fas fa-chevron-${isCollapsed ? 'right' : 'left'} text-sm`}></i>
+                  <svg width="22" height="22" viewBox="0 0 24 24" aria-hidden="true">
+                    <rect x="1.5" y="2" width="21" height="20" rx="5" ry="5" fill="currentColor" />
+                    <line x1="12" y1="2" x2="12" y2="22" stroke="#ffffff" strokeWidth="4" />
+                    <polyline points="15,9 8.5,12 15,15" fill="none" stroke="#ffffff" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round" />
+                  </svg>
               </button>
-              <span className="pointer-events-none absolute left-full top-1/2 -translate-y-1/2 ml-2 whitespace-nowrap rounded bg-[#0e1f42] text-white text-xs px-2 py-1 opacity-0 group-hover:opacity-100 transition-opacity shadow-sm">
-                {isCollapsed ? 'Expand sidebar' : 'Collapse sidebar'}
-              </span>
-            </div>
-          )}
+            )}
+          </div>
         </div>
 
         {/* Sidebar Navigation - Scrollable */}
@@ -304,11 +307,6 @@ const Sidebar = ({ sidebarState, toggleSidebar, closeMobileSidebar, isMobile, cu
                       <i className={`fas fa-${item.icon} ${isCollapsed ? 'text-lg' : 'text-base'} w-5 text-center ${isActive ? 'text-[#9f7539]' : 'text-[#64748b]'}`}></i>
                       {!isCollapsed && (
                         <span className="nav-text font-medium text-sm">{item.label}</span>
-                      )}
-                      {isCollapsed && (
-                        <span className="pointer-events-none absolute left-full top-1/2 -translate-y-1/2 translate-x-3 whitespace-nowrap rounded bg-[#0e1f42] text-white text-xs px-2 py-1 opacity-0 group-hover:opacity-100 group-hover:delay-0 transition-opacity duration-75 shadow-sm z-30">
-                          {item.label}
-                        </span>
                       )}
                     </>
                   )}
@@ -363,11 +361,6 @@ const Sidebar = ({ sidebarState, toggleSidebar, closeMobileSidebar, isMobile, cu
                           {item.badge > 9 ? '9+' : item.badge}
                         </span>
                       )}
-                      {isCollapsed && (
-                        <span className="pointer-events-none absolute left-full top-1/2 -translate-y-1/2 translate-x-3 whitespace-nowrap rounded bg-[#0e1f42] text-white text-xs px-2 py-1 opacity-0 group-hover:opacity-100 group-hover:delay-0 transition-opacity duration-75 shadow-sm z-30">
-                          {item.label}
-                        </span>
-                      )}
                     </>
                   )}
                 </NavLink>
@@ -407,11 +400,6 @@ const Sidebar = ({ sidebarState, toggleSidebar, closeMobileSidebar, isMobile, cu
                       <i className={`fas fa-${item.icon} ${isCollapsed ? 'text-lg' : 'text-base'} w-5 text-center ${isActive ? 'text-[#9f7539]' : 'text-[#64748b]'}`}></i>
                       {!isCollapsed && (
                         <span className="nav-text font-medium text-sm">{item.label}</span>
-                      )}
-                      {isCollapsed && (
-                        <span className="pointer-events-none absolute left-full top-1/2 -translate-y-1/2 translate-x-3 whitespace-nowrap rounded bg-[#0e1f42] text-white text-xs px-2 py-1 opacity-0 group-hover:opacity-100 group-hover:delay-0 transition-opacity duration-75 shadow-sm z-30">
-                          {item.label}
-                        </span>
                       )}
                     </>
                   )}

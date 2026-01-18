@@ -254,3 +254,12 @@ body.dashboard-themed[data-theme="true-black"] .sidebar-footer {
 .animate-float {
   animation: float 3s ease-in-out infinite;
 }
+
+/* Utility to hide scrollbars but allow scroll */
+.no-scrollbar {
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+}
+.no-scrollbar::-webkit-scrollbar {
+  display: none; /* Chrome, Safari, Opera */
+}
