@@ -55,6 +55,13 @@ const DashboardLayout = () => {
     }
   }, [sidebarState, isMobile]);
 
+  useEffect(() => {
+    document.body.classList.add('dashboard-themed');
+    return () => {
+      document.body.classList.remove('dashboard-themed');
+    };
+  }, []);
+
   const toggleSidebar = () => {
     setSidebarState((prev) => (prev === 'expanded' ? 'collapsed' : 'expanded'));
   };
