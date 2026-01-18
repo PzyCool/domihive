@@ -9,6 +9,214 @@ body {
   color: var(--text-color, #0e1f42);
 }
 
+/* Theme helpers */
+.themed-page,
+.dashboard-layout,
+.dashboard-main,
+.dashboard-content {
+  background: var(--page-bg, #f8f9fa);
+  color: var(--text-color, #0e1f42);
+}
+
+.themed-card,
+.bg-white {
+  background: var(--card-bg, #ffffff) !important;
+  color: var(--text-color, #0e1f42);
+}
+
+.text-gray-600, .text-gray-700, .text-gray-800, .text-gray-500 {
+  color: var(--text-muted, #6c757d) !important;
+}
+
+/* Theme presets (for stronger overrides when data-theme is set) */
+:root[data-theme="light"] {
+  --page-bg: #f8f9fa;
+  --card-bg: #ffffff;
+  --text-color: #0e1f42;
+  --text-muted: #6c757d;
+}
+
+:root[data-theme="dark-gray"] {
+  --page-bg: #111827;
+  --card-bg: #1f2937;
+  --text-color: #e5e7eb;
+  --text-muted: #cbd5e1;
+}
+
+:root[data-theme="true-black"] {
+  --page-bg: #000000;
+  --card-bg: #0b0b0b;
+  --text-color: #f8fafc;
+  --text-muted: #cbd5e1;
+}
+
+body[data-theme="dark-gray"],
+body[data-theme="true-black"] {
+  background: var(--page-bg, #111827) !important;
+  color: var(--text-color, #e5e7eb) !important;
+}
+
+body[data-theme="dark-gray"] .bg-white,
+body[data-theme="true-black"] .bg-white {
+  background: var(--card-bg) !important;
+  color: var(--text-color) !important;
+}
+body[data-theme="dark-gray"] .bg-gray-50,
+body[data-theme="dark-gray"] .bg-gray-100,
+body[data-theme="true-black"] .bg-gray-50,
+body[data-theme="true-black"] .bg-gray-100 {
+  background: var(--page-bg) !important;
+  color: var(--text-color) !important;
+}
+
+body[data-theme="dark-gray"] .text-gray-600,
+body[data-theme="dark-gray"] .text-gray-700,
+body[data-theme="dark-gray"] .text-gray-800,
+body[data-theme="true-black"] .text-gray-600,
+body[data-theme="true-black"] .text-gray-700,
+body[data-theme="true-black"] .text-gray-800 {
+  color: var(--text-muted) !important;
+}
+
+/* Force text to white/near-white in dark themes */
+body[data-theme="dark-gray"] h1,
+body[data-theme="dark-gray"] h2,
+body[data-theme="dark-gray"] h3,
+body[data-theme="dark-gray"] h4,
+body[data-theme="dark-gray"] h5,
+body[data-theme="dark-gray"] h6,
+body[data-theme="dark-gray"] p,
+body[data-theme="dark-gray"] span,
+body[data-theme="dark-gray"] label,
+body[data-theme="dark-gray"] li,
+body[data-theme="true-black"] h1,
+body[data-theme="true-black"] h2,
+body[data-theme="true-black"] h3,
+body[data-theme="true-black"] h4,
+body[data-theme="true-black"] h5,
+body[data-theme="true-black"] h6,
+body[data-theme="true-black"] p,
+body[data-theme="true-black"] span,
+body[data-theme="true-black"] label,
+body[data-theme="true-black"] li {
+  color: var(--text-color, #f8fafc) !important;
+}
+
+/* Force page backgrounds to theme color when components use gradients/light grays */
+body[data-theme="dark-gray"] .bg-gradient-to-br,
+body[data-theme="true-black"] .bg-gradient-to-br,
+body[data-theme="dark-gray"] .from-gray-50,
+body[data-theme="true-black"] .from-gray-50,
+body[data-theme="dark-gray"] .from-white,
+body[data-theme="true-black"] .from-white,
+body[data-theme="dark-gray"] .to-gray-100,
+body[data-theme="true-black"] .to-gray-100 {
+  background: var(--page-bg) !important;
+  background-image: none !important;
+}
+
+body[data-theme="dark-gray"] .rent-browse-container,
+body[data-theme="true-black"] .rent-browse-container,
+body[data-theme="dark-gray"] .rent-overview-container,
+body[data-theme="true-black"] .rent-overview-container {
+  background: var(--page-bg) !important;
+}
+
+/* Payments page: force text to theme color in dark modes */
+body[data-theme="dark-gray"] .payments-page *,
+body[data-theme="true-black"] .payments-page * {
+  color: var(--text-color,#f8fafc) !important;
+}
+
+/* Borders on dark themes */
+body[data-theme="dark-gray"] .border,
+body[data-theme="dark-gray"] .border-gray-200,
+body[data-theme="dark-gray"] .border-gray-300,
+body[data-theme="true-black"] .border,
+body[data-theme="true-black"] .border-gray-200,
+body[data-theme="true-black"] .border-gray-300 {
+  border-color: rgba(255,255,255,0.12) !important;
+}
+
+/* Stronger card override for white surfaces with shadows */
+body[data-theme="dark-gray"] .bg-white.shadow,
+body[data-theme="dark-gray"] .bg-white.shadow-md,
+body[data-theme="true-black"] .bg-white.shadow,
+body[data-theme="true-black"] .bg-white.shadow-md {
+  background: var(--card-bg) !important;
+  color: var(--text-color) !important;
+}
+
+/* Apply theme across dashboard chrome */
+body[data-theme="dark-gray"] .dashboard-header,
+body[data-theme="true-black"] .dashboard-header {
+  background: var(--card-bg) !important;
+  color: var(--text-color) !important;
+  border-color: rgba(255,255,255,0.08) !important;
+}
+
+body[data-theme="dark-gray"] .dashboard-sidebar,
+body[data-theme="true-black"] .dashboard-sidebar {
+  background: var(--card-bg) !important;
+  color: var(--text-color) !important;
+  border-color: rgba(255,255,255,0.08) !important;
+}
+
+body[data-theme="dark-gray"] .dashboard-sidebar .nav-link,
+body[data-theme="true-black"] .dashboard-sidebar .nav-link {
+  color: var(--text-color) !important;
+  border-radius: 12px !important;
+}
+
+body[data-theme="dark-gray"] .dashboard-sidebar .nav-link i,
+body[data-theme="true-black"] .dashboard-sidebar .nav-link i {
+  color: var(--accent-color,#9F7539) !important;
+}
+
+body[data-theme="dark-gray"] .dashboard-sidebar .nav-link.active,
+body[data-theme="true-black"] .dashboard-sidebar .nav-link.active {
+  background: rgba(255,255,255,0.08) !important;
+  border-left-color: #000 !important;
+  color: var(--text-color) !important;
+}
+
+body[data-theme="dark-gray"] .dashboard-sidebar .nav-link * ,
+body[data-theme="true-black"] .dashboard-sidebar .nav-link * {
+  color: var(--text-color) !important;
+}
+
+body[data-theme="dark-gray"] .dashboard-sidebar .nav-link:hover,
+body[data-theme="true-black"] .dashboard-sidebar .nav-link:hover {
+  border-left-color: #000 !important;
+  background: rgba(255,255,255,0.08) !important;
+  color: var(--text-color) !important;
+}
+
+body[data-theme="dark-gray"] .dashboard-sidebar .nav-link:hover i,
+body[data-theme="true-black"] .dashboard-sidebar .nav-link:hover i,
+body[data-theme="dark-gray"] .dashboard-sidebar .nav-link.active i,
+body[data-theme="true-black"] .dashboard-sidebar .nav-link.active i {
+  color: var(--primary-color,#0e1f42) !important;
+}
+
+body[data-theme="dark-gray"] .dashboard-content,
+body[data-theme="true-black"] .dashboard-content {
+  background: var(--page-bg) !important;
+  color: var(--text-color) !important;
+}
+
+body[data-theme="dark-gray"] .sidebar-header,
+body[data-theme="true-black"] .sidebar-header {
+  background: var(--card-bg) !important;
+  border-color: rgba(255,255,255,0.08) !important;
+}
+
+body[data-theme="dark-gray"] .sidebar-footer,
+body[data-theme="true-black"] .sidebar-footer {
+  background: var(--card-bg) !important;
+  border-color: rgba(255,255,255,0.08) !important;
+}
+
 .navbar {
   font-family: 'Manrope', sans-serif;
 }

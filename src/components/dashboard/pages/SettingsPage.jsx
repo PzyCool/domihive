@@ -67,6 +67,8 @@ const SettingsPage = () => {
     Object.entries(selected).forEach(([key, value]) => {
       document.documentElement.style.setProperty(key, value);
     });
+    document.documentElement.setAttribute('data-theme', themeId);
+    document.body?.setAttribute('data-theme', themeId);
     localStorage.setItem('domihive_theme', themeId);
   };
 
@@ -78,8 +80,8 @@ const SettingsPage = () => {
   const renderProfile = () => (
     <div className="space-y-6">
       <div>
-        <h2 className="text-xl font-semibold text-[var(--primary-color,#0e1f42)]">Profile Settings</h2>
-        <p className="text-sm text-[var(--gray,#6c757d)]">Manage your personal information and profile photo</p>
+        <h2 className="text-xl font-semibold text-[var(--text-color,#0e1f42)]">Profile Settings</h2>
+        <p className="text-sm text-[var(--text-muted,#6c757d)]">Manage your personal information and profile photo</p>
       </div>
 
       <div className="flex items-center gap-5 md:gap-7">
@@ -91,13 +93,13 @@ const SettingsPage = () => {
             <button className="px-4 py-2 rounded-md text-white font-semibold" style={{ backgroundColor: accent }}>Upload Photo</button>
             <button className="px-4 py-2 rounded-md border border-[var(--gray-light,#e2e8f0)] text-[var(--gray,#6c757d)] font-semibold">Remove</button>
           </div>
-          <p className="text-xs text-[var(--gray,#6c757d)]">Recommended: Square JPG or PNG, max 5MB</p>
+          <p className="text-xs text-[var(--text-muted,#6c757d)]">Recommended: Square JPG or PNG, max 5MB</p>
         </div>
       </div>
 
       <div className="space-y-4 mt-6">
         <div className="space-y-2">
-          <label className="text-sm font-semibold text-[var(--primary-color,#0e1f42)]">Full Name</label>
+          <label className="text-sm font-semibold text-[var(--text-color,#0e1f42)]">Full Name</label>
           <input
             className="w-full border border-[var(--gray-light,#e2e8f0)] rounded-md px-3 py-2"
             value={profileForm.fullName}
@@ -108,7 +110,7 @@ const SettingsPage = () => {
 
         <div className="grid md:grid-cols-2 gap-4 pt-4 border-t border-[var(--gray-light,#e2e8f0)]">
           <div className="space-y-2">
-            <label className="text-sm font-semibold text-[var(--primary-color,#0e1f42)]">Email Address</label>
+            <label className="text-sm font-semibold text-[var(--text-color,#0e1f42)]">Email Address</label>
             <input
               className="w-full border border-[var(--gray-light,#e2e8f0)] rounded-md px-3 py-2"
               value={profileForm.email}
@@ -117,7 +119,7 @@ const SettingsPage = () => {
             />
           </div>
           <div className="space-y-2">
-            <label className="text-sm font-semibold text-[var(--primary-color,#0e1f42)]">Phone Number</label>
+            <label className="text-sm font-semibold text-[var(--text-color,#0e1f42)]">Phone Number</label>
             <div className="flex">
               <select
                 className="border border-[var(--gray-light,#e2e8f0)] rounded-l-md px-3 py-2 bg-white text-sm"
@@ -149,13 +151,13 @@ const SettingsPage = () => {
   const renderSecurity = () => (
     <div className="space-y-6">
       <div>
-        <h2 className="text-xl font-semibold text-[var(--primary-color,#0e1f42)]">Security Settings</h2>
-        <p className="text-sm text-[var(--gray,#6c757d)]">Manage your password and account security</p>
+        <h2 className="text-xl font-semibold text-[var(--text-color,#0e1f42)]">Security Settings</h2>
+        <p className="text-sm text-[var(--text-muted,#6c757d)]">Manage your password and account security</p>
       </div>
-      <div className="border border-[var(--gray-light,#e2e8f0)] rounded-lg p-4 space-y-3 bg-[var(--light-gray,#f8f9fa)]">
-        <h3 className="font-semibold text-[var(--primary-color,#0e1f42)]">Change Password</h3>
+      <div className="border border-[var(--gray-light,#e2e8f0)] rounded-lg p-4 space-y-3 bg-[var(--card-bg,#ffffff)]">
+        <h3 className="font-semibold text-[var(--text-color,#0e1f42)]">Change Password</h3>
         <div className="space-y-2">
-          <label className="text-sm text-[var(--primary-color,#0e1f42)]">Current Password</label>
+          <label className="text-sm text-[var(--text-color,#0e1f42)]">Current Password</label>
           <input
             type="password"
             className="w-full border border-[var(--gray-light,#e2e8f0)] rounded-md px-3 py-2"
@@ -164,7 +166,7 @@ const SettingsPage = () => {
           />
         </div>
         <div className="space-y-2">
-          <label className="text-sm text-[var(--primary-color,#0e1f42)]">New Password</label>
+          <label className="text-sm text-[var(--text-color,#0e1f42)]">New Password</label>
           <input
             type="password"
             className="w-full border border-[var(--gray-light,#e2e8f0)] rounded-md px-3 py-2"
@@ -174,7 +176,7 @@ const SettingsPage = () => {
           <div className="h-1 bg-[var(--gray-light,#e2e8f0)] rounded-full"></div>
         </div>
         <div className="space-y-2">
-          <label className="text-sm text-[var(--primary-color,#0e1f42)]">Confirm New Password</label>
+          <label className="text-sm text-[var(--text-color,#0e1f42)]">Confirm New Password</label>
           <input
             type="password"
             className="w-full border border-[var(--gray-light,#e2e8f0)] rounded-md px-3 py-2"
@@ -192,11 +194,11 @@ const SettingsPage = () => {
   const renderNotifications = () => (
     <div className="space-y-6">
       <div>
-        <h2 className="text-xl font-semibold text-[var(--primary-color,#0e1f42)]">Notification Preferences</h2>
-        <p className="text-sm text-[var(--gray,#6c757d)]">Choose how and when you want to be notified</p>
+        <h2 className="text-xl font-semibold text-[var(--text-color,#0e1f42)]">Notification Preferences</h2>
+        <p className="text-sm text-[var(--text-muted,#6c757d)]">Choose how and when you want to be notified</p>
       </div>
-      <div className="border border-[var(--gray-light,#e2e8f0)] rounded-lg p-4 space-y-4 bg-[var(--light-gray,#f8f9fa)]">
-        <h3 className="font-semibold text-[var(--primary-color,#0e1f42)]">Notification Methods</h3>
+      <div className="border border-[var(--gray-light,#e2e8f0)] rounded-lg p-4 space-y-4 bg-[var(--card-bg,#ffffff)]">
+        <h3 className="font-semibold text-[var(--text-color,#0e1f42)]">Notification Methods</h3>
         {[
           { key: 'push', title: 'Push Notifications', desc: 'Receive notifications in your browser' },
           { key: 'email', title: 'Email Notifications', desc: 'Receive notifications via email' },
@@ -204,8 +206,8 @@ const SettingsPage = () => {
         ].map((item) => (
           <div key={item.key} className="flex items-center justify-between py-3 border-b last:border-b-0 border-[var(--gray-light,#e2e8f0)]">
             <div>
-              <p className="font-semibold text-[var(--primary-color,#0e1f42)]">{item.title}</p>
-              <p className="text-sm text-[var(--gray,#6c757d)]">{item.desc}</p>
+              <p className="font-semibold text-[var(--text-color,#0e1f42)]">{item.title}</p>
+              <p className="text-sm text-[var(--text-muted,#6c757d)]">{item.desc}</p>
             </div>
             <label className="inline-flex items-center cursor-pointer">
               <input
@@ -237,11 +239,11 @@ const SettingsPage = () => {
   const renderAppearance = () => (
     <div className="space-y-6">
       <div>
-        <h2 className="text-xl font-semibold text-[var(--primary-color,#0e1f42)]">Appearance</h2>
-        <p className="text-sm text-[var(--gray,#6c757d)]">Customize how DomiHive looks and feels</p>
+        <h2 className="text-xl font-semibold text-[var(--text-color,#0e1f42)]">Appearance</h2>
+        <p className="text-sm text-[var(--text-muted,#6c757d)]">Customize how DomiHive looks and feels</p>
       </div>
-      <div className="border border-[var(--gray-light,#e2e8f0)] rounded-xl p-4 md:p-6 bg-white">
-        <h3 className="text-xl font-semibold text-[var(--primary-color,#0e1f42)] mb-4">Theme</h3>
+      <div className="border border-[var(--gray-light,#e2e8f0)] rounded-xl p-4 md:p-6 bg-[var(--card-bg,#ffffff)]">
+        <h3 className="text-xl font-semibold text-[var(--text-color,#0e1f42)] mb-4">Theme</h3>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6 mb-6">
           {[
             { id: 'light', label: 'Light', blocks: ['#0e1f42', '#f8fafc', '#ffffff'] },
@@ -262,7 +264,7 @@ const SettingsPage = () => {
                   <div className="flex-1" style={{ backgroundColor: themeOption.blocks[2] }}></div>
                 </div>
               </div>
-              <span className="text-[var(--primary-color,#0e1f42)] font-semibold">{themeOption.label}</span>
+              <span className="text-[var(--text-color,#0e1f42)] font-semibold">{themeOption.label}</span>
             </button>
           ))}
         </div>
@@ -283,33 +285,33 @@ const SettingsPage = () => {
   const renderAccount = () => (
     <div className="space-y-6">
       <div>
-        <h2 className="text-xl font-semibold text-[var(--primary-color,#0e1f42)]">Account Actions</h2>
-        <p className="text-sm text-[var(--gray,#6c757d)]">Manage your account status and data</p>
+        <h2 className="text-xl font-semibold text-[var(--text-color,#0e1f42)]">Account Actions</h2>
+        <p className="text-sm text-[var(--text-muted,#6c757d)]">Manage your account status and data</p>
       </div>
 
-      <div className="border border-[var(--gray-light,#e2e8f0)] rounded-lg p-4 bg-[var(--light-gray,#f8f9fa)] flex items-center justify-between">
+      <div className="border border-[var(--gray-light,#e2e8f0)] rounded-lg p-4 bg-[var(--card-bg,#ffffff)] flex items-center justify-between">
         <div>
-          <p className="font-semibold text-[var(--primary-color,#0e1f42)]">Download Account Data</p>
-          <p className="text-sm text-[var(--gray,#6c757d)]">Get a copy of all your data in a portable format</p>
+          <p className="font-semibold text-[var(--text-color,#0e1f42)]">Download Account Data</p>
+          <p className="text-sm text-[var(--text-muted,#6c757d)]">Get a copy of all your data in a portable format</p>
         </div>
         <button className="px-4 py-2 rounded-md text-white font-semibold" style={{ backgroundColor: accent }}>Download Data</button>
       </div>
 
-      <div className="border border-red-200 bg-red-50 rounded-lg p-4 space-y-4">
-        <p className="font-semibold text-red-700">Danger Zone</p>
+      <div className="border border-red-200 bg-[var(--card-bg,#ffffff)] rounded-lg p-4 space-y-4">
+        <p className="font-semibold text-red-500">Danger Zone</p>
 
-        <div className="border border-red-200 rounded-lg p-3 flex items-center justify-between bg-white">
+        <div className="border border-red-200 rounded-lg p-3 flex items-center justify-between bg-[var(--card-bg,#ffffff)]">
           <div>
-            <p className="font-semibold text-[var(--primary-color,#0e1f42)]">Deactivate Account</p>
-            <p className="text-sm text-[var(--gray,#6c757d)]">Temporarily disable your account. You can reactivate it later.</p>
+            <p className="font-semibold text-[var(--text-color,#0e1f42)]">Deactivate Account</p>
+            <p className="text-sm text-[var(--text-muted,#6c757d)]">Temporarily disable your account. You can reactivate it later.</p>
           </div>
           <button className="px-4 py-2 rounded-md text-white font-semibold" style={{ backgroundColor: '#f97316' }}>Deactivate Account</button>
         </div>
 
-        <div className="border border-red-300 rounded-lg p-3 flex items-center justify-between bg-white">
+        <div className="border border-red-300 rounded-lg p-3 flex items-center justify-between bg-[var(--card-bg,#ffffff)]">
           <div>
-            <p className="font-semibold text-[var(--primary-color,#0e1f42)]">Delete Account Permanently</p>
-            <p className="text-sm text-[var(--gray,#6c757d)]">Permanently delete your account and all associated data. This action cannot be undone.</p>
+            <p className="font-semibold text-[var(--text-color,#0e1f42)]">Delete Account Permanently</p>
+            <p className="text-sm text-[var(--text-muted,#6c757d)]">Permanently delete your account and all associated data. This action cannot be undone.</p>
           </div>
           <button
             className="px-4 py-2 rounded-md text-white font-semibold bg-red-600 hover:bg-red-700"
@@ -340,20 +342,20 @@ const SettingsPage = () => {
   };
 
   return (
-    <div className="p-4 md:p-6 bg-[var(--light-gray,#f8f9fa)] min-h-screen">
+    <div className="p-4 md:p-6 bg-[var(--page-bg,#f8f9fa)] min-h-screen">
       <div className="max-w-6xl mx-auto space-y-6">
         <div className="flex items-start gap-3">
           <div className="w-12 h-12 rounded-full bg-[var(--accent-color,#9F7539)] text-white flex items-center justify-center text-lg">
             <i className="fas fa-cog"></i>
           </div>
           <div>
-            <h1 className="text-3xl font-bold text-[var(--primary-color,#0e1f42)]">Profile Settings</h1>
-            <p className="text-base text-[var(--gray,#6c757d)]">Manage your personal information and profile photo</p>
+            <h1 className="text-3xl font-bold text-[var(--text-color,#0e1f42)]">Profile Settings</h1>
+            <p className="text-base text-[var(--text-muted,#6c757d)]">Manage your personal information and profile photo</p>
           </div>
         </div>
 
         <div className="flex flex-col lg:flex-row gap-6 items-start">
-          <div className="bg-white rounded-2xl shadow-lg border border-[var(--gray-light,#e2e8f0)] p-3 space-y-2 w-full lg:w-64 shrink-0">
+          <div className="bg-[var(--card-bg,#ffffff)] rounded-2xl shadow-lg border border-[var(--gray-light,#e2e8f0)] p-3 space-y-2 w-full lg:w-64 shrink-0">
             {tabs.map((item) => (
               <button
                 key={item.id}
@@ -361,7 +363,7 @@ const SettingsPage = () => {
                 className={`w-full flex items-center gap-3 px-3 py-3 rounded-lg text-left transition-colors ${
                   activeTab === item.id
                     ? 'bg-[var(--accent-color,#9F7539)] text-white'
-                    : 'bg-white text-[var(--primary-color,#0e1f42)] hover:bg-[var(--light-gray,#f8f9fa)]'
+                    : 'bg-[var(--card-bg,#ffffff)] text-[var(--text-color,#0e1f42)] hover:bg-[var(--page-bg,#f8f9fa)]'
                 }`}
               >
                 <i className={`fas fa-${item.icon} w-4`}></i>
@@ -370,7 +372,7 @@ const SettingsPage = () => {
             ))}
           </div>
 
-          <div className="bg-white rounded-2xl shadow-lg border border-[var(--gray-light,#e2e8f0)] p-5 md:p-6 min-h-[540px] flex-1 w-full">
+          <div className="bg-[var(--card-bg,#ffffff)] rounded-2xl shadow-lg border border-[var(--gray-light,#e2e8f0)] p-5 md:p-6 min-h-[540px] flex-1 w-full">
             {renderContent()}
           </div>
         </div>
@@ -378,14 +380,14 @@ const SettingsPage = () => {
 
       {showDeleteModal && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 px-4">
-          <div className="bg-white rounded-lg shadow-xl w-full max-w-md p-5 space-y-4">
-            <h3 className="text-lg font-semibold text-[var(--primary-color,#0e1f42)]">Delete Account</h3>
-            <p className="text-sm text-[var(--gray,#6c757d)]">
+          <div className="bg-[var(--card-bg,#ffffff)] rounded-lg shadow-xl w-full max-w-md p-5 space-y-4">
+            <h3 className="text-lg font-semibold text-[var(--text-color,#0e1f42)]">Delete Account</h3>
+            <p className="text-sm text-[var(--text-muted,#6c757d)]">
               This action will permanently delete your account and all data. This cannot be undone.
             </p>
             <div className="flex justify-end gap-3">
               <button
-                className="px-4 py-2 rounded-md border border-[var(--gray-light,#e2e8f0)] text-[var(--gray,#6c757d)] font-semibold"
+                className="px-4 py-2 rounded-md border border-[var(--gray-light,#e2e8f0)] text-[var(--text-muted,#6c757d)] font-semibold"
                 onClick={() => setShowDeleteModal(false)}
               >
                 Cancel

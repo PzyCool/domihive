@@ -13,12 +13,13 @@ const PaymentTabs = ({ active, onChange }) => {
         <button
           key={tab.id}
           onClick={() => onChange(tab.id)}
-          className={`px-4 py-2 text-sm font-semibold border transition-colors`}
+          className={`px-4 py-2 text-sm font-semibold border rounded-lg transition-colors ${
+            active === tab.id ? '' : 'hover:bg-[var(--card-bg,#ffffff)] hover:text-[var(--accent-color,#9F7539)]'
+          }`}
           style={{
-            borderRadius: '8px',
-            borderColor: active === tab.id ? 'var(--accent-color, #9F7539)' : 'var(--primary-color, #0e1f42)',
-            color: active === tab.id ? 'var(--accent-color, #9F7539)' : '#fff',
-            backgroundColor: active === tab.id ? '#fff7ed' : 'var(--primary-color, #0e1f42)'
+            borderColor: active === tab.id ? 'var(--accent-color, #9F7539)' : 'var(--text-color, #0e1f42)',
+            color: active === tab.id ? '#fff' : 'var(--text-color, #0e1f42)',
+            backgroundColor: active === tab.id ? 'var(--accent-color, #9F7539)' : 'transparent'
           }}
         >
           {tab.label}

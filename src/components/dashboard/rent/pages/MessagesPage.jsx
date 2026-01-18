@@ -3,8 +3,8 @@ import { useMessages } from '../contexts/MessagesContext';
 import { useProperties } from '../contexts/PropertiesContext';
 
 const statusClasses = {
-  OPEN: 'bg-emerald-100 text-emerald-800 border border-emerald-200',
-  RESOLVED: 'bg-gray-100 text-gray-700 border border-gray-200'
+  OPEN: 'bg-[var(--accent-color,#9F7539)] text-white border border-[var(--accent-color,#9F7539)]',
+  RESOLVED: 'bg-transparent text-[var(--text-muted,#6c757d)] border border-[var(--text-muted,#6c757d)]'
 };
 
 const formatDate = (iso) => {
@@ -59,13 +59,13 @@ const MessagesPage = () => {
   };
 
   return (
-    <div className="p-4 md:p-6 bg-[var(--light-gray,#f8f9fa)] min-h-screen">
+    <div className="p-4 md:p-6 bg-[var(--page-bg,#f8f9fa)] min-h-screen">
       <div className="max-w-6xl mx-auto">
-        <div className="bg-white rounded-lg shadow-md border border-[var(--gray-light,#e2e8f0)] p-5 md:p-6 space-y-4">
+        <div className="bg-[var(--card-bg,#ffffff)] rounded-lg shadow-md border border-[var(--gray-light,#e2e8f0)] p-5 md:p-6 space-y-4">
           <div className="flex items-center justify-between">
             <div>
-              <h1 className="text-3xl font-bold text-[var(--primary-color,#0e1f42)]">Messages</h1>
-              <p className="text-sm text-[var(--gray,#6c757d)]">Simple support inbox.</p>
+              <h1 className="text-3xl font-bold text-[var(--text-color,#0e1f42)]">Messages</h1>
+              <p className="text-sm text-[var(--text-muted,#6c757d)]">Simple support inbox.</p>
             </div>
             <button
               onClick={() => setComposeOpen(true)}
@@ -77,17 +77,17 @@ const MessagesPage = () => {
           </div>
 
           {composeOpen && (
-            <div className="bg-white border border-[var(--gray-light,#e2e8f0)] rounded-lg shadow-sm p-4 space-y-3">
+            <div className="bg-[var(--card-bg,#ffffff)] border border-[var(--gray-light,#e2e8f0)] rounded-lg shadow-sm p-4 space-y-3">
               <div className="flex items-start justify-between">
-                <h3 className="text-lg font-semibold text-[var(--primary-color,#0e1f42)]">New Message</h3>
+                <h3 className="text-lg font-semibold text-[var(--text-color,#0e1f42)]">New Message</h3>
                 <button
                   onClick={() => setComposeOpen(false)}
-                  className="text-[var(--gray,#6c757d)] hover:text-[var(--primary-color,#0e1f42)]"
+                  className="text-[var(--text-muted,#6c757d)] hover:text-[var(--text-color,#0e1f42)]"
                 >
                   <i className="fas fa-times"></i>
                 </button>
               </div>
-              <div className="space-y-3 text-sm text-[var(--primary-color,#0e1f42)]">
+              <div className="space-y-3 text-sm text-[var(--text-color,#0e1f42)]">
                 <label className="flex flex-col gap-1">
                   Subject *
                   <input
@@ -143,9 +143,9 @@ const MessagesPage = () => {
             </div>
           )}
 
-          <div className="bg-white border border-[var(--gray-light,#e2e8f0)] rounded-lg shadow-sm p-4 space-y-3">
+          <div className="bg-[var(--card-bg,#ffffff)] border border-[var(--gray-light,#e2e8f0)] rounded-lg shadow-sm p-4 space-y-3">
             {simpleThreads.length === 0 ? (
-              <p className="text-sm text-[var(--gray,#6c757d)]">No messages yet. Start a new one.</p>
+              <p className="text-sm text-[var(--text-muted,#6c757d)]">No messages yet. Start a new one.</p>
             ) : (
               simpleThreads.map((t) => (
                 <button
@@ -153,20 +153,20 @@ const MessagesPage = () => {
                   onClick={() => setSelectedId(t.threadId)}
                   className={`w-full text-left rounded-md border px-4 py-3 transition-colors ${
                     selectedId === t.threadId
-                      ? 'border-[var(--accent-color,#9F7539)] bg-[#fff7ed]'
-                      : 'border-[var(--gray-light,#e2e8f0)] bg-white hover:bg-[var(--light-gray,#f8f9fa)]'
+                      ? 'border-[var(--accent-color,#9F7539)] bg-[color:rgba(159,117,57,0.12)]'
+                      : 'border-[var(--gray-light,#e2e8f0)] bg-[var(--card-bg,#ffffff)] hover:bg-[var(--page-bg,#f8f9fa)]'
                   }`}
                 >
                   <div className="flex items-start justify-between gap-3">
                     <div className="space-y-1">
-                      <p className="font-semibold text-[var(--primary-color,#0e1f42)]">{t.subject}</p>
-                      <p className="text-sm text-[var(--gray,#6c757d)] line-clamp-1">{t.lastMessage}</p>
+                      <p className="font-semibold text-[var(--text-color,#0e1f42)]">{t.subject}</p>
+                      <p className="text-sm text-[var(--text-muted,#6c757d)] line-clamp-1">{t.lastMessage}</p>
                     </div>
                     <div className="text-right space-y-1">
                       <span className={`inline-flex items-center px-2 py-1 rounded-full text-[11px] font-semibold ${statusClasses[t.status] || statusClasses.OPEN}`}>
                         {t.status}
                       </span>
-                      <p className="text-xs text-[var(--gray,#6c757d)]">{formatDate(t.lastUpdatedAt)}</p>
+                      <p className="text-xs text-[var(--text-muted,#6c757d)]">{formatDate(t.lastUpdatedAt)}</p>
                     </div>
                   </div>
                 </button>
@@ -174,15 +174,15 @@ const MessagesPage = () => {
             )}
           </div>
 
-          <div className="bg-white border border-[var(--gray-light,#e2e8f0)] rounded-lg shadow-sm p-4 space-y-3 min-h-[320px]">
+          <div className="bg-[var(--card-bg,#ffffff)] border border-[var(--gray-light,#e2e8f0)] rounded-lg shadow-sm p-4 space-y-3 min-h-[320px]">
             {!selectedThread ? (
-              <p className="text-sm text-[var(--gray,#6c757d)]">Select a message to view conversation.</p>
+              <p className="text-sm text-[var(--text-muted,#6c757d)]">Select a message to view conversation.</p>
             ) : (
               <>
                 <div className="flex items-start justify-between">
                   <div>
-                    <p className="text-lg font-semibold text-[var(--primary-color,#0e1f42)]">{selectedThread.subject}</p>
-                    <p className="text-xs text-[var(--gray,#6c757d)]">{selectedThread.propertyName || 'General'}</p>
+                    <p className="text-lg font-semibold text-[var(--text-color,#0e1f42)]">{selectedThread.subject}</p>
+                    <p className="text-xs text-[var(--text-muted,#6c757d)]">{selectedThread.propertyName || 'General'}</p>
                   </div>
                   <div className="flex items-center gap-2">
                     <span className={`inline-flex items-center px-2 py-1 rounded-full text-[11px] font-semibold ${statusClasses[selectedThread.status] || statusClasses.OPEN}`}>
@@ -191,7 +191,7 @@ const MessagesPage = () => {
                     <select
                       value={selectedThread.status}
                       onChange={(e) => setStatus(selectedThread.threadId, e.target.value)}
-                      className="border border-[var(--gray-light,#e2e8f0)] rounded-md px-2 py-1 text-xs"
+                      className="border border-[var(--gray-light,#e2e8f0)] rounded-md px-2 py-1 text-xs bg-[var(--card-bg,#ffffff)] text-[var(--text-color,#0e1f42)]"
                     >
                       <option value="OPEN">Open</option>
                       <option value="RESOLVED">Resolved</option>
@@ -206,7 +206,7 @@ const MessagesPage = () => {
                         className={`max-w-[75%] rounded-lg px-3 py-2 text-sm ${
                           m.sender === 'USER'
                             ? 'bg-[var(--primary-color,#0e1f42)] text-white'
-                            : 'bg-[var(--light-gray,#f8f9fa)] text-[var(--primary-color,#0e1f42)] border border-[var(--gray-light,#e2e8f0)]'
+                            : 'bg-[var(--card-bg,#ffffff)] text-[var(--text-color,#0e1f42)] border border-[var(--gray-light,#e2e8f0)]'
                         }`}
                       >
                         <p>{m.text}</p>

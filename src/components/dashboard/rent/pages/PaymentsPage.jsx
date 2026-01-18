@@ -224,12 +224,13 @@ const PaymentsPage = () => {
           <button
             key={tab}
             onClick={() => setSubTab(tab)}
-            className={`px-3 py-2 text-sm font-semibold border transition-colors`}
+            className={`px-3 py-2 text-sm font-semibold border rounded-lg transition-colors ${
+              subTab === tab ? '' : 'hover:bg-[var(--card-bg,#ffffff)] hover:text-[var(--accent-color,#9F7539)]'
+            }`}
             style={{
-              borderRadius: '8px',
-              borderColor: subTab === tab ? 'var(--accent-color, #9F7539)' : 'var(--primary-color, #0e1f42)',
-              color: subTab === tab ? 'var(--accent-color, #9F7539)' : '#fff',
-              backgroundColor: subTab === tab ? '#fff7ed' : 'var(--primary-color, #0e1f42)'
+              borderColor: subTab === tab ? 'var(--accent-color, #9F7539)' : 'var(--text-color, #0e1f42)',
+              color: subTab === tab ? '#fff' : 'var(--text-color, #0e1f42)',
+              backgroundColor: subTab === tab ? 'var(--accent-color, #9F7539)' : 'transparent'
             }}
           >
             {tab === 'rent' ? 'Rent' : 'Bills'}
@@ -244,7 +245,14 @@ const PaymentsPage = () => {
               <p className="text-sm font-semibold text-[#0e1f42]">Yearly Rent</p>
               <p className="text-xs text-[#475467]">{property?.unitType || ''} • {property?.location}</p>
             </div>
-            <span className="px-3 py-1 rounded-full text-xs font-semibold bg-[#f8fafc] border border-[#e2e8f0] text-[#0e1f42]">
+            <span
+              className="px-3 py-1 rounded-full text-xs font-semibold border"
+              style={{
+                backgroundColor: '#0e1f42',
+                color: '#fff',
+                borderColor: '#0e1f42'
+              }}
+            >
               {rentInfo.status}
             </span>
           </div>
@@ -287,7 +295,14 @@ const PaymentsPage = () => {
                       <td className="py-2 pr-4 font-semibold text-[#0e1f42]">₦{bill.amount.toLocaleString()}</td>
                       <td className="py-2 pr-4">{bill.dueDate}</td>
                       <td className="py-2 pr-4">
-                        <span className="px-2 py-1 rounded-full text-[11px] font-semibold bg-[#f8fafc] border border-[#e2e8f0] text-[#0e1f42]">
+                        <span
+                          className="px-2 py-1 rounded-full text-[11px] font-semibold border"
+                          style={{
+                            backgroundColor: '#0e1f42',
+                            color: '#fff',
+                            borderColor: '#0e1f42'
+                          }}
+                        >
                           {bill.status}
                         </span>
                       </td>
@@ -337,7 +352,14 @@ const PaymentsPage = () => {
                 <td className="py-2 pr-4">{r.method}</td>
                 <td className="py-2 pr-4">{r.date}</td>
                 <td className="py-2 pr-4">
-                  <span className={`px-2 py-1 rounded-full text-[11px] font-semibold ${r.status === 'Paid' ? 'bg-emerald-100 text-emerald-800' : 'bg-amber-100 text-amber-800'}`}>
+                  <span
+                    className="px-2 py-1 rounded-full text-[11px] font-semibold border"
+                    style={{
+                      backgroundColor: '#0e1f42',
+                      color: '#fff',
+                      borderColor: '#0e1f42'
+                    }}
+                  >
                     {r.status}
                   </span>
                 </td>
@@ -373,7 +395,14 @@ const PaymentsPage = () => {
                 <td className="py-2 pr-4">{h.propertyName}</td>
                 <td className="py-2 pr-4 font-semibold text-[#0e1f42]">₦{h.amount.toLocaleString()}</td>
                 <td className="py-2 pr-4">
-                  <span className={`px-2 py-1 rounded-full text-[11px] font-semibold ${h.status === 'Paid' ? 'bg-emerald-100 text-emerald-800' : 'bg-amber-100 text-amber-800'}`}>
+                  <span
+                    className="px-2 py-1 rounded-full text-[11px] font-semibold border"
+                    style={{
+                      backgroundColor: '#0e1f42',
+                      color: '#fff',
+                      borderColor: '#0e1f42'
+                    }}
+                  >
                     {h.status}
                   </span>
                 </td>
@@ -386,20 +415,20 @@ const PaymentsPage = () => {
   );
 
   return (
-    <div className="rent-overview-container bg-gradient-to-br from-gray-50 to-gray-100 min-h-screen p-4 md:p-6">
-      <div className="bg-white rounded-lg shadow-md border border-[#e2e8f0] p-6 space-y-6">
+    <div className="rent-overview-container payments-page bg-[var(--page-bg,#f8f9fa)] min-h-screen p-4 md:p-6">
+      <div className="bg-[var(--card-bg,#ffffff)] rounded-lg shadow-md border border-[var(--gray-light,#e2e8f0)] p-6 space-y-6">
         <div className="space-y-2">
-          <h1 className="text-3xl font-bold text-[#0e1f42]">Payments</h1>
-          <p className="text-sm text-[#64748b]">Pay rent and bills, view receipts, and track history.</p>
+          <h1 className="text-3xl font-bold text-[var(--text-color,#0e1f42)]">Payments</h1>
+          <p className="text-sm text-[var(--text-muted,#64748b)]">Pay rent and bills, view receipts, and track history.</p>
         </div>
 
         <div className="flex flex-wrap gap-3 items-center">
-          <label className="text-sm text-[#475467]">
+          <label className="text-sm text-[var(--text-muted,#475467)]">
             Select Property
             <select
               value={selectedPropertyId}
               onChange={(e) => setSelectedPropertyId(e.target.value)}
-              className="border border-[#e2e8f0] rounded-lg px-3 py-2 text-sm ml-2"
+              className="border border-[var(--gray-light,#e2e8f0)] rounded-lg px-3 py-2 text-sm ml-2 bg-[var(--card-bg,#ffffff)] text-[var(--text-color,#0e1f42)]"
             >
               <option value="">Select property</option>
               {activeProperties.map((p) => (
