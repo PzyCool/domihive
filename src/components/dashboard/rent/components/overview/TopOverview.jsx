@@ -20,7 +20,7 @@ const TopOverview = () => {
     id: 'recent_001',
     title: '3 Bedroom Luxury Apartment',
     location: 'Lekki Phase 1, Lagos',
-    price: 'ƒ,İ2,800,000/year',
+    price: 'NGN 2,800,000/year',
     bedrooms: 3,
     bathrooms: 3,
     size: '180 sqm',
@@ -37,15 +37,16 @@ const TopOverview = () => {
 
   // ========== TIMELINE CALENDAR SECTION ==========
   const [view, setView] = useState('month');
+  const [calendarDate, setCalendarDate] = useState(new Date());
   const [isExpanded, setIsExpanded] = useState(false);
   const containerRef = useRef(null);
 
   const events = [
-    { date: '2024-01-15', type: 'rented', title: 'Moved into Ikeja Apartment', color: 'bg-green-500' },
-    { date: '2024-03-01', type: 'rented', title: 'Started renting VI Studio', color: 'bg-green-500' },
-    { date: '2024-06-10', type: 'inspection', title: 'Property Inspection', color: 'bg-blue-500' },
-    { date: '2024-09-05', type: 'payment', title: 'Quarterly Payment Due', color: 'bg-amber-500' },
-    { date: '2025-01-14', type: 'renewal', title: 'Lease Renewal', color: 'bg-purple-500' }
+    { date: new Date('2024-01-15'), type: 'rented', title: 'Moved into Ikeja Apartment', color: '#22c55e' },
+    { date: new Date('2024-03-01'), type: 'rented', title: 'Started renting VI Studio', color: '#22c55e' },
+    { date: new Date('2024-06-10'), type: 'inspection', title: 'Property Inspection', color: '#3b82f6' },
+    { date: new Date('2024-09-05'), type: 'payment', title: 'Quarterly Payment Due', color: '#f59e0b' },
+    { date: new Date('2025-01-14'), type: 'renewal', title: 'Lease Renewal', color: '#a855f7' }
   ];
 
   const timelineStats = [
@@ -54,6 +55,76 @@ const TopOverview = () => {
     { label: 'Next Renewal', value: '45 days', icon: 'calendar-alt' },
     { label: 'Timeline Events', value: '5', icon: 'list' }
   ];
+
+  const daysOfWeek = ['S', 'M', 'T', 'W', 'T', 'F', 'S'];
+
+  const normalizeDate = (d) => {
+    const nd = new Date(d);
+    nd.setHours(0, 0, 0, 0);
+    return nd;
+  };
+
+  const startOfWeek = (date) => {
+    const d = normalizeDate(date);
+    const day = d.getDay();
+    d.setDate(d.getDate() - day);
+    return d;
+  };
+
+  const addDays = (date, days) => {
+    const d = new Date(date);
+    d.setDate(d.getDate() + days);
+    return d;
+  };
+
+  const isSameDay = (a, b) => normalizeDate(a).getTime() === normalizeDate(b).getTime();
+
+  const getMonthDays = (date) => {
+    const start = startOfWeek(new Date(date.getFullYear(), date.getMonth(), 1));
+    const days = [];
+    for (let i = 0; i < 42; i++) {
+      const day = addDays(start, i);
+      const inCurrentMonth = day.getMonth() === date.getMonth();
+      const isToday = isSameDay(day, new Date());
+      const dayEvents = events.filter((evt) => isSameDay(evt.date, day));
+      days.push({ day, inCurrentMonth, isToday, events: dayEvents });
+    }
+    return days;
+  };
+
+  const getWeekDays = (date) => {
+    const start = startOfWeek(date);
+    const days = [];
+    for (let i = 0; i < 7; i++) {
+      const day = addDays(start, i);
+      const isToday = isSameDay(day, new Date());
+      const dayEvents = events.filter((evt) => isSameDay(evt.date, day));
+      days.push({ day, inCurrentWeek: true, isToday, events: dayEvents });
+    }
+    return days;
+  };
+
+  const monthLabel = calendarDate.toLocaleDateString('en-US', { month: 'long', year: 'numeric' });
+
+  const goPrev = () => {
+    if (view === 'month') {
+      const d = new Date(calendarDate);
+      d.setMonth(d.getMonth() - 1);
+      setCalendarDate(d);
+    } else {
+      setCalendarDate(addDays(calendarDate, -7));
+    }
+  };
+
+  const goNext = () => {
+    if (view === 'month') {
+      const d = new Date(calendarDate);
+      d.setMonth(d.getMonth() + 1);
+      setCalendarDate(d);
+    } else {
+      setCalendarDate(addDays(calendarDate, 7));
+    }
+  };
 
   useEffect(() => () => {}, []);
 
@@ -188,7 +259,7 @@ const TopOverview = () => {
                 </div>
               </div>
               <div className="text-right">
-                <div className="text-lg font-bold text-[var(--text-color,#0e1f42)]">ƒ,İ{stats.nextPaymentAmount}</div>
+                <div className="text-lg font-bold text-[var(--text-color,#0e1f42)]">NGN {stats.nextPaymentAmount}</div>
                 <div className="text-xs text-green-600 font-semibold">On Track</div>
               </div>
             </div>
@@ -234,44 +305,81 @@ const TopOverview = () => {
             }`}>
               <div>
                 <div className="flex items-center justify-between mb-3">
-                  <button className="text-[#64748b] hover:text-[#0e1f42] w-6 h-6 flex items-center justify-center rounded-lg hover:bg-gray-100">
+                  <button onClick={goPrev} className="text-[#64748b] hover:text-[#0e1f42] w-6 h-6 flex items-center justify-center rounded-lg hover:bg-gray-100">
                     <i className="fas fa-chevron-left text-xs"></i>
                   </button>
                   <div className="text-sm font-bold text-[var(--text-color,#0e1f42)]">
-                    Dec 2024
+                    {monthLabel}
                   </div>
-                  <button className="text-[#64748b] hover:text-[#0e1f42] w-6 h-6 flex items-center justify-center rounded-lg hover:bg-gray-100">
+                  <button onClick={goNext} className="text-[#64748b] hover:text-[#0e1f42] w-6 h-6 flex items-center justify-center rounded-lg hover:bg-gray-100">
                     <i className="fas fa-chevron-right text-xs"></i>
                   </button>
                 </div>
 
                 <div className="grid grid-cols-7 gap-1 mb-2">
-                  {['S', 'M', 'T', 'W', 'T', 'F', 'S'].map(day => (
+                  {daysOfWeek.map(day => (
                     <div key={day} className="text-center text-xs font-medium text-[#64748b] py-1">
                       {day}
                     </div>
                   ))}
                 </div>
 
-                <div className="grid grid-cols-7 gap-1">
-                  {[26,27,28,29,30,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28].slice(0, 21).map((day, index) => {
-                    const hasEvent = day === 5 || day === 15;
-                    return (
+                {view === 'month' ? (
+                  <div className="grid grid-cols-7 gap-1">
+                    {getMonthDays(calendarDate).map(({ day, inCurrentMonth, isToday, events: dayEvents }, idx) => (
                       <div
-                        key={index}
-                        className={`text-center text-xs py-1.5 rounded cursor-default ${
-                          day === 15
+                        key={idx}
+                        className={`text-center text-xs py-1.5 rounded cursor-default border border-transparent hover:border-[#e2e8f0] ${
+                          isToday
                             ? 'bg-gradient-to-r from-[#0e1f42] to-[#1a2d5f] text-white font-bold'
-                            : hasEvent
-                            ? 'bg-blue-50 text-blue-600 font-medium hover:bg-blue-100'
-                            : 'text-[var(--text-color,#0e1f42)] hover:bg-gray-100'
+                            : inCurrentMonth
+                            ? 'text-[var(--text-color,#0e1f42)] hover:bg-gray-100'
+                            : 'text-gray-400'
                         }`}
                       >
-                        {day}
+                        {day.getDate()}
+                        {dayEvents.length > 0 && (
+                          <div className="mt-1 flex justify-center gap-1">
+                            {dayEvents.slice(0, 3).map((evt, i) => (
+                              <span
+                                key={i}
+                                className="w-1.5 h-1.5 rounded-full"
+                                style={{ backgroundColor: evt.color || '#9f7539' }}
+                              ></span>
+                            ))}
+                          </div>
+                        )}
                       </div>
-                    );
-                  })}
-                </div>
+                    ))}
+                  </div>
+                ) : (
+                  <div className="grid grid-cols-7 gap-1">
+                    {getWeekDays(calendarDate).map(({ day, isToday, events: dayEvents }, idx) => (
+                      <div
+                        key={idx}
+                        className={`text-center text-xs py-2 rounded cursor-default border border-[#e2e8f0] ${
+                          isToday ? 'bg-gradient-to-r from-[#0e1f42] to-[#1a2d5f] text-white font-bold' : 'bg-white text-[var(--text-color,#0e1f42)]'
+                        }`}
+                      >
+                        <div className="font-semibold">{day.getDate()}</div>
+                        <div className="text-[10px] text-[#64748b]">
+                          {day.toLocaleDateString('en-US', { month: 'short' })}
+                        </div>
+                        {dayEvents.length > 0 && (
+                          <div className="mt-1 flex justify-center gap-1">
+                            {dayEvents.slice(0, 3).map((evt, i) => (
+                              <span
+                                key={i}
+                                className="w-1.5 h-1.5 rounded-full"
+                                style={{ backgroundColor: evt.color || '#9f7539' }}
+                              ></span>
+                            ))}
+                          </div>
+                        )}
+                      </div>
+                    ))}
+                  </div>
+                )}
 
                 {/* Timeline Stats */}
                 <div className="grid grid-cols-2 gap-2 mt-4">
@@ -311,7 +419,7 @@ const TopOverview = () => {
                   <div className="space-y-2 mb-4">
                     {events.slice(0, 3).map((event, index) => (
                       <div key={index} className="flex items-center gap-2 p-2 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors border border-[#e2e8f0]">
-                        <div className={`w-2 h-2 rounded-full ${event.color}`}></div>
+                        <div className="w-2 h-2 rounded-full" style={{ backgroundColor: event.color || '#9f7539' }}></div>
                         <div className="flex-1">
                           <div className="font-medium text-[var(--text-color,#0e1f42)] text-sm">{event.title}</div>
                           <div className="text-xs text-[#64748b]">
