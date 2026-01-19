@@ -130,7 +130,7 @@ const Header = ({ toggleSidebar, isMobile, sidebarState }) => {
 
             {/* Dashboard Switcher Dropdown */}
             {showDashboardSwitcher && (
-              <div className="absolute right-0 top-full mt-2 w-48 bg-white rounded-lg shadow-lg border border-gray-200 py-2 z-40">
+              <div className="dashboard-switcher-dropdown absolute right-0 top-full mt-2 w-48 bg-white rounded-lg shadow-lg border border-gray-200 py-2 z-40">
                 <div className="px-3 py-2 text-xs font-semibold text-gray-500 uppercase tracking-wider">
                   Switch Dashboard
                 </div>
@@ -140,8 +140,8 @@ const Header = ({ toggleSidebar, isMobile, sidebarState }) => {
                     key={dashboard.id}
                     onClick={() => handleSwitchDashboard(dashboard.id)}
                     className={`
-                      w-full flex items-center gap-3 px-3 py-2.5 text-left hover:bg-gray-50 transition-colors
-                      ${dashboard.id === currentDashboard ? 'bg-blue-50 text-blue-700' : 'text-gray-700'}
+                      switcher-item w-full flex items-center gap-3 px-3 py-2.5 text-left hover:bg-gray-50 transition-colors
+                      ${dashboard.id === currentDashboard ? 'bg-blue-50 text-blue-700 current-dashboard' : 'text-gray-700'}
                       ${!dashboard.enabled ? 'opacity-50 cursor-not-allowed' : ''}
                     `}
                     disabled={!dashboard.enabled}

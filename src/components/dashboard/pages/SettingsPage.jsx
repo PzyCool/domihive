@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
+import { useAuth } from '../../../context/AuthContext';
 
 const tabs = [
   { id: 'profile', label: 'Profile', icon: 'user' },
@@ -12,6 +13,7 @@ const accent = 'var(--accent-color, #9F7539)';
 const primary = 'var(--primary-color, #0E1F42)';
 
 const SettingsPage = () => {
+  const { user, updateUser } = useAuth();
   const [activeTab, setActiveTab] = useState('profile');
   const [profileForm, setProfileForm] = useState({
     fullName: '',
@@ -31,6 +33,8 @@ const SettingsPage = () => {
   });
   const [theme, setTheme] = useState(() => localStorage.getItem('domihive_theme') || 'light');
   const [showDeleteModal, setShowDeleteModal] = useState(false);
+  const [avatarPreview, setAvatarPreview] = useState(user?.profilePhoto || '');
+  const fileInputRef = useRef(null);
 
   const themeMap = {
     light: {
@@ -77,6 +81,35 @@ const SettingsPage = () => {
     applyTheme(theme);
   }, []);
 
+  // Keep avatar preview in sync with user updates
+  useEffect(() => {
+    setAvatarPreview(user?.profilePhoto || '');
+  }, [user?.profilePhoto]);
+
+  const handleUploadClick = () => {
+    fileInputRef.current?.click();
+  };
+
+  const handleFileChange = (e) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    const reader = new FileReader();
+    reader.onloadend = () => {
+      const dataUrl = reader.result;
+      setAvatarPreview(dataUrl);
+      updateUser?.({ profilePhoto: dataUrl });
+    };
+    reader.readAsDataURL(file);
+    // reset input so the same file can be re-selected if needed
+    e.target.value = '';
+  };
+
+  const handleRemovePhoto = () => {
+    setAvatarPreview('');
+    updateUser?.({ profilePhoto: null });
+  };
+
   const renderProfile = () => (
     <div className="space-y-6">
       <div>
@@ -85,13 +118,53 @@ const SettingsPage = () => {
       </div>
 
       <div className="flex items-center gap-5 md:gap-7">
-        <div className="w-32 h-32 rounded-full bg-[var(--accent-color,#9F7539)] border-4 border-white shadow-md flex items-center justify-center text-4xl text-white">
-          <i className="fas fa-user"></i>
+        <div className="w-32 h-32 rounded-full bg-[var(--accent-color,#9F7539)] border-4 border-white shadow-md flex items-center justify-center text-4xl text-white overflow-hidden">
+          {avatarPreview ? (
+            <img
+              src={avatarPreview}
+              alt={user?.name || 'Profile'}
+              className="w-full h-full object-cover"
+              onError={(e) => {
+                e.target.onerror = null;
+                e.target.src = `https://ui-avatars.com/api/?name=${encodeURIComponent(user?.name || 'User')}&background=9f7539&color=fff`;
+              }}
+            />
+          ) : (
+            <span className="text-3xl font-bold">
+              {(user?.name || 'User')
+                .split(' ')
+                .filter(Boolean)
+                .map((n) => n[0])
+                .join('')
+                .slice(0, 2)
+                .toUpperCase()}
+            </span>
+          )}
         </div>
         <div className="flex flex-col gap-2">
           <div className="flex flex-wrap gap-2">
-            <button className="px-4 py-2 rounded-md text-white font-semibold" style={{ backgroundColor: accent }}>Upload Photo</button>
-            <button className="px-4 py-2 rounded-md border border-[var(--gray-light,#e2e8f0)] text-[var(--gray,#6c757d)] font-semibold">Remove</button>
+            <button
+              className="px-4 py-2 rounded-md text-white font-semibold"
+              style={{ backgroundColor: accent }}
+              type="button"
+              onClick={handleUploadClick}
+            >
+              Upload Photo
+            </button>
+            <button
+              className="px-4 py-2 rounded-md border border-[var(--gray-light,#e2e8f0)] text-[var(--gray,#6c757d)] font-semibold"
+              type="button"
+              onClick={handleRemovePhoto}
+            >
+              Remove
+            </button>
+            <input
+              ref={fileInputRef}
+              type="file"
+              accept="image/*"
+              className="hidden"
+              onChange={handleFileChange}
+            />
           </div>
           <p className="text-xs text-[var(--text-muted,#6c757d)]">Recommended: Square JPG or PNG, max 5MB</p>
         </div>
@@ -305,7 +378,7 @@ const SettingsPage = () => {
             <p className="font-semibold text-[var(--text-color,#0e1f42)]">Deactivate Account</p>
             <p className="text-sm text-[var(--text-muted,#6c757d)]">Temporarily disable your account. You can reactivate it later.</p>
           </div>
-          <button className="px-4 py-2 rounded-md text-white font-semibold" style={{ backgroundColor: '#f97316' }}>Deactivate Account</button>
+          <button className="px-4 py-2 rounded-md text-white font-semibold" style={{ backgroundColor: '#f97316' }}>Deactivate</button>
         </div>
 
         <div className="border border-red-300 rounded-lg p-3 flex items-center justify-between bg-[var(--card-bg,#ffffff)]">
@@ -317,8 +390,7 @@ const SettingsPage = () => {
             className="px-4 py-2 rounded-md text-white font-semibold bg-red-600 hover:bg-red-700"
             onClick={() => setShowDeleteModal(true)}
           >
-            Delete Account
-          </button>
+            Delete</button>
         </div>
       </div>
     </div>
@@ -381,10 +453,10 @@ const SettingsPage = () => {
       {showDeleteModal && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 px-4">
           <div className="bg-[var(--card-bg,#ffffff)] rounded-lg shadow-xl w-full max-w-md p-5 space-y-4">
-            <h3 className="text-lg font-semibold text-[var(--text-color,#0e1f42)]">Delete Account</h3>
-            <p className="text-sm text-[var(--text-muted,#6c757d)]">
-              This action will permanently delete your account and all data. This cannot be undone.
-            </p>
+          <h3 className="text-lg font-semibold text-[var(--text-color,#0e1f42)]">Delete</h3>
+          <p className="text-sm text-[var(--text-muted,#6c757d)]">
+            This action will permanently delete your account and all data. This cannot be undone.
+          </p>
             <div className="flex justify-end gap-3">
               <button
                 className="px-4 py-2 rounded-md border border-[var(--gray-light,#e2e8f0)] text-[var(--text-muted,#6c757d)] font-semibold"

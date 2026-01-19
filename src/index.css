@@ -141,6 +141,25 @@ body.dashboard-themed[data-theme="true-black"] .border-gray-300 {
   border-color: rgba(255,255,255,0.12) !important;
 }
 
+/* Form controls in dark themes */
+body.dashboard-themed[data-theme="dark-gray"] input,
+body.dashboard-themed[data-theme="dark-gray"] select,
+body.dashboard-themed[data-theme="dark-gray"] textarea,
+body.dashboard-themed[data-theme="true-black"] input,
+body.dashboard-themed[data-theme="true-black"] select,
+body.dashboard-themed[data-theme="true-black"] textarea {
+  background: var(--card-bg) !important;
+  color: var(--text-color) !important;
+  border-color: rgba(255,255,255,0.16) !important;
+}
+
+body.dashboard-themed[data-theme="dark-gray"] input::placeholder,
+body.dashboard-themed[data-theme="dark-gray"] textarea::placeholder,
+body.dashboard-themed[data-theme="true-black"] input::placeholder,
+body.dashboard-themed[data-theme="true-black"] textarea::placeholder {
+  color: var(--text-muted) !important;
+}
+
 /* Stronger card override for white surfaces with shadows */
 body.dashboard-themed[data-theme="dark-gray"] .bg-white.shadow,
 body.dashboard-themed[data-theme="dark-gray"] .bg-white.shadow-md,
@@ -156,6 +175,70 @@ body.dashboard-themed[data-theme="true-black"] .dashboard-header {
   background: var(--card-bg) !important;
   color: var(--text-color) !important;
   border-color: rgba(255,255,255,0.08) !important;
+}
+
+/* Header user text in dark themes */
+body.dashboard-themed[data-theme="dark-gray"] .dashboard-header .user-name-sm,
+body.dashboard-themed[data-theme="true-black"] .dashboard-header .user-name-sm,
+body.dashboard-themed[data-theme="dark-gray"] .dashboard-header .user-role,
+body.dashboard-themed[data-theme="true-black"] .dashboard-header .user-role {
+  color: #ffffff !important;
+}
+
+body.dashboard-themed[data-theme="dark-gray"] .dashboard-header .user-dropdown-item:hover,
+body.dashboard-themed[data-theme="true-black"] .dashboard-header .user-dropdown-item:hover,
+body.dashboard-themed[data-theme="dark-gray"] .user-dropdown-item:hover,
+body.dashboard-themed[data-theme="true-black"] .user-dropdown-item:hover {
+  background: rgba(255,255,255,0.08) !important;
+}
+
+body.dashboard-themed[data-theme="dark-gray"] .dashboard-header .user-dropdown-item:hover span,
+body.dashboard-themed[data-theme="true-black"] .dashboard-header .user-dropdown-item:hover span,
+body.dashboard-themed[data-theme="dark-gray"] .dashboard-header .user-dropdown-item:hover i,
+body.dashboard-themed[data-theme="true-black"] .dashboard-header .user-dropdown-item:hover i,
+body.dashboard-themed[data-theme="dark-gray"] .user-dropdown-item:hover span,
+body.dashboard-themed[data-theme="true-black"] .user-dropdown-item:hover span,
+body.dashboard-themed[data-theme="dark-gray"] .user-dropdown-item:hover i,
+body.dashboard-themed[data-theme="true-black"] .user-dropdown-item:hover i {
+  color: #ffffff !important;
+}
+
+/* Header trigger hover in dark themes */
+body.dashboard-themed[data-theme="dark-gray"] .user-menu-btn:hover,
+body.dashboard-themed[data-theme="true-black"] .user-menu-btn:hover {
+  background: rgba(255,255,255,0.08) !important;
+}
+
+/* Header icon buttons & dashboard switcher hover in dark themes */
+body.dashboard-themed[data-theme="dark-gray"] .action-btn:hover,
+body.dashboard-themed[data-theme="true-black"] .action-btn:hover,
+body.dashboard-themed[data-theme="dark-gray"] .mobile-menu-btn:hover,
+body.dashboard-themed[data-theme="true-black"] .mobile-menu-btn:hover,
+body.dashboard-themed[data-theme="dark-gray"] .dashboard-switcher-btn:hover,
+body.dashboard-themed[data-theme="true-black"] .dashboard-switcher-btn:hover {
+  background: rgba(255,255,255,0.08) !important;
+  border-color: rgba(255,255,255,0.16) !important;
+  color: #ffffff !important;
+}
+
+body.dashboard-themed[data-theme="dark-gray"] .action-btn:hover i,
+body.dashboard-themed[data-theme="true-black"] .action-btn:hover i,
+body.dashboard-themed[data-theme="dark-gray"] .dashboard-switcher-btn i,
+body.dashboard-themed[data-theme="true-black"] .dashboard-switcher-btn i {
+  color: #ffffff !important;
+}
+
+/* Dashboard switcher dropdown items hover in dark themes */
+body.dashboard-themed[data-theme="dark-gray"] .dashboard-switcher-dropdown .switcher-item:hover,
+body.dashboard-themed[data-theme="true-black"] .dashboard-switcher-dropdown .switcher-item:hover {
+  background: rgba(255,255,255,0.08) !important;
+  color: #ffffff !important;
+}
+
+body.dashboard-themed[data-theme="dark-gray"] .dashboard-switcher-dropdown .switcher-item.current-dashboard,
+body.dashboard-themed[data-theme="true-black"] .dashboard-switcher-dropdown .switcher-item.current-dashboard {
+  background: rgba(255,255,255,0.14) !important;
+  color: #ffffff !important;
 }
 
 body.dashboard-themed[data-theme="dark-gray"] .dashboard-sidebar,
@@ -218,6 +301,28 @@ body.dashboard-themed[data-theme="dark-gray"] .sidebar-footer,
 body.dashboard-themed[data-theme="true-black"] .sidebar-footer {
   background: var(--card-bg) !important;
   border-color: rgba(255,255,255,0.08) !important;
+}
+
+/* Sidebar footer profile text in dark themes */
+body.dashboard-themed[data-theme="dark-gray"] .sidebar-footer .user-name,
+body.dashboard-themed[data-theme="true-black"] .sidebar-footer .user-name,
+body.dashboard-themed[data-theme="dark-gray"] .sidebar-footer .user-role,
+body.dashboard-themed[data-theme="true-black"] .sidebar-footer .user-role {
+  color: #ffffff !important;
+}
+
+/* Sidebar footer logout button in dark themes */
+body.dashboard-themed[data-theme="dark-gray"] .sidebar-footer .logout-btn,
+body.dashboard-themed[data-theme="true-black"] .sidebar-footer .logout-btn {
+  background: var(--accent-color, #9F7539) !important;
+  color: #ffffff !important;
+  border-color: rgba(255,255,255,0.16) !important;
+}
+
+body.dashboard-themed[data-theme="dark-gray"] .sidebar-footer .logout-btn:hover,
+body.dashboard-themed[data-theme="true-black"] .sidebar-footer .logout-btn:hover {
+  background: #b58a4a !important;
+  color: #ffffff !important;
 }
 
 .navbar {
