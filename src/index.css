@@ -155,6 +155,127 @@ body.dashboard-themed[data-theme="true-black"] .maintenance-tab-btn.active {
   color: #ffffff !important;
 }
 
+/* Property overview tabs (match payment styling) */
+body.dashboard-themed[data-theme="dark-gray"] .property-overview-tab,
+body.dashboard-themed[data-theme="true-black"] .property-overview-tab {
+  background: transparent !important;
+  color: var(--text-color,#f8fafc) !important;
+  border-color: var(--text-color,#f8fafc) !important;
+}
+
+body.dashboard-themed[data-theme="dark-gray"] .property-overview-tab:hover,
+body.dashboard-themed[data-theme="true-black"] .property-overview-tab:hover {
+  background: rgba(255,255,255,0.08) !important;
+  border-color: var(--accent-color,#9F7539) !important;
+  color: #ffffff !important;
+}
+
+body.dashboard-themed[data-theme="dark-gray"] .property-overview-tab.active,
+body.dashboard-themed[data-theme="true-black"] .property-overview-tab.active {
+  background: var(--accent-color,#9F7539) !important;
+  border-color: var(--accent-color,#9F7539) !important;
+  color: #ffffff !important;
+}
+
+/* Property payments page (dark theme) */
+body.dashboard-themed[data-theme="dark-gray"] .property-payments-page,
+body.dashboard-themed[data-theme="true-black"] .property-payments-page {
+  background: var(--page-bg) !important;
+  color: var(--text-color) !important;
+}
+
+body.dashboard-themed[data-theme="dark-gray"] .property-payments-page .bg-white,
+body.dashboard-themed[data-theme="true-black"] .property-payments-page .bg-white {
+  background: var(--card-bg) !important;
+  color: var(--text-color) !important;
+  border-color: rgba(255,255,255,0.12) !important;
+}
+
+body.dashboard-themed[data-theme="dark-gray"] .property-payment-next,
+body.dashboard-themed[data-theme="true-black"] .property-payment-next {
+  background: rgba(255,255,255,0.05) !important;
+  border-color: rgba(255,255,255,0.12) !important;
+  color: var(--text-color,#f8fafc) !important;
+}
+
+body.dashboard-themed[data-theme="dark-gray"] .property-payment-next p,
+body.dashboard-themed[data-theme="true-black"] .property-payment-next p {
+  color: var(--text-color,#f8fafc) !important;
+}
+
+body.dashboard-themed[data-theme="dark-gray"] .property-payments-page * ,
+body.dashboard-themed[data-theme="true-black"] .property-payments-page * {
+  color: var(--text-color,#f8fafc) !important;
+}
+
+/* Property payments tabs (light + dark) */
+.property-payment-tab {
+  background: transparent;
+  color: var(--text-color,#0e1f42);
+  border-color: var(--text-color,#0e1f42);
+}
+
+.property-payment-tab:hover {
+  background: #fff7ed;
+  border-color: var(--accent-color,#9F7539);
+  color: var(--accent-color,#9F7539);
+}
+
+.property-payment-tab.active {
+  background: var(--accent-color,#9F7539);
+  border-color: var(--accent-color,#9F7539);
+  color: #ffffff;
+}
+
+body.dashboard-themed[data-theme="dark-gray"] .property-payment-tab,
+body.dashboard-themed[data-theme="true-black"] .property-payment-tab {
+  background: transparent !important;
+  color: var(--text-color,#f8fafc) !important;
+  border-color: var(--text-color,#f8fafc) !important;
+}
+
+body.dashboard-themed[data-theme="dark-gray"] .property-payment-tab:hover,
+body.dashboard-themed[data-theme="true-black"] .property-payment-tab:hover {
+  background: rgba(255,255,255,0.08) !important;
+  border-color: var(--accent-color,#9F7539) !important;
+  color: #ffffff !important;
+}
+
+body.dashboard-themed[data-theme="dark-gray"] .property-payment-tab.active,
+body.dashboard-themed[data-theme="true-black"] .property-payment-tab.active {
+  background: var(--accent-color,#9F7539) !important;
+  border-color: var(--accent-color,#9F7539) !important;
+  color: #ffffff !important;
+}
+
+body.dashboard-themed[data-theme="dark-gray"] .property-payment-status,
+body.dashboard-themed[data-theme="true-black"] .property-payment-status {
+  background: var(--primary-color,#0e1f42) !important;
+  border-color: var(--primary-color,#0e1f42) !important;
+  color: #ffffff !important;
+}
+
+/* Property payments status badges (light) */
+.property-payment-status {
+  background: var(--primary-color,#0e1f42);
+  border: 1px solid var(--primary-color,#0e1f42);
+  color: #ffffff;
+}
+
+body.dashboard-themed[data-theme="dark-gray"] .property-overview-updates,
+body.dashboard-themed[data-theme="true-black"] .property-overview-updates {
+  background: rgba(255,255,255,0.05) !important;
+  border-color: rgba(255,255,255,0.12) !important;
+  color: var(--text-color,#f8fafc) !important;
+}
+
+body.dashboard-themed[data-theme="dark-gray"] .property-overview-updates h3,
+body.dashboard-themed[data-theme="true-black"] .property-overview-updates h3,
+body.dashboard-themed[data-theme="dark-gray"] .property-overview-updates p,
+body.dashboard-themed[data-theme="true-black"] .property-overview-updates p {
+  color: var(--text-color,#f8fafc) !important;
+}
+
 /* Maintenance badges in dark themes */
 body.dashboard-themed[data-theme="dark-gray"] .maintenance-card,
 body.dashboard-themed[data-theme="true-black"] .maintenance-card {

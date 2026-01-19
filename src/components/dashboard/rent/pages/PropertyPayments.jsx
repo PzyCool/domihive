@@ -24,7 +24,7 @@ const PropertyPayments = () => {
   }
 
   return (
-    <div className="rent-overview-container bg-gradient-to-br from-gray-50 to-gray-100 min-h-screen p-4 md:p-6">
+    <div className="rent-overview-container bg-gradient-to-br from-gray-50 to-gray-100 min-h-screen p-4 md:p-6 property-payments-page">
       <div className="bg-white rounded-lg border border-[#e2e8f0] p-6 space-y-6 max-w-6xl mx-auto">
         <div className="space-y-4">
           <button
@@ -42,9 +42,9 @@ const PropertyPayments = () => {
               </p>
             </div>
             {property.nextPayment && (
-              <div className="text-sm text-[#475467] bg-[#f8fafc] border border-[#e2e8f0] rounded-lg px-3 py-2">
+              <div className="text-sm text-[#475467] bg-[#f8fafc] border border-[#e2e8f0] rounded-lg px-3 py-2 property-payment-next">
                 <p className="text-xs text-[#6c757d]">Next payment</p>
-                <p className="font-semibold text-[#0e1f42]">
+                <p className="font-semibold text-[var(--accent-color,#9F7539)]">
                   {formatNaira(property.nextPayment.amount)} • {property.nextPayment.dueDate}
                 </p>
                 <p className="text-xs text-[#9f7539] font-semibold">{property.nextPayment.status}</p>
@@ -60,11 +60,7 @@ const PropertyPayments = () => {
                 <button
                   key={tab}
                   onClick={() => setFilter(tab)}
-                  className={`px-3 py-2 rounded-full text-sm font-semibold border transition-colors ${
-                    filter === tab
-                      ? 'border-[var(--accent-color,#9F7539)] text-[var(--accent-color,#9F7539)] bg-[#fff7ed]'
-                      : 'border-[#e2e8f0] text-[#475467] hover:border-[var(--accent-color,#9F7539)] hover:text-[var(--accent-color,#9F7539)] hover:bg-[#fff7ed]'
-                  }`}
+                  className={`px-3 py-2 rounded-full text-sm font-semibold border transition-colors property-payment-tab ${filter === tab ? 'active' : ''}`}
                 >
                   {tab === 'all' ? 'All Payments' : tab === 'rent' ? 'Rent' : 'Bills'}
                 </button>
@@ -96,12 +92,10 @@ const PropertyPayments = () => {
                     <tr key={pay.id} className="border-t border-[#e2e8f0]">
                       <td className="py-2 pr-4">{pay.date}</td>
                       <td className="py-2 pr-4">{pay.description}</td>
-                      <td className="py-2 pr-4 font-semibold text-[#0e1f42]">{formatNaira(pay.amount)}</td>
+                      <td className="py-2 pr-4 font-semibold text-[var(--accent-color,#9F7539)]">{formatNaira(pay.amount)}</td>
                       <td className="py-2 pr-4">
                         <span
-                          className={`px-2 py-1 rounded-full text-xs font-semibold ${
-                            pay.status === 'paid' ? 'bg-emerald-100 text-emerald-800' : 'bg-amber-100 text-amber-800'
-                          }`}
+                          className={`px-2 py-1 rounded-full text-xs font-semibold ${pay.status === 'paid' ? 'bg-emerald-100 text-emerald-800' : 'bg-amber-100 text-amber-800'} property-payment-status`}
                         >
                           {pay.status}
                         </span>

@@ -211,10 +211,8 @@ const PropertyDashboard = () => {
               <button
                 key={tab.id}
                 onClick={() => setActiveTab(tab.id)}
-                className={`px-4 py-2 rounded-full text-sm font-semibold border transition-colors ${
-                  activeTab === tab.id
-                    ? 'border-[#9F7539] text-[#9F7539] bg-[#fff7ed]'
-                    : 'border-[#9F7539] text-[#9F7539] bg-white hover:bg-[#fff7ed]'
+                className={`px-4 py-2 rounded-full text-sm font-semibold border transition-colors property-overview-tab ${
+                  activeTab === tab.id ? 'active' : ''
                 }`}
               >
                 {tab.label}
@@ -224,7 +222,7 @@ const PropertyDashboard = () => {
 
           {activeTab === 'updates' && (
             <div className="space-y-3">
-              <div className="p-4 rounded-xl border border-[#e2e8f0] bg-[#f8fafc]">
+              <div className="p-4 rounded-xl border border-[#e2e8f0] bg-[#f8fafc] property-overview-updates">
                 <p className="text-sm font-semibold text-[#0e1f42]">No new updates</p>
                 <p className="text-xs text-[#6c757d]">We’ll post property announcements and service updates here.</p>
               </div>
@@ -235,7 +233,7 @@ const PropertyDashboard = () => {
             <div className="space-y-6">
               <div className="space-y-3">
                 <h3 className="text-sm font-semibold text-[#0e1f42]">Lease Documents</h3>
-                <div className="flex items-center justify-between gap-3 border border-[#e2e8f0] rounded-2xl p-4 bg-[#f8fafc]">
+                <div className="flex items-center justify-between gap-3 border border-[#e2e8f0] rounded-2xl p-4 bg-[#f8fafc] property-overview-updates">
                   <div className="flex items-center gap-3">
                     <div className="h-12 w-12 rounded-xl bg-[#9F7539] flex items-center justify-center text-white">
                       <i className="fas fa-file-signature"></i>
@@ -245,13 +243,14 @@ const PropertyDashboard = () => {
                       <p className="text-sm text-[#64748b]">Professional rental agreement with DomiHive</p>
                     </div>
                   </div>
-                  <div className="flex gap-2">
-                    <button
-                      onClick={() => setShowAgreement(true)}
-                      className="px-4 py-2 rounded-lg border border-[#e2e8f0] text-[#0e1f42] font-semibold"
-                    >
-                      View
-                    </button>
+                    <div className="flex gap-2">
+                      <button
+                        onClick={() => setShowAgreement(true)}
+                        className="px-4 py-2 rounded-lg border border-[#e2e8f0] text-white font-semibold"
+                        style={{ backgroundColor: 'var(--primary-color,#0e1f42)' }}
+                      >
+                        View
+                      </button>
                     <button
                       className="px-4 py-2 rounded-lg text-white font-semibold"
                       style={{ backgroundColor: 'var(--accent-color, #9F7539)' }}
@@ -286,7 +285,7 @@ const PropertyDashboard = () => {
             <div className="space-y-4">
               <h3 className="text-sm font-semibold text-[#0e1f42]">Rate & Review Property</h3>
               <p className="text-xs text-[#6c757d]">Share your experience to help future tenants.</p>
-              <div className="bg-[#f8fafc] border border-[#e2e8f0] rounded-2xl p-4 space-y-4">
+              <div className="bg-[#f8fafc] border border-[#e2e8f0] rounded-2xl p-4 space-y-4 property-overview-updates">
                 <div className="space-y-1">
                   <p className="text-sm font-semibold text-[#0e1f42]">Overall Rating *</p>
                   <div className="flex gap-2">
