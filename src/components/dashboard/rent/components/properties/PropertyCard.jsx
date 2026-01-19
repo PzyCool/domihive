@@ -1,9 +1,9 @@
 import React from 'react';
 
 const statusStyles = {
-  PENDING_MOVE_IN: 'bg-amber-100 text-amber-800 border border-amber-200',
-  ACTIVE: 'bg-emerald-100 text-emerald-800 border border-emerald-200',
-  ENDED: 'bg-gray-100 text-gray-700 border border-gray-200'
+  PENDING_MOVE_IN: 'bg-amber-100 text-amber-800 border border-amber-200 property-status',
+  ACTIVE: 'bg-emerald-100 text-emerald-800 border border-emerald-200 property-status',
+  ENDED: 'bg-gray-100 text-gray-700 border border-gray-200 property-status'
 };
 
 const statusLabel = {

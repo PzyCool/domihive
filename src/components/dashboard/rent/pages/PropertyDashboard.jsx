@@ -21,6 +21,7 @@ const PropertyDashboard = () => {
   const [activeTab, setActiveTab] = useState('updates'); // updates | lease | reviews
   const [showAgreement, setShowAgreement] = useState(false);
   const [reviewForm, setReviewForm] = useState({ rating: 0, title: '', body: '', recommend: '', anonymous: false });
+  const showMoveInOnly = focus === 'movein' && property.tenancyStatus === 'PENDING_MOVE_IN';
 
   if (!property) {
     return (
@@ -45,6 +46,87 @@ const PropertyDashboard = () => {
     ? 'Active'
     : 'Ended';
 
+  // If user came from "Complete Move-in Checklist", focus on the move-in section and scroll
+  React.useEffect(() => {
+    if (showMoveInOnly) {
+      const el = document.getElementById('movein');
+      if (el) {
+        el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+      setActiveTab('updates');
+    }
+  }, [showMoveInOnly]);
+
+  // Render only Move-in checklist when focused
+  if (showMoveInOnly) {
+    return (
+      <div className="rent-overview-container bg-gradient-to-br from-gray-50 to-gray-100 min-h-screen p-4 md:p-6">
+        <div className="bg-white rounded-lg border border-[#e2e8f0] p-6 space-y-6 max-w-4xl mx-auto">
+          <div className="space-y-4">
+            <button
+              onClick={() => navigate('/dashboard/rent/my-properties')}
+              className="text-2xl font-medium leading-none"
+              style={{ color: 'var(--accent-color, #9F7539)' }}
+              aria-label="Back to My Properties"
+            >
+              <i className="fas fa-arrow-left-long text-xl"></i>
+            </button>
+            <div className="flex flex-wrap justify-between gap-3 items-start">
+              <div>
+                <h1 className="text-2xl font-semibold text-[#0e1f42]">{property.name}</h1>
+                <p className="text-sm text-[#475467]">{property.location}</p>
+                <p className="text-xs text-[#6c757d]">{property.unitType}</p>
+              </div>
+              <span className="px-3 py-1 rounded-full text-xs font-semibold property-status bg-[#e0f2fe] text-[#0e1f42] border border-[#cbd5e1]">
+                {statusLabel}
+              </span>
+            </div>
+          </div>
+
+          <div className="bg-white border border-[#e2e8f0] rounded-2xl p-4 shadow-sm" id="movein">
+            <div className="flex items-center justify-between mb-3">
+              <h3 className="text-sm font-semibold text-[#0e1f42]">Move-in Checklist</h3>
+              <button
+                onClick={handleCompleteMoveIn}
+                className="px-4 py-2 rounded-lg text-white font-semibold"
+                style={{ backgroundColor: 'var(--accent-color, #9F7539)' }}
+              >
+                Confirm Move-in
+              </button>
+            </div>
+            <div className="space-y-3 text-sm text-[#475467]">
+              <label className="flex items-center gap-2">
+                <input
+                  type="checkbox"
+                  checked={!!moveInForm.keysReceived}
+                  onChange={() => setMoveInForm((p) => ({ ...p, keysReceived: !p.keysReceived }))}
+                />
+                Have you collected the keys?
+              </label>
+              <label className="flex items-center gap-2">
+                <input type="checkbox" checked={!!moveInForm.inventoryConfirmed} onChange={() => setMoveInForm((p) => ({ ...p, inventoryConfirmed: !p.inventoryConfirmed }))} />
+                Inventory confirmed
+              </label>
+              <div className="flex items-center gap-2">
+                <input
+                  type="text"
+                  value={moveInForm.meterReading || ''}
+                  onChange={(e) => setMoveInForm((p) => ({ ...p, meterReading: e.target.value }))}
+                  className="border border-[#e2e8f0] rounded-lg px-3 py-2 flex-1"
+                  placeholder="Enter reading"
+                />
+              </div>
+              <label className="flex items-center gap-2">
+                <input type="checkbox" checked={!!moveInForm.moveInDateConfirmed} onChange={() => setMoveInForm((p) => ({ ...p, moveInDateConfirmed: !p.moveInDateConfirmed }))} />
+                Move-in date confirmed
+              </label>
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="rent-overview-container bg-gradient-to-br from-gray-50 to-gray-100 min-h-screen p-4 md:p-6">
       <div className="bg-white rounded-lg border border-[#e2e8f0] p-6 space-y-6 max-w-6xl mx-auto">
@@ -62,7 +144,7 @@ const PropertyDashboard = () => {
               <p className="text-sm text-[#475467]">{property.location}</p>
               <p className="text-xs text-[#6c757d]">{property.unitType}</p>
             </div>
-            <span className="px-3 py-1 rounded-full text-xs font-semibold bg-[#e0f2fe] text-[#0e1f42] border border-[#cbd5e1]">
+            <span className="px-3 py-1 rounded-full text-xs font-semibold property-status bg-[#e0f2fe] text-[#0e1f42] border border-[#cbd5e1]">
               {statusLabel}
             </span>
           </div>

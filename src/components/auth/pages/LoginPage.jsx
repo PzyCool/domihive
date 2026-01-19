@@ -103,6 +103,7 @@ const LoginPage = () => {
           number: formData.phone,
           countryCode: countryCode
         }));
+      
       } else {
         localStorage.removeItem('domihive_remembered_phone');
       }

@@ -185,6 +185,14 @@ body.dashboard-themed[data-theme="true-black"] .maintenance-responsibility {
   border-radius: 9999px !important;
 }
 
+/* My Properties status badges */
+body.dashboard-themed[data-theme="dark-gray"] .property-status,
+body.dashboard-themed[data-theme="true-black"] .property-status {
+  background: rgba(255,255,255,0.08) !important;
+  border-color: var(--accent-color,#9F7539) !important;
+  color: #ffffff !important;
+}
+
 /* Maintenance policy box */
 body.dashboard-themed[data-theme="dark-gray"] .maintenance-policy-box,
 body.dashboard-themed[data-theme="true-black"] .maintenance-policy-box {
