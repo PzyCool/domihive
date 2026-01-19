@@ -70,8 +70,8 @@ const RentApplications = () => {
   }), [applications]);
 
   return (
-    <div className="rent-overview-container bg-gradient-to-br from-gray-50 to-gray-100 min-h-screen p-4 md:p-6">
-      <div className="bg-white rounded-lg shadow-md border border-[#e2e8f0] p-6 space-y-6">
+    <div className="rent-overview-container bg-gradient-to-br from-gray-50 to-gray-100 min-h-screen p-4 md:p-6 applications-page">
+      <div className="bg-white rounded-lg shadow-md border border-[#e2e8f0] p-6 space-y-6 applications-card">
         <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-4">
           <div>
             <h1 className="text-3xl font-bold text-[#0e1f42]">My Applications</h1>

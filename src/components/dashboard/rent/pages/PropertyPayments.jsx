@@ -29,7 +29,7 @@ const PropertyPayments = () => {
         <div className="space-y-4">
           <button
             onClick={() => navigate('/dashboard/rent/my-properties')}
-            className="text-2xl font-medium leading-none"
+            className="text-2xl font-medium leading-none" aria-label="Back to My Properties"
             style={{ color: 'var(--accent-color, #9F7539)' }}
           >
             ←

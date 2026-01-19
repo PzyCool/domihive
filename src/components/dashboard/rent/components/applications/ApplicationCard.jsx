@@ -23,14 +23,14 @@ const ACTION_LABELS = {
 };
 
 const badgeStyles = {
-  INSPECTION_SCHEDULED: 'bg-amber-100 text-amber-800 border border-amber-200',
-  INSPECTION_VERIFIED: 'bg-blue-100 text-[#0e1f42] border border-blue-200',
-  APPLICATION_STARTED: 'bg-[#fefce8] text-[#9f7539] border border-[#fef08a]',
-  APPLICATION_SUBMITTED: 'bg-[#ecfccb] text-[#15803d] border border-[#bbf7d0]',
-  UNDER_REVIEW: 'bg-[#e0f2fe] text-[#0284c7] border border-[#bae6fd]',
-  APPROVED: 'bg-[#dcfce7] text-[#047857] border border-[#86efac]',
-  REJECTED: 'bg-[#ffe4e6] text-[#be123c] border border-[#fecdd3]',
-  CANCELLED: 'bg-[#f3f4f6] text-[#475467] border border-[#e2e8f0]'
+  INSPECTION_SCHEDULED: 'bg-amber-100 text-amber-800 border border-amber-200 app-status-badge',
+  INSPECTION_VERIFIED: 'bg-blue-100 text-[#0e1f42] border border-blue-200 app-status-badge',
+  APPLICATION_STARTED: 'bg-[#fefce8] text-[#9f7539] border border-[#fef08a] app-status-badge',
+  APPLICATION_SUBMITTED: 'bg-[#ecfccb] text-[#15803d] border border-[#bbf7d0] app-status-badge',
+  UNDER_REVIEW: 'bg-[#e0f2fe] text-[#0284c7] border border-[#bae6fd] app-status-badge',
+  APPROVED: 'bg-[#dcfce7] text-[#047857] border border-[#86efac] app-status-badge',
+  REJECTED: 'bg-[#ffe4e6] text-[#be123c] border border-[#fecdd3] app-status-badge',
+  CANCELLED: 'bg-[#f3f4f6] text-[#475467] border border-[#e2e8f0] app-status-badge'
 };
 
 const ApplicationCard = ({ application, onAction }) => {

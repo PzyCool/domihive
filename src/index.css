@@ -248,17 +248,68 @@ body.dashboard-themed[data-theme="true-black"] .property-payment-tab.active {
   color: #ffffff !important;
 }
 
+/* My Applications cards */
+body.dashboard-themed[data-theme="dark-gray"] .application-card,
+body.dashboard-themed[data-theme="true-black"] .application-card {
+  background: var(--card-bg) !important;
+  border-color: rgba(255,255,255,0.12) !important;
+  color: var(--text-color) !important;
+}
+
+body.dashboard-themed[data-theme="dark-gray"] .application-card h3,
+body.dashboard-themed[data-theme="true-black"] .application-card h3,
+body.dashboard-themed[data-theme="dark-gray"] .application-card p,
+body.dashboard-themed[data-theme="true-black"] .application-card p,
+body.dashboard-themed[data-theme="dark-gray"] .application-card span,
+body.dashboard-themed[data-theme="true-black"] .application-card span {
+  color: var(--text-color) !important;
+}
+
+body.dashboard-themed[data-theme="dark-gray"] .application-card .app-status-badge,
+body.dashboard-themed[data-theme="true-black"] .application-card .app-status-badge {
+  background: rgba(255,255,255,0.08) !important;
+  border-color: var(--accent-color,#9F7539) !important;
+  color: #ffffff !important;
+}
+
+body.dashboard-themed[data-theme="dark-gray"] .application-card .bg-white,
+body.dashboard-themed[data-theme="true-black"] .application-card .bg-white {
+  background: var(--card-bg) !important;
+  color: var(--text-color) !important;
+}
+
+/* My Applications page dark theme */
+body.dashboard-themed[data-theme="dark-gray"] .applications-page,
+body.dashboard-themed[data-theme="true-black"] .applications-page {
+  background: var(--page-bg) !important;
+  color: var(--text-color) !important;
+}
+
+body.dashboard-themed[data-theme="dark-gray"] .applications-card,
+body.dashboard-themed[data-theme="true-black"] .applications-card {
+  background: var(--card-bg) !important;
+  border-color: rgba(255,255,255,0.12) !important;
+  color: var(--text-color) !important;
+}
+
+body.dashboard-themed[data-theme="dark-gray"] .applications-card h1,
+body.dashboard-themed[data-theme="true-black"] .applications-card h1,
+body.dashboard-themed[data-theme="dark-gray"] .applications-card p,
+body.dashboard-themed[data-theme="true-black"] .applications-card p {
+  color: var(--text-color,#f8fafc) !important;
+}
+
 body.dashboard-themed[data-theme="dark-gray"] .property-payment-status,
 body.dashboard-themed[data-theme="true-black"] .property-payment-status {
   background: var(--primary-color,#0e1f42) !important;
-  border-color: var(--primary-color,#0e1f42) !important;
+  border: none !important;
   color: #ffffff !important;
 }
 
 /* Property payments status badges (light) */
 .property-payment-status {
   background: var(--primary-color,#0e1f42);
-  border: 1px solid var(--primary-color,#0e1f42);
+  border: none;
   color: #ffffff;
 }
 
