@@ -294,7 +294,7 @@ const Sidebar = ({ sidebarState, toggleSidebar, closeMobileSidebar, isMobile, cu
                     `nav-link group flex items-center gap-3 ${isCollapsed ? 'px-0 py-3' : 'px-4 py-3'} rounded-lg transition-all duration-200 relative
                     ${isCollapsed ? 'justify-center' : ''}
                     ${isActive 
-                      ? 'bg-white/60 text-[#0e1f42] border-l-3 border-[#9f7539] backdrop-blur-sm' 
+                      ? 'bg-white/40 text-[#0e1f42] backdrop-blur-sm' 
                       : 'text-[#334155] hover:bg-white/40 hover:text-[#0e1f42] backdrop-blur-sm'
                     }
                     ${isCollapsed ? 'mx-2' : 'mx-3'}`
@@ -304,7 +304,7 @@ const Sidebar = ({ sidebarState, toggleSidebar, closeMobileSidebar, isMobile, cu
                 >
                   {({ isActive }) => (
                     <>
-                      <i className={`fas fa-${item.icon} ${isCollapsed ? 'text-lg' : 'text-base'} w-5 text-center ${isActive ? 'text-[#9f7539]' : 'text-[#64748b]'}`}></i>
+                      <i className={`fas fa-${item.icon} ${isCollapsed ? 'text-lg' : 'text-base'} w-5 text-center ${isActive ? 'text-[#9f7539]' : 'text-[#64748b]'} icon-clean`}></i>
                       {!isCollapsed && (
                         <span className="nav-text font-medium text-sm">{item.label}</span>
                       )}
@@ -334,7 +334,7 @@ const Sidebar = ({ sidebarState, toggleSidebar, closeMobileSidebar, isMobile, cu
                     `nav-link group flex items-center gap-3 ${isCollapsed ? 'px-0 py-3' : 'px-4 py-3'} rounded-lg transition-all duration-200 relative
                     ${isCollapsed ? 'justify-center' : ''}
                     ${isActive 
-                      ? 'bg-white/60 text-[#0e1f42] border-l-3 border-[#9f7539] backdrop-blur-sm' 
+                      ? 'bg-white/40 text-[#0e1f42] font-semibold backdrop-blur-sm' 
                       : 'text-[#334155] hover:bg-white/40 hover:text-[#0e1f42] backdrop-blur-sm'
                     }
                     ${isCollapsed ? 'mx-2' : 'mx-3'}`
@@ -387,7 +387,7 @@ const Sidebar = ({ sidebarState, toggleSidebar, closeMobileSidebar, isMobile, cu
                     `nav-link group flex items-center gap-3 ${isCollapsed ? 'px-0 py-3' : 'px-4 py-3'} rounded-lg transition-all duration-200 relative
                     ${isCollapsed ? 'justify-center' : ''}
                     ${isActive 
-                      ? 'bg-white/60 text-[#0e1f42] border-l-3 border-[#9f7539] backdrop-blur-sm' 
+                      ? 'bg-white/40 text-[#0e1f42] font-semibold backdrop-blur-sm' 
                       : 'text-[#334155] hover:bg-white/40 hover:text-[#0e1f42] backdrop-blur-sm'
                     }
                     ${isCollapsed ? 'mx-2' : 'mx-3'}`

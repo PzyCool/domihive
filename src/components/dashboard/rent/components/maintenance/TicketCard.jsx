@@ -16,16 +16,16 @@ const TicketCard = ({ ticket, onView }) => {
   const isEmergency = ticket.priority === 'Emergency';
 
   return (
-    <div className="bg-white rounded-2xl shadow-sm border border-[#e2e8f0] p-5 flex flex-col gap-3">
+    <div className="bg-white rounded-2xl shadow-sm border border-[#e2e8f0] p-5 flex flex-col gap-3 maintenance-card">
       <div className="flex items-start justify-between gap-3">
         <div className="space-y-1">
           <div className="flex items-center gap-2">
             <span className="text-sm font-semibold text-[#0e1f42]">{ticket.title}</span>
-            <span className={`px-3 py-1 rounded-full text-xs font-semibold ${statusClass}`}>
+            <span className={`px-3 py-1 rounded-full text-xs font-semibold maintenance-status ${statusClass}`}>
               {ticket.status.replace('_', ' ')}
             </span>
             {isEmergency && (
-              <span className="px-2 py-1 rounded-full text-[11px] font-semibold bg-red-100 text-red-700 border border-red-200">
+              <span className="px-2 py-1 rounded-full text-[11px] font-semibold bg-red-100 text-red-700 border border-red-200 maintenance-emergency">
                 Emergency
               </span>
             )}
@@ -33,11 +33,11 @@ const TicketCard = ({ ticket, onView }) => {
           <p className="text-xs text-[#475467] line-clamp-2">{ticket.description}</p>
           <p className="text-xs text-[#6c757d]">{ticket.propertyName}</p>
         </div>
-        <div className="text-right space-y-1">
-          <span className="px-2 py-1 rounded-full text-[11px] font-semibold bg-[#f8fafc] border border-[#e2e8f0] text-[#0e1f42]">
+        <div className="text-right space-y-20">
+          <span className="px-2 py-1 rounded-full text-[11px] font-semibold bg-[#f8fafc] border border-[#e2e8f0] text-[#0e1f42] maintenance-responsibility">
             {ticket.responsibility === 'Landlord Wallet' ? 'Pending Assessment' : ticket.responsibility || 'Pending Assessment'}
           </span>
-          <p className="text-[11px] text-[#6c757d]">Created: {ticket.createdAt}</p>
+          <p className="text-[11px] text-[#6c757d] mt-8">Created: {ticket.createdAt}</p>
         </div>
       </div>
       <div className="flex justify-end">

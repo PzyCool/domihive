@@ -91,12 +91,15 @@ const MaintenancePage = () => {
         <button
           key={tab.id}
           onClick={() => setActiveTab(tab.id)}
-          className={`px-4 py-2 text-sm font-semibold border transition-colors ${
-            activeTab === tab.id
-              ? 'border-[var(--accent-color,#9F7539)] text-[var(--accent-color,#9F7539)] bg-[#fff7ed]'
-              : 'border-[var(--primary-color,#0e1f42)] text-white bg-[var(--primary-color,#0e1f42)] hover:bg-[#1a2d5f]'
+          className={`px-4 py-2 text-sm font-semibold border rounded-lg transition-colors maintenance-tab-btn ${
+            activeTab === tab.id ? '' : 'hover:bg-[var(--card-bg,#ffffff)] hover:text-[var(--accent-color,#9F7539)]'
           }`}
-          style={{ borderRadius: '8px' }}
+          style={{
+            borderColor: activeTab === tab.id ? 'var(--accent-color, #9F7539)' : 'var(--text-color, #0e1f42)',
+            color: activeTab === tab.id ? '#fff' : 'var(--text-color, #0e1f42)',
+            backgroundColor: activeTab === tab.id ? 'var(--accent-color, #9F7539)' : 'transparent'
+          }}
+          data-active={activeTab === tab.id}
         >
           {tab.label}
         </button>
@@ -242,11 +245,11 @@ const MaintenancePage = () => {
           </label>
         </div>
 
-        <div className="space-y-2 text-sm text-[#475467] border border-[#e2e8f0] rounded-lg p-3 bg-[#f8fafc]">
+        <div className="space-y-2 text-sm text-[#475467] border border-[#e2e8f0] rounded-lg p-3 bg-[#f8fafc] maintenance-policy-box">
           <p className="font-semibold text-[#0e1f42]">Please read and agree to the maintenance policy before submitting.</p>
           <button
             onClick={() => navigate('/dashboard/rent/maintenance/policy')}
-            className="text-[var(--accent-color,#9F7539)] font-semibold"
+            className="text-[var(--accent-color,#9F7539)] font-semibold maintenance-policy-link"
           >
             Read Maintenance Policy
           </button>
@@ -305,7 +308,7 @@ const MaintenancePage = () => {
               <h3 className="text-lg font-semibold text-[#0e1f42]">{trackingTicket.title}</h3>
               <p className="text-sm text-[#475467]">{trackingTicket.description}</p>
             </div>
-            <span className="px-3 py-1 rounded-full text-xs font-semibold bg-[#e0f2fe] text-[#0e1f42] border border-[#cbd5e1]">
+            <span className="px-3 py-1 rounded-full text-xs font-semibold maintenance-status bg-[#fff7ed] text-[var(--accent-color,#9F7539)] border border-[var(--accent-color,#9F7539)]">
               {trackingTicket.status.replace('_', ' ')}
             </span>
           </div>

@@ -2,7 +2,7 @@ import React from 'react';
 
 const statusColors = {
   SUBMITTED: 'bg-gray-100 text-gray-800',
-  UNDER_REVIEW: 'bg-blue-100 text-blue-800',
+  UNDER_REVIEW: 'bg-[var(--accent-color,#9F7539)] text-white border border-[var(--accent-color,#9F7539)]',
   QUOTE_SHARED: 'bg-amber-100 text-amber-800',
   AWAITING_APPROVAL: 'bg-amber-100 text-amber-800',
   SCHEDULED: 'bg-indigo-100 text-indigo-800',
@@ -31,7 +31,7 @@ const TicketDetailsModal = ({ ticket, onClose }) => {
             <p className="text-sm text-[#475467] mt-1">{ticket.description}</p>
           </div>
           <div className="flex flex-col items-end gap-2">
-            <span className={`px-3 py-1 rounded-full text-xs font-semibold ${statusColors[ticket.status] || 'bg-gray-100 text-gray-800'}`}>
+            <span className={`px-3 py-1 rounded-full text-xs font-semibold maintenance-status ${statusColors[ticket.status] || 'bg-gray-100 text-gray-800'}`}>
               {ticket.status.replace('_', ' ')}
             </span>
             <span className="px-2 py-1 rounded-full text-[11px] font-semibold bg-[#f8fafc] border border-[#e2e8f0] text-[#0e1f42]">
