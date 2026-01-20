@@ -68,7 +68,7 @@ const RatingSummary = ({ property }) => {
       <div className="mt-6 pt-6 border-t border-[#e2e8f0]">
         <h4 className="font-medium text-[#0e1f42] mb-4">Rating Breakdown</h4>
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-          <div className="bg-[#f8fafc] p-3 rounded-lg">
+          <div className="rating-breakdown-card bg-[#f8fafc] p-3 rounded-lg">
             <div className="text-sm text-[#64748b] mb-1">Cleanliness</div>
             <div className="flex items-center gap-1">
               {[...Array(5)].map((_, i) => (
@@ -85,7 +85,7 @@ const RatingSummary = ({ property }) => {
             </div>
           </div>
           
-          <div className="bg-[#f8fafc] p-3 rounded-lg">
+          <div className="rating-breakdown-card bg-[#f8fafc] p-3 rounded-lg">
             <div className="text-sm text-[#64748b] mb-1">Location</div>
             <div className="flex items-center gap-1">
               {[...Array(5)].map((_, i) => (
@@ -102,7 +102,7 @@ const RatingSummary = ({ property }) => {
             </div>
           </div>
           
-          <div className="bg-[#f8fafc] p-3 rounded-lg">
+          <div className="rating-breakdown-card bg-[#f8fafc] p-3 rounded-lg">
             <div className="text-sm text-[#64748b] mb-1">Value for Money</div>
             <div className="flex items-center gap-1">
               {[...Array(5)].map((_, i) => (
@@ -119,7 +119,7 @@ const RatingSummary = ({ property }) => {
             </div>
           </div>
           
-          <div className="bg-[#f8fafc] p-3 rounded-lg">
+          <div className="rating-breakdown-card bg-[#f8fafc] p-3 rounded-lg">
             <div className="text-sm text-[#64748b] mb-1">Maintenance</div>
             <div className="flex items-center gap-1">
               {[...Array(5)].map((_, i) => (

@@ -38,7 +38,7 @@ const AreaToggle = ({ value = 'all', onChange }) => {
               key={option.id}
               type="button"
               onClick={() => handleSelect(option.id)}
-              className={`w-full flex items-center gap-2 px-3 py-2 text-sm text-gray-700 hover:bg-gray-100 transition-colors ${value === option.id ? 'bg-gray-100 font-semibold' : ''}`}
+              className={`advanced-filter-option w-full flex items-center gap-2 px-3 py-2 text-sm text-gray-700 transition-colors ${value === option.id ? 'bg-gray-100 font-semibold' : ''}`}
             >
               <i className={`fas fa-${option.icon} text-[#9f7539] w-4`}></i>
               <span>{option.label}</span>

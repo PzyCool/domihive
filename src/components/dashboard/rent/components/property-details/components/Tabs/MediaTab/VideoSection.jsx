@@ -151,7 +151,7 @@ const VideoSection = ({ property }) => {
 
       {/* Main Video Player */}
       <div className="mb-8" ref={containerRef}>
-        <div className="relative rounded-2xl overflow-hidden bg-black shadow-xl">
+          <div className="video-player-shell relative rounded-2xl overflow-hidden bg-black shadow-xl">
           <div className="aspect-video flex items-center justify-center bg-gradient-to-br from-gray-900 to-black">
             {isPlaying ? (
               <div className="relative w-full h-full">
@@ -271,7 +271,7 @@ const VideoSection = ({ property }) => {
           return (
             <div
               key={video.id}
-              className={`relative rounded-xl overflow-hidden cursor-pointer transition-all duration-300 group ${
+              className={`video-card relative rounded-xl overflow-hidden cursor-pointer transition-all duration-300 group ${
                 activeVideo === index 
                   ? 'ring-3 ring-[#9f7539] transform scale-[1.02] shadow-lg' 
                   : 'hover:ring-2 hover:ring-[#9f7539]/50 hover:shadow-md'
@@ -344,23 +344,23 @@ const VideoSection = ({ property }) => {
       </div>
 
       {/* Stats Bar */}
-      <div className="mt-8 p-4 bg-[#f8fafc] rounded-xl border border-[#e2e8f0]">
+      <div className="video-stats mt-8 p-4 bg-[#f8fafc] rounded-xl border border-[#e2e8f0]">
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-          <div className="text-center">
+          <div className="text-center video-stat-card">
             <div className="text-2xl font-bold text-[#0e1f42]">{videos.length}</div>
             <div className="text-sm text-[#64748b]">Total Videos</div>
           </div>
-          <div className="text-center">
+          <div className="text-center video-stat-card">
             <div className="text-2xl font-bold text-[#0e1f42]">24m</div>
             <div className="text-sm text-[#64748b]">Total Duration</div>
           </div>
-          <div className="text-center">
+          <div className="text-center video-stat-card">
             <div className="text-2xl font-bold text-[#0e1f42]">HD</div>
             <div className="text-sm text-[#64748b]">Video Quality</div>
           </div>
-          <div className="text-center">
+          <div className="text-center video-stat-card">
             <div className="text-2xl font-bold text-[#0e1f42]">EN</div>
-            <div className="text-sm text-[#64748b">Audio Language</div>
+            <div className="text-sm text-[#64748b]">Audio Language</div>
           </div>
         </div>
       </div>

@@ -91,7 +91,7 @@ const ApplicationTrackPage = () => {
               <p className="text-xs text-[#6c757d]">Application ID</p>
               <p className="text-sm font-semibold text-[#0e1f42]">{application.id}</p>
             </div>
-            <span className={`px-3 py-1 rounded-full text-xs font-semibold ${statusColor(application.status)}`}>
+            <span className={`px-3 py-1 rounded-full text-xs font-semibold app-track-badge ${statusColor(application.status)}`}>
               {STATUS_LABELS[flowStatus] || application.status}
             </span>
           </div>

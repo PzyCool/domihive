@@ -51,13 +51,13 @@ const PropertyTabs = ({ property }) => {
 
   return (
     <div className="property-tabs mt-8">
-      <div className="sticky top-20 z-30 bg-white border-b border-[#e2e8f0] rounded-t-2xl shadow-sm">
+      <div className="property-tabs-header sticky top-[80px] lg:top-[96px] z-[100] bg-white border-b border-[#e2e8f0] rounded-t-2xl shadow-sm">
         <div className="flex">
           {tabs.map((tab) => (
             <button
               key={tab.id}
               onClick={() => setActiveTab(tab.id)}
-              className={`flex-1 px-6 py-4 text-center font-medium transition-all duration-300 ease-in-out ${
+              className={`property-tab-btn ${activeTab === tab.id ? 'active' : ''} flex-1 px-6 py-4 text-center font-medium transition-all duration-300 ease-in-out ${
                 activeTab === tab.id
                   ? 'text-[#0e1f42] border-b-2 border-[#9f7539] bg-gradient-to-b from-white to-[#f8fafc]'
                   : 'text-[#64748b] hover:text-[#0e1f42] hover:bg-[#f8fafc]'

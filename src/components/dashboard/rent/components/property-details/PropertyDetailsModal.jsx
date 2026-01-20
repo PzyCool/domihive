@@ -40,7 +40,7 @@ const PropertyDetailsModal = ({ propertyId, isOpen, onClose }) => {
       {/* Main Content */}
       <div className="property-details-content p-4 md:p-6">
         {/* CHANGED: Wrapped content in white container with shadow/border */}
-        <div className="bg-white rounded-lg shadow-md border border-[#e2e8f0] p-4 md:p-6">
+        <div className="property-details-card bg-white rounded-lg shadow-md border border-[#e2e8f0] p-4 md:p-6">
           {loading ? (
             <div className="flex items-center justify-center min-h-[400px]">
               <div className="text-center">
@@ -67,7 +67,7 @@ const PropertyDetailsModal = ({ propertyId, isOpen, onClose }) => {
               <div className="mb-6">
                 <button
                   onClick={onClose}
-                  className="flex items-center gap-2 px-4 py-2 rounded-lg hover:bg-gray-100 transition-colors text-gray-700 hover:text-gray-900"
+                  className="property-back-btn flex items-center gap-2 px-4 py-2 rounded-lg hover:bg-gray-100 transition-colors text-gray-700 hover:text-gray-900"
                 >
                   <i className="fas fa-arrow-left"></i>
                   <span className="font-medium">Back to Browse</span>
@@ -86,10 +86,10 @@ const PropertyDetailsModal = ({ propertyId, isOpen, onClose }) => {
               <PropertyTabs property={property} />
               
               {/* Bottom Navigation - Back to Browse Button */}
-              <div className="mt-8 pt-8 border-t border-[#e2e8f0]">
+              <div className="property-details-footer mt-8 pt-8 border-t border-[#e2e8f0]">
                 <button
                   onClick={onClose}
-                  className="flex items-center gap-2 px-6 py-3 bg-[#f8fafc] border border-[#e2e8f0] text-[#0e1f42] font-semibold rounded-lg hover:bg-[#e2e8f0] transition-all duration-300 w-full sm:w-auto justify-center"
+                  className="property-back-btn flex items-center gap-2 px-6 py-3 bg-[#f8fafc] border border-[#e2e8f0] text-[#0e1f42] font-semibold rounded-lg hover:bg-[#e2e8f0] transition-all duration-300 w-full sm:w-auto justify-center"
                 >
                   <i className="fas fa-arrow-left"></i>
                   Back to Browse

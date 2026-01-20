@@ -281,7 +281,7 @@ const InspectionForm = ({ propertyId, formValues, onFormChange }) => {
         )}
         
         {/* Time Slots Info */}
-        <div className="flex items-start gap-3 p-4 bg-gradient-to-r from-[rgba(159,117,57,0.08)] to-[rgba(181,138,74,0.08)] rounded-lg border-l-4 border-[#9f7539] mt-4">
+        <div className="inspection-note flex items-start gap-3 p-4 bg-gradient-to-r from-[rgba(159,117,57,0.08)] to-[rgba(181,138,74,0.08)] rounded-lg border-l-4 border-[#9f7539] mt-4">
           <i className="fas fa-info-circle text-[#9f7539] text-lg mt-0.5"></i>
           <div className="text-sm text-[#334155]">
             Each inspection slot is 1 hour 30 min between 9:00 AM - 5:00 PM, Monday to Friday

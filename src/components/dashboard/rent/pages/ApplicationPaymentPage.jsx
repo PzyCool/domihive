@@ -84,8 +84,8 @@ const ApplicationPaymentPage = () => {
             <button
               key={method.id}
               onClick={() => setSelectedMethod(method.id)}
-              className={`p-4 rounded-2xl border transition-all text-left hover:border-[var(--accent-color,#9F7539)] hover:shadow-md ${
-                selectedMethod === method.id ? 'border-[#d97706] bg-[#fff7ed] shadow-lg' : 'border-[#e2e8f0] bg-white'
+              className={`application-payment-method p-4 rounded-2xl border transition-all text-left hover:border-[var(--accent-color,#9F7539)] hover:shadow-md ${
+                selectedMethod === method.id ? 'active border-[#d97706] bg-[#fff7ed] shadow-lg' : 'border-[#e2e8f0] bg-white'
               }`}
             >
               <div className="text-sm font-semibold text-[#0e1f42]">{method.label}</div>

@@ -36,7 +36,7 @@ const PropertyTypeDropdown = ({ value, onChange }) => {
                 onChange(option.id);
                 setIsOpen(false);
               }}
-              className="w-full px-3 py-2 text-left hover:bg-gray-50 transition-colors text-sm"
+              className="advanced-filter-option w-full px-3 py-2 text-left transition-colors text-sm"
             >
               {option.label}
             </button>

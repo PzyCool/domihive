@@ -18,7 +18,7 @@ const ReviewCard = ({ review }) => {
       <div className="flex items-start justify-between mb-4">
         <div className="flex items-center gap-3">
           {/* Avatar */}
-          <div className="w-12 h-12 bg-[#f8fafc] rounded-full flex items-center justify-center border border-[#e2e8f0]">
+          <div className="review-avatar w-12 h-12 bg-[#f8fafc] rounded-full flex items-center justify-center border border-[#e2e8f0]">
             <span className="text-lg font-bold text-[#0e1f42]">
               {review.name.charAt(0)}
             </span>
@@ -29,7 +29,7 @@ const ReviewCard = ({ review }) => {
             <div className="flex items-center gap-2">
               <h4 className="font-bold text-[#0e1f42]">{review.name}</h4>
               {review.verified && (
-                <span className="px-2 py-1 bg-green-100 text-green-800 text-xs rounded-full font-medium">
+                <span className="review-verified px-2 py-1 bg-green-100 text-green-800 text-xs rounded-full font-medium">
                   Verified
                 </span>
               )}
@@ -75,7 +75,7 @@ const ReviewCard = ({ review }) => {
           {review.tags.map((tag, index) => (
             <span
               key={index}
-              className="px-3 py-1 bg-[#f8fafc] text-[#0e1f42] text-sm rounded-lg border border-[#e2e8f0]"
+              className="review-tag px-3 py-1 bg-[#f8fafc] text-[#0e1f42] text-sm rounded-lg border border-[#e2e8f0]"
             >
               {tag}
             </span>
@@ -87,7 +87,7 @@ const ReviewCard = ({ review }) => {
       <div className="flex items-center justify-between pt-4 border-t border-[#e2e8f0]">
         <button
           onClick={handleHelpful}
-          className={`flex items-center gap-2 px-4 py-2 rounded-lg transition-colors duration-300 ${
+          className={`review-helpful flex items-center gap-2 px-4 py-2 rounded-lg transition-colors duration-300 ${
             isHelpful
               ? 'bg-green-50 text-green-700 border border-green-200'
               : 'bg-[#f8fafc] text-[#64748b] hover:bg-[#e2e8f0] border border-[#e2e8f0]'
@@ -115,10 +115,10 @@ const ReviewCard = ({ review }) => {
 
         {/* Report/Share */}
         <div className="flex items-center gap-4">
-          <button className="text-[#64748b] hover:text-[#0e1f42] text-sm transition-colors duration-300">
+          <button className="review-link text-[#64748b] hover:text-[#0e1f42] text-sm transition-colors duration-300">
             Report
           </button>
-          <button className="text-[#64748b] hover:text-[#0e1f42] text-sm transition-colors duration-300">
+          <button className="review-link text-[#64748b] hover:text-[#0e1f42] text-sm transition-colors duration-300">
             Share
           </button>
         </div>

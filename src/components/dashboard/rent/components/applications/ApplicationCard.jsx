@@ -68,7 +68,7 @@ const ApplicationCard = ({ application, onAction }) => {
           </div>
         </div>
       </div>
-      <div className="border-t border-[#e2e8f0] px-5 py-3 text-xs text-[#475467] bg-[#fdfdfd] flex flex-wrap gap-4">
+      <div className="application-card-footer border-t border-[#e2e8f0] px-5 py-3 text-xs text-[#475467] bg-[#fdfdfd] flex flex-wrap gap-4">
         <span className="flex items-center gap-1">
           <i className="fas fa-user-check text-[#0e1f42]"></i>
           {application.status === 'APPROVED' ? 'Tenant verified' : 'Application in pipeline'}

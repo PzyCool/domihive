@@ -44,7 +44,7 @@ const LocationDropdown = ({ value, areaType, onChange }) => {
               onChange('all');
               setIsOpen(false);
             }}
-            className="w-full px-3 py-2 text-left hover:bg-gray-50 transition-colors text-sm"
+            className="advanced-filter-option w-full px-3 py-2 text-left transition-colors text-sm"
           >
             All Locations
           </button>
@@ -55,7 +55,7 @@ const LocationDropdown = ({ value, areaType, onChange }) => {
                 onChange(location);
                 setIsOpen(false);
               }}
-              className="w-full px-3 py-2 text-left hover:bg-gray-50 transition-colors text-sm"
+              className="advanced-filter-option w-full px-3 py-2 text-left transition-colors text-sm"
             >
               {location}
             </button>

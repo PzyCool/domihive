@@ -64,7 +64,7 @@ const ManagementDropdown = ({ value, onChange }) => {
                 onChange(option.value);
                 setIsOpen(false);
               }}
-              className={`w-full flex items-start gap-3 px-3 py-3 hover:bg-gray-50 transition-colors ${
+              className={`advanced-filter-option w-full flex items-start gap-3 px-3 py-3 transition-colors ${
                 option.value === selectedOption.value ? 'bg-blue-50' : ''
               }`}
             >

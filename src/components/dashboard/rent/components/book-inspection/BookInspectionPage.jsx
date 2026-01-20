@@ -87,12 +87,12 @@ const BookInspectionPage = ({ propertyId, onBack }) => {
     <div className="book-inspection-page min-h-screen bg-gradient-to-br from-gray-50 to-gray-100">
       {/* Main Content */}
       <div className="property-details-content p-4 md:p-6">
-        <div className="bg-white rounded-lg shadow-md border border-[#e2e8f0] p-4 md:p-6">
+        <div className="book-inspection-card bg-white rounded-lg shadow-md border border-[#e2e8f0] p-4 md:p-6">
           {/* Back to Browse Navigation - Top */}
           <div className="mb-6">
             <button
               onClick={handleBackClick}
-              className="flex items-center gap-2 px-4 py-2 rounded-lg hover:bg-gray-100 transition-colors text-gray-700 hover:text-gray-900"
+              className="property-back-btn flex items-center gap-2 px-4 py-2 rounded-lg hover:bg-gray-100 transition-colors text-gray-700 hover:text-gray-900"
             >
               <i className="fas fa-arrow-left"></i>
               <span className="font-medium">Back to Browse</span>

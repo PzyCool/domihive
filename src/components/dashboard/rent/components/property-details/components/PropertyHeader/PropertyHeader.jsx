@@ -58,7 +58,7 @@ const PropertyHeader = ({ property }) => {
       </div>
 
       {/* Detailed Specifications - Compact Accordion Style */}
-      <div className="bg-[#f8fafc] p-5 rounded-xl border border-[#e2e8f0]">
+      <div className="spec-card bg-[#f8fafc] p-5 rounded-xl border border-[#e2e8f0]">
         <h2 className="text-xl font-bold text-[#0e1f42] mb-4">Specifications</h2>
         
         <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
