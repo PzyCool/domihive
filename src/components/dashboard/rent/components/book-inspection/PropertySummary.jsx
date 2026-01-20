@@ -18,7 +18,7 @@ const PropertySummary = ({ propertyId }) => {
   };
 
   return (
-    <section className="bg-white rounded-2xl shadow-[0_4px_20px_rgba(0,0,0,0.08)] border border-[rgba(14,31,66,0.05)] p-6 md:p-8">
+    <section className="inspection-summary-card bg-white rounded-2xl shadow-[0_4px_20px_rgba(0,0,0,0.08)] border border-[rgba(14,31,66,0.05)] p-6 md:p-8">
       <div className="text-center mb-8 pb-6 border-b border-[#e2e8f0]">
         <h1 className="text-2xl md:text-3xl font-bold text-[#0e1f42] mb-2">
           Book Property Inspection
@@ -28,7 +28,7 @@ const PropertySummary = ({ propertyId }) => {
         </p>
       </div>
 
-      <div className="flex flex-col md:flex-row gap-8 items-center bg-[#f8fafc] rounded-xl p-6 hover:shadow-[0_8px_25px_rgba(0,0,0,0.1)] hover:-translate-y-0.5 transition-all duration-300">
+      <div className="inspection-summary-inner flex flex-col md:flex-row gap-8 items-center bg-[#f8fafc] rounded-xl p-6 hover:shadow-[0_8px_25px_rgba(0,0,0,0.1)] hover:-translate-y-0.5 transition-all duration-300">
         {/* Property Image */}
         <div className="w-full md:w-48 lg:w-56 xl:w-64 h-48 md:h-auto flex-shrink-0 rounded-lg overflow-hidden">
           <img

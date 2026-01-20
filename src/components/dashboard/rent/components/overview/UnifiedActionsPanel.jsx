@@ -341,7 +341,7 @@ const UnifiedActionsPanel = () => {
 
       {/* REPLACEMENT: Rental Journey Status Section (instead of Quick Actions) */}
       <div>
-        <h3 className="font-bold text-[#0e1f42] mb-6 flex items-center gap-2">
+        <h3 className="font-bold text-[#0e1f42] mb-6 flex items-center gap-2 status-heading">
           <i className="fas fa-road text-[#9f7539]"></i>
           Your Rental Journey Status
         </h3>

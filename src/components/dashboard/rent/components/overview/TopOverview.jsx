@@ -148,12 +148,12 @@ const TopOverview = () => {
         <div className="flex flex-col h-full">
           <div className="flex items-center justify-between mb-4">
             <h3 className="font-bold text-[var(--text-color,#0e1f42)]">Recently Viewed</h3>
-            <div className="text-xs px-3 py-1.5 bg-blue-100 text-blue-800 rounded-full font-medium">
+            <div className="text-xs px-3 py-1.5 bg-blue-100 text-blue-800 rounded-full font-medium overview-pill">
               VIEWED {property.viewedAt.toUpperCase()}
             </div>
           </div>
 
-          <div className="bg-[#f8fafc] rounded-xl border border-[#e2e8f0] overflow-hidden flex-1 flex flex-col">
+          <div className="overview-card bg-[#f8fafc] rounded-xl border border-[#e2e8f0] overflow-hidden flex-1 flex flex-col">
             {/* Property Image */}
             <div className="relative h-40 flex-shrink-0">
               <img
@@ -184,7 +184,7 @@ const TopOverview = () => {
               {/* Features Grid */}
               <div className="grid grid-cols-2 gap-2 mb-3">
                 {features.map((feature, index) => (
-                  <div key={index} className="bg-white rounded-lg p-2 hover:bg-gray-50 transition-colors border border-[#e2e8f0]">
+                  <div key={index} className="overview-feature bg-white rounded-lg p-2 hover:bg-gray-50 transition-colors border border-[#e2e8f0]">
                     <div className="flex items-center gap-2">
                       <i className={`fas fa-${feature.icon} text-[#9f7539] text-sm`}></i>
                       <div>
@@ -224,7 +224,7 @@ const TopOverview = () => {
           </div>
 
           <div
-            className="bg-[#f8fafc] rounded-xl p-4 border border-[#e2e8f0] hover:border-[#9f7539]/30 cursor-pointer transition-all duration-300 hover:translate-x-2 hover:shadow-md group flex flex-col gap-4 flex-1"
+            className="overview-card stats-card bg-[#f8fafc] rounded-xl p-4 border border-[#e2e8f0] hover:border-[#9f7539]/30 cursor-pointer transition-all duration-300 hover:translate-x-2 hover:shadow-md group flex flex-col gap-4 flex-1"
             onClick={() => navigate('/dashboard/rent/my-properties')}
           >
             <div className="flex items-center gap-3">
@@ -271,7 +271,7 @@ const TopOverview = () => {
           <div className="flex items-center justify-between mb-4">
             <h3 className="font-bold text-[var(--text-color,#0e1f42)]">Rental Timeline</h3>
             <div className="flex items-center gap-2">
-              <div className="flex gap-1 bg-gray-100 rounded-lg p-1">
+              <div className="flex gap-1 bg-gray-100 rounded-lg p-1 timeline-toggle">
                 {['month', 'week'].map((item) => (
                   <button
                     key={item}
@@ -300,9 +300,9 @@ const TopOverview = () => {
             className="relative flex-1"
           >
             {/* Compact Calendar */}
-            <div className={`bg-[#f8fafc] rounded-xl p-4 border border-[#e2e8f0] h-full flex flex-col justify-between transition-all duration-300 ${
-              isExpanded ? 'shadow-lg' : 'hover:shadow-md'
-            }`}>
+              <div className={`overview-card timeline-card bg-[#f8fafc] rounded-xl p-4 border border-[#e2e8f0] h-full flex flex-col justify-between transition-all duration-300 ${
+                isExpanded ? 'shadow-lg' : 'hover:shadow-md'
+              }`}>
               <div>
                 <div className="flex items-center justify-between mb-3">
                   <button onClick={goPrev} className="text-[#64748b] hover:text-[#0e1f42] w-6 h-6 flex items-center justify-center rounded-lg hover:bg-gray-100">
@@ -382,12 +382,12 @@ const TopOverview = () => {
                 )}
 
                 {/* Timeline Stats */}
-                <div className="grid grid-cols-2 gap-2 mt-4">
-                  {timelineStats.slice(0, 2).map((stat, index) => (
-                    <div key={index} className="bg-white rounded-lg p-2 border border-[#e2e8f0] hover:border-[#9f7539]/30 transition-colors">
-                      <div className="flex items-center gap-2">
-                        <div className="w-6 h-6 rounded-lg bg-[#f8fafc] flex items-center justify-center text-[#9f7539]">
-                          <i className={`fas fa-${stat.icon} text-xs`}></i>
+                  <div className="grid grid-cols-2 gap-2 mt-4">
+                    {timelineStats.slice(0, 2).map((stat, index) => (
+                      <div key={index} className="timeline-stat-card bg-white rounded-lg p-2 border border-[#e2e8f0] hover:border-[#9f7539]/30 transition-colors">
+                        <div className="flex items-center gap-2">
+                          <div className="w-6 h-6 rounded-lg bg-[#f8fafc] flex items-center justify-center text-[#9f7539]">
+                            <i className={`fas fa-${stat.icon} text-xs`}></i>
                         </div>
                         <div>
                           <div className="text-xs text-[#64748b]">{stat.label}</div>
@@ -404,7 +404,7 @@ const TopOverview = () => {
             {/* Expanded Overlay */}
             {isExpanded && (
               <div className="absolute top-0 left-0 w-full z-10 animate-slide-in-top">
-                <div className="bg-white rounded-xl shadow-2xl border border-[#e2e8f0] p-4 mt-2 max-h-80 overflow-y-auto no-scrollbar">
+                <div className="timeline-overlay bg-white rounded-xl shadow-2xl border border-[#e2e8f0] p-4 mt-2 max-h-80 overflow-y-auto no-scrollbar">
                   <div className="flex items-center justify-between mb-4">
                     <h3 className="font-bold text-[var(--text-color,#0e1f42)] text-sm">Timeline Details</h3>
                     <button

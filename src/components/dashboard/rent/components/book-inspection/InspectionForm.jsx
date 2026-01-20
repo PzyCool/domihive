@@ -141,15 +141,42 @@ const InspectionForm = ({ propertyId, formValues, onFormChange }) => {
         </label>
         
         {loadingDates ? (
-          <div className="flex items-center justify-center p-8 bg-[#f8fafc] rounded-xl border border-dashed border-[#e2e8f0]">
-            <i className="fas fa-spinner fa-spin text-[#9f7539] mr-3"></i>
-            <span className="text-[#64748b]">Loading available dates...</span>
+          <div
+            className="inspection-empty themed-card flex items-center justify-center p-8 rounded-xl border border-dashed bg-[#f8fafc] border-[#e2e8f0]"
+            style={{
+              backgroundColor: 'var(--card-bg, #111827)',
+              color: 'var(--text-color, #f8fafc)',
+              borderColor: 'rgba(255,255,255,0.15)'
+            }}
+          >
+            <i
+              className="fas fa-spinner fa-spin mr-3"
+              style={{ color: 'var(--accent-color, #9f7539)' }}
+            ></i>
+            <span style={{ color: 'var(--text-color, #f8fafc)' }}>Loading available dates...</span>
           </div>
         ) : availableDates.length === 0 ? (
-          <div className="text-center p-8 bg-[#f8fafc] rounded-xl border border-dashed border-[#e2e8f0]">
-            <i className="fas fa-calendar-times text-3xl text-[#64748b] mb-3"></i>
-            <h4 className="text-[#0e1f42] font-semibold mb-1">No Available Dates</h4>
-            <p className="text-[#64748b]">Please check back later for available inspection dates</p>
+          <div
+            className="inspection-empty themed-card text-center p-8 rounded-xl border border-dashed bg-[#f8fafc] border-[#e2e8f0]"
+            style={{
+              backgroundColor: 'var(--card-bg, #111827)',
+              color: 'var(--text-color, #f8fafc)',
+              borderColor: 'rgba(255,255,255,0.15)'
+            }}
+          >
+            <i
+              className="fas fa-calendar-times text-3xl mb-3"
+              style={{ color: 'var(--text-color, #f8fafc)' }}
+            ></i>
+            <h4
+              className="font-semibold mb-1"
+              style={{ color: 'var(--text-color, #f8fafc)' }}
+            >
+              No Available Dates
+            </h4>
+            <p style={{ color: 'var(--text-color, #f8fafc)' }}>
+              Please check back later for available inspection dates
+            </p>
           </div>
         ) : (
           <>
@@ -235,12 +262,16 @@ const InspectionForm = ({ propertyId, formValues, onFormChange }) => {
         </label>
         
         {!inspectionDate ? (
-          <div className="flex items-center justify-center p-8 bg-[#f8fafc] rounded-xl border border-dashed border-[#e2e8f0]">
+          <div
+            className="inspection-empty flex items-center justify-center p-8 bg-[#f8fafc] rounded-xl border border-dashed border-[#e2e8f0]"
+          >
             <i className="fas fa-clock text-[#9f7539] mr-3"></i>
             <span className="text-[#64748b]">Please select a date first</span>
           </div>
         ) : availableTimes.length === 0 ? (
-          <div className="text-center p-8 bg-[#f8fafc] rounded-xl border border-dashed border-[#e2e8f0]">
+          <div
+            className="inspection-empty text-center p-8 bg-[#f8fafc] rounded-xl border border-dashed border-[#e2e8f0]"
+          >
             <i className="fas fa-clock text-3xl text-[#64748b] mb-3"></i>
             <h4 className="text-[#0e1f42] font-semibold mb-1">No Available Times</h4>
             <p className="text-[#64748b]">All time slots are booked for this date</p>
