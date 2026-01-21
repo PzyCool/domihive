@@ -21,8 +21,7 @@ const HowItWorks = () => {
   };
 
   const handleBuyerClick = () => {
-    setListingType('buy');
-    scrollToSection('properties');
+    // Coming soon: buy journey
   };
 
   const processSteps = [
@@ -73,15 +72,15 @@ const HowItWorks = () => {
       user: 'buyer',
       icon: 'fas fa-home',
       title: 'For Buyers',
-      badge: 'Property Ownership',
+      badge: 'Coming Soon',
       benefits: [
-        'Verified listings with genuine property owners',
-        'Affordable properties across prime locations',
-        'Expert assistance through the buying process',
-        'Transparent pricing and documentation',
-        'Secure payment and title verification'
+        'We are focused on rentals right now',
+        'Buying journey will launch soon',
+        'Stay tuned for verified sale listings',
+        'Expert guidance and secure process',
+        'Transparent pricing and documentation'
       ],
-      buttonText: 'Explore Properties for Sale',
+      buttonText: 'Coming Soon',
       buttonType: 'accent',
       onClick: handleBuyerClick
     }

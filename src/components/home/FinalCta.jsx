@@ -23,8 +23,7 @@ const FinalCta = () => {
   };
 
   const handleBuyerClick = () => {
-    setListingType('buy');
-    scrollToSection('properties');
+    // Coming soon: buyer journey placeholder
   };
 
   const handleAppClick = () => {
@@ -48,9 +47,9 @@ const FinalCta = () => {
       id: 'buyer',
       icon: 'fas fa-home',
       title: 'Buy Property',
-      description: 'Discover verified homes and properties for sale with transparent pricing and trusted agents.',
-      buttonText: 'Explore Properties',
-      buttonIcon: 'fas fa-arrow-right',
+      description: 'Buyer journey launching soon. We\'re focused on rentals first.',
+      buttonText: 'Coming Soon',
+      buttonIcon: 'fas fa-clock',
       buttonType: 'accent',
       onClick: handleBuyerClick
     },

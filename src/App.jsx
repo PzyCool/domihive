@@ -28,6 +28,15 @@ import PaymentsPage from './components/dashboard/rent/pages/PaymentsPage';
 import MessagesPage from './components/dashboard/rent/pages/MessagesPage';
 import SettingsPage from './components/dashboard/pages/SettingsPage';
 import FavoritesPage from './components/dashboard/rent/pages/FavoritesPage';
+import AdminLayout from './components/admin/layout/AdminLayout';
+import AdminDashboard from './components/admin/pages/AdminDashboard';
+import AdminProperties from './components/admin/pages/AdminProperties';
+import AdminLocationsFilters from './components/admin/pages/AdminLocationsFilters';
+import AdminInspectionSlots from './components/admin/pages/AdminInspectionSlots';
+import AdminInspections from './components/admin/pages/AdminInspections';
+import AdminApplications from './components/admin/pages/AdminApplications';
+import AdminTenants from './components/admin/pages/AdminTenants';
+import AdminContentPolicies from './components/admin/pages/AdminContentPolicies';
 import './App.css';
 
 function App() {
@@ -53,6 +62,19 @@ function App() {
         {/* Auth pages without Header/Footer */}
         <Route path="/signup" element={<SignupPage />} />
         <Route path="/login" element={<LoginPage />} />
+        {/* Admin routes */}
+        <Route path="/admin" element={<AdminLayout />}>
+          <Route index element={<AdminDashboard />} />
+          <Route path="properties" element={<AdminProperties />} />
+          <Route path="locations-filters" element={<AdminLocationsFilters />} />
+          <Route path="inspection-slots" element={<AdminInspectionSlots />} />
+          <Route path="inspections" element={<AdminInspections />} />
+          <Route path="applications" element={<AdminApplications />} />
+          <Route path="tenants" element={<AdminTenants />} />
+          <Route path="content-policies" element={<AdminContentPolicies />} />
+        </Route>
+
+
         {/* Dashboard routes */}
         <Route path="/dashboard" element={<DashboardLayout />}>
           <Route index element={<Navigate to="rent/overview" replace />} />

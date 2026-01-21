@@ -6,7 +6,6 @@ import ViewToggle from './components/ViewToggle';
 import ManagementDropdown from './components/ManagementDropdown';
 import ExpandButton from './components/ExpandButton';
 import ForRentOverlayIcon from './AdvancedFilterOverlay/ForRent/ForRentOverlayIcon';
-import ForSalesOverlayIcon from './AdvancedFilterOverlay/ForSales/ForSalesOverlayIcon';
 
 const PrimaryRow = ({
   filters,
@@ -33,10 +32,7 @@ const PrimaryRow = ({
     onFilterChange({ managementType });
   };
   
-  const handleListingTypeToggle = () => {
-    const newType = filters.listingType === 'rent' ? 'buy' : 'rent';
-    onFilterChange({ listingType: newType });
-  };
+  // Listing type stays on rent (for sale removed)
 
   return (
     <div className="primary-row flex flex-col md:flex-row md:items-center md:justify-between px-4 lg:px-6 py-3 border-b border-[#0e1f42]/10 gap-3 md:gap-0">
@@ -56,39 +52,15 @@ const PrimaryRow = ({
 
           {/* Listing Type Toggle */}
           <div className="flex items-center gap-1 bg-gray-100 rounded-lg p-1">
-            <button
-              onClick={handleListingTypeToggle}
-              className={`px-3 py-1.5 rounded text-sm font-medium transition-all ${
-                filters.listingType === 'rent' 
-                  ? 'bg-white shadow-sm text-[#9f7539]' 
-                  : 'hover:bg-gray-200 text-gray-700'
-              }`}
-            >
+            <span className="px-3 py-1.5 rounded text-sm font-medium bg-white shadow-sm text-[#9f7539]">
               For Rent
-            </button>
-            <button
-              onClick={handleListingTypeToggle}
-              className={`px-3 py-1.5 rounded text-sm font-medium transition-all ${
-                filters.listingType === 'buy' 
-                  ? 'bg-white shadow-sm text-[#9f7539]' 
-                  : 'hover:bg-gray-200 text-gray-700'
-              }`}
-            >
-              For Sale
-            </button>
+            </span>
           </div>
 
-          {filters.listingType === 'rent' ? (
-            <ForRentOverlayIcon
-              isActive={showAdvancedFilters}
-              onClick={onAdvancedToggle}
-            />
-          ) : (
-            <ForSalesOverlayIcon
-              isActive={showAdvancedFilters}
-              onClick={onAdvancedToggle}
-            />
-          )}
+          <ForRentOverlayIcon
+            isActive={showAdvancedFilters}
+            onClick={onAdvancedToggle}
+          />
         </div>
       </div>
       

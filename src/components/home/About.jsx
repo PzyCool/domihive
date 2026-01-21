@@ -25,8 +25,8 @@ const About = () => {
     {
       id: 4,
       icon: 'fas fa-home',
-      title: 'Buyer-Focused',
-      description: 'Tailored property options for buyers, offering verified listings, transparent pricing, and expert support through the purchase process.'
+      title: 'Buyer Experience (Coming Soon)',
+      description: 'We\'re focused on rentals first. A dedicated buyer journey with verified listings and transparent support is coming soon.'
     },
     {
       id: 5,
