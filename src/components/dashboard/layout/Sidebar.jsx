@@ -11,8 +11,7 @@ const Sidebar = ({ sidebarState, toggleSidebar, closeMobileSidebar, isMobile, cu
   const location = useLocation();
   const sidebarNavRef = useRef(null);
   const activeLinkRef = useRef(null);
-  const [tooltip, setTooltip] = useState({ label: '', x: 0, y: 0, visible: false });
-  
+
   // Image paths constants
   const IMAGES = {
     icon: iconImage,
@@ -20,7 +19,7 @@ const Sidebar = ({ sidebarState, toggleSidebar, closeMobileSidebar, isMobile, cu
     placeholderIcon: 'https://via.placeholder.com/28?text=DH',
     placeholderLogo: 'https://via.placeholder.com/150x32?text=DomiHive'
   };
-  
+
   // Get dashboard-specific navigation items - MATCHING HTML STRUCTURE
   const getDashboardNavItems = () => {
     const navConfigs = {
@@ -42,10 +41,10 @@ const Sidebar = ({ sidebarState, toggleSidebar, closeMobileSidebar, isMobile, cu
       },
       // Other dashboards will be added later
     };
-    
+
     return navConfigs[currentDashboard] || navConfigs.rent;
   };
-  
+
   const navItems = getDashboardNavItems();
   const isExpanded = sidebarState === 'expanded';
   const isCollapsed = sidebarState === 'collapsed';
@@ -85,7 +84,7 @@ const Sidebar = ({ sidebarState, toggleSidebar, closeMobileSidebar, isMobile, cu
       }
     `;
     document.head.appendChild(style);
-    
+
     return () => {
       document.head.removeChild(style);
     };
@@ -104,22 +103,22 @@ const Sidebar = ({ sidebarState, toggleSidebar, closeMobileSidebar, isMobile, cu
 
       // Store reference for cleanup
       activeLinkRef.current = activeLink;
-      
+
       // Calculate scroll position
       const navRect = sidebarNav.getBoundingClientRect();
       const linkRect = activeLink.getBoundingClientRect();
       const navScrollTop = sidebarNav.scrollTop;
       const linkTopRelativeToNav = linkRect.top - navRect.top + navScrollTop;
-      
+
       // Calculate middle position
       const targetScrollTop = linkTopRelativeToNav - (navRect.height / 2) + (linkRect.height / 2);
-      
+
       // Only scroll if link is not in viewport
       const isInView = (
-        linkTopRelativeToNav >= navScrollTop && 
+        linkTopRelativeToNav >= navScrollTop &&
         linkTopRelativeToNav <= navScrollTop + navRect.height - linkRect.height
       );
-      
+
       if (!isInView) {
         // Smooth scroll to position
         sidebarNav.scrollTo({
@@ -127,10 +126,10 @@ const Sidebar = ({ sidebarState, toggleSidebar, closeMobileSidebar, isMobile, cu
           behavior: 'smooth'
         });
       }
-      
+
       // Add highlight effect
       activeLink.classList.add('scroll-highlight');
-      
+
       // Remove highlight after animation
       setTimeout(() => {
         if (activeLinkRef.current === activeLink) {
@@ -146,30 +145,30 @@ const Sidebar = ({ sidebarState, toggleSidebar, closeMobileSidebar, isMobile, cu
     if (isMobile && closeMobileSidebar) {
       closeMobileSidebar();
     }
-    
+
     const clickedLink = e.currentTarget;
     const sidebarNav = sidebarNavRef.current;
-    
+
     if (!sidebarNav) return;
-    
+
     // Calculate scroll position
     const navRect = sidebarNav.getBoundingClientRect();
     const linkRect = clickedLink.getBoundingClientRect();
     const navScrollTop = sidebarNav.scrollTop;
     const linkTopRelativeToNav = linkRect.top - navRect.top + navScrollTop;
-    
+
     // Calculate middle position
     const targetScrollTop = linkTopRelativeToNav - (navRect.height / 2) + (linkRect.height / 2);
-    
+
     // Smooth scroll to position
     sidebarNav.scrollTo({
       top: targetScrollTop,
       behavior: 'smooth'
     });
-    
+
     // Add highlight effect
     clickedLink.classList.add('scroll-highlight');
-    
+
     // Remove highlight after animation
     setTimeout(() => {
       clickedLink.classList.remove('scroll-highlight');
@@ -181,27 +180,6 @@ const Sidebar = ({ sidebarState, toggleSidebar, closeMobileSidebar, isMobile, cu
       logout();
       // Redirect handled by AuthContext
     }
-  };
-
-  useEffect(() => {
-    if (!isCollapsed && tooltip.visible) {
-      setTooltip((prev) => ({ ...prev, visible: false }));
-    }
-  }, [isCollapsed, tooltip.visible]);
-
-  const showTooltip = (label, event) => {
-    if (!isCollapsed) return;
-    const rect = event.currentTarget.getBoundingClientRect();
-    setTooltip({
-      label,
-      x: rect.right,
-      y: rect.top + rect.height / 2,
-      visible: true
-    });
-  };
-
-  const hideTooltip = () => {
-    setTooltip((prev) => ({ ...prev, visible: false }));
   };
 
   // CRITICAL FIX: Move conditional return AFTER all hooks
@@ -216,97 +194,96 @@ const Sidebar = ({ sidebarState, toggleSidebar, closeMobileSidebar, isMobile, cu
         fixed top-0 left-0 h-screen z-50
         transition-all duration-300 ease-in-out
         ${isMobile ? (isCollapsed ? 'w-20' : 'w-72') : isCollapsed ? 'w-20' : 'w-64'}
-        bg-white/80 backdrop-blur-lg backdrop-saturate-150 /* Glass effect */
+        bg-white/80 backdrop-blur-lg backdrop-saturate-150
         flex flex-col
-        border-r border-white/30 /* Softer border for glass effect */
-        shadow-lg shadow-black/5 /* Soft shadow */
-        overflow-x-hidden
+        border-r border-white/30
+        shadow-lg shadow-black/5
+        ${isCollapsed ? 'overflow-visible' : 'overflow-x-hidden'}
       `}>
-        
-        {/* Sidebar Header with Logo - Glass effect */}
-        <div className="sidebar-header px-6 py-5 flex items-center justify-between min-h-[80px] border-b border-white/30 bg-white/60 backdrop-blur-sm">
-          <div className="sidebar-logo relative flex items-center gap-3 group">
-            <div className={`transition-all duration-300 ${isCollapsed ? 'group-hover:opacity-0 group-hover:-translate-x-2' : ''}`}>
-              {isCollapsed && !isMobile ? (
-                <img 
-                  src={IMAGES.icon}
-                  alt="DomiHive Icon"
-                  className="h-7 w-auto transition-all duration-300"
-                  onError={(e) => {
-                    e.target.onerror = null;
-                    e.target.src = IMAGES.placeholderIcon;
-                  }}
-                />
-              ) : (
-                <img 
-                  src={IMAGES.logo}
-                  alt="DomiHive"
-                  className="h-8 w-auto transition-all duration-300 object-contain"
-                  onError={(e) => {
-                    e.target.onerror = null;
-                    e.target.src = IMAGES.placeholderLogo;
-                  }}
-                />
-              )}
-            </div>
 
-            {/* Desktop Toggle Button (shows on hover when collapsed) */}
-            {!isMobile && (
-              <button 
-                onClick={toggleSidebar}
-                aria-label={isCollapsed ? "Expand sidebar" : "Collapse sidebar"}
-                className={`sidebar-toggle w-9 h-9 rounded-md flex items-center justify-center transition-all text-[var(--accent-color,#9F7539)] hover:text-[var(--primary-color,#0e1f42)] backdrop-blur-sm ${
-                  isCollapsed ? 'opacity-0 translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 absolute right-0 top-1/2 -translate-y-1/2 hover:bg-white/30' : 'ml-2 hover:bg-white/30'
-                }`}
-              >
-                  <svg width="22" height="22" viewBox="0 0 24 24" aria-hidden="true">
-                    <rect x="1.5" y="2" width="21" height="20" rx="5" ry="5" fill="currentColor" />
-                    <line x1="12" y1="2" x2="12" y2="22" stroke="#ffffff" strokeWidth="4" />
-                    <polyline points="15,9 8.5,12 15,15" fill="none" stroke="#ffffff" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round" />
-                  </svg>
-              </button>
-            )}
-          </div>
+        {/* Sidebar Header with Logo */}
+        <div className={`sidebar-header px-6 py-5 flex items-center min-h-[80px] border-b border-white/30 bg-white/60 backdrop-blur-sm transition-all duration-300 ${isCollapsed ? 'justify-center' : 'justify-between'}`}>
+          {isCollapsed && !isMobile ? (
+            <button
+              onClick={toggleSidebar}
+              className="p-1 rounded-lg hover:bg-white/40 transition-all cursor-pointer group relative"
+              title="Expand Sidebar"
+            >
+              <img
+                src={IMAGES.icon}
+                alt="Logo"
+                className="h-8 "
+              />
+              {/* Opener indicator on hover */}
+              <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity bg-white/20 rounded-lg">
+                <i className="fas fa-chevron-right text-(--accent-color,#9F7539) text-xs"></i>
+              </div>
+            </button>
+          ) : (
+            <>
+              <div className="sidebar-logo flex items-center gap-3">
+                <img
+                  src={isMobile && isCollapsed ? IMAGES.icon : IMAGES.logo}
+                  alt="DomiHive"
+                  className="h-8 w-auto object-cover"
+                />
+              </div>
+
+              {!isMobile && (
+                <button
+                  onClick={toggleSidebar}
+                  className="p-1.5 rounded-lg hover:bg-white/40 text-(--accent-color,#9F7539) transition-colors cursor-pointer"
+                  title="Collapse Sidebar"
+                >
+                  <i className="fas fa-chevron-left"></i>
+                </button>
+              )}
+            </>
+          )}
         </div>
 
         {/* Sidebar Navigation - Scrollable */}
-        <nav 
+        <nav
           ref={sidebarNavRef}
-          className="sidebar-nav flex-1 overflow-y-auto overflow-x-hidden py-4"
+          className={`sidebar-nav flex-1 py-4 transition-all duration-300 ${isCollapsed ? 'overflow-visible' : 'overflow-y-auto'}`}
           style={{ scrollbarWidth: 'thin', scrollbarColor: '#9f7539 transparent' }}
         >
-          {/* MAIN Section - MATCHING HTML */}
+          {/* MAIN Section */}
           <div className="nav-section mb-6">
             {!isCollapsed && (
               <div className="nav-section-title px-6 mb-3 text-xs font-semibold text-[#64748b] uppercase tracking-wider">
                 MAIN
               </div>
             )}
-            
+
             <div className="space-y-1 px-3">
               {navItems.main.map((item) => (
                 <NavLink
                   key={item.path}
                   to={item.path}
-                  // No native title to avoid double tooltip
                   onClick={handleNavClick}
-                  className={({ isActive }) => 
-                    `nav-link group flex items-center gap-3 ${isCollapsed ? 'px-0 py-3' : 'px-4 py-3'} rounded-lg transition-all duration-200 relative
-                    ${isCollapsed ? 'justify-center' : ''}
-                    ${isActive 
-                      ? 'bg-white/40 text-[#0e1f42] backdrop-blur-sm' 
+                  className={({ isActive }) =>
+                    `group relative flex items-center gap-3 ${isCollapsed ? 'px-0 py-3 justify-center' : 'px-4 py-3'} rounded-lg transition-all duration-200
+                    ${isActive
+                      ? 'bg-white/40 text-[#0e1f42] backdrop-blur-sm'
                       : 'text-[#334155] hover:bg-white/40 hover:text-[#0e1f42] backdrop-blur-sm'
                     }
                     ${isCollapsed ? 'mx-2' : 'mx-3'}`
                   }
-                  onMouseEnter={(e) => showTooltip(item.label, e)}
-                  onMouseLeave={hideTooltip}
                 >
                   {({ isActive }) => (
                     <>
-                      <i className={`fas fa-${item.icon} ${isCollapsed ? 'text-lg' : 'text-base'} w-5 text-center ${isActive ? 'text-[#9f7539]' : 'text-[#64748b]'} icon-clean`}></i>
+                      <i className={`fas fa-${item.icon} ${isCollapsed ? 'text-lg' : 'text-base'} w-5 text-center ${isActive ? 'text-(--accent-color,#9f7539)' : 'text-[#64748b]'} icon-clean transition-colors`}></i>
                       {!isCollapsed && (
                         <span className="nav-text font-medium text-sm">{item.label}</span>
+                      )}
+
+                      {/* Premium Tooltip */}
+                      {isCollapsed && (
+                        <div className="absolute left-full ml-3 px-2.5 py-1.5 bg-[#0e1f42] text-white text-[11px] font-semibold rounded-md opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 whitespace-nowrap z-100 pointer-events-none shadow-xl border border-white/10 translate-x-1 group-hover:translate-x-0">
+                          <div className="absolute left-[-4px] top-1/2 -translate-y-1/2 w-2 h-2 bg-[#0e1f42] rotate-45" />
+                          {item.label}
+                        </div>
                       )}
                     </>
                   )}
@@ -315,51 +292,56 @@ const Sidebar = ({ sidebarState, toggleSidebar, closeMobileSidebar, isMobile, cu
             </div>
           </div>
 
-          {/* CONTINUE APPLICATIONS Section - MATCHING HTML */}
+          {/* CONTINUE APPLICATIONS Section */}
           <div className="nav-section mb-6">
             {!isCollapsed && (
               <div className="nav-section-title px-6 mb-3 text-xs font-semibold text-[#64748b] uppercase tracking-wider">
-                CONTINUE APPLICATIONS
+                APPLICATIONS
               </div>
             )}
-            
+
             <div className="space-y-1 px-3">
               {navItems.applications.map((item) => (
                 <NavLink
                   key={item.path}
                   to={item.path}
-                  // No native title to avoid double tooltip
                   onClick={handleNavClick}
-                  className={({ isActive }) => 
-                    `nav-link group flex items-center gap-3 ${isCollapsed ? 'px-0 py-3' : 'px-4 py-3'} rounded-lg transition-all duration-200 relative
-                    ${isCollapsed ? 'justify-center' : ''}
-                    ${isActive 
-                      ? 'bg-white/40 text-[#0e1f42] font-semibold backdrop-blur-sm' 
+                  className={({ isActive }) =>
+                    `group relative flex items-center gap-3 ${isCollapsed ? 'px-0 py-3 justify-center' : 'px-4 py-3'} rounded-lg transition-all duration-200
+                    ${isActive
+                      ? 'bg-white/40 text-[#0e1f42] font-semibold backdrop-blur-sm'
                       : 'text-[#334155] hover:bg-white/40 hover:text-[#0e1f42] backdrop-blur-sm'
                     }
                     ${isCollapsed ? 'mx-2' : 'mx-3'}`
                   }
-                  onMouseEnter={(e) => showTooltip(item.label, e)}
-                  onMouseLeave={hideTooltip}
                 >
                   {({ isActive }) => (
                     <>
-                      <i className={`fas fa-${item.icon} ${isCollapsed ? 'text-lg' : 'text-base'} w-5 text-center ${isActive ? 'text-[#9f7539]' : 'text-[#64748b]'}`}></i>
+                      <i className={`fas fa-${item.icon} ${isCollapsed ? 'text-lg' : 'text-base'} w-5 text-center ${isActive ? 'text-(--accent-color,#9f7539)' : 'text-[#64748b]'} transition-colors`}></i>
                       {!isCollapsed && (
                         <>
                           <span className="nav-text font-medium text-sm">{item.label}</span>
                           {item.badge > 0 && (
-                            <span className="nav-badge bg-[#9f7539] text-white text-xs font-semibold rounded-full w-5 h-5 flex items-center justify-center ml-auto shadow-sm">
+                            <span className="nav-badge bg-(--accent-color,#9f7539) text-white text-xs font-semibold rounded-full w-5 h-5 flex items-center justify-center ml-auto">
                               {item.badge > 99 ? '99+' : item.badge}
                             </span>
                           )}
                         </>
                       )}
+
                       {/* Badge for collapsed state */}
                       {isCollapsed && item.badge > 0 && (
-                        <span className="nav-badge absolute top-1 right-1 bg-[#9f7539] text-white text-[10px] font-semibold rounded-full w-4 h-4 flex items-center justify-center shadow-sm">
+                        <span className="nav-badge absolute top-2 right-2 bg-(--accent-color,#9f7539) text-white text-[9px] font-bold rounded-full w-4 h-4 flex items-center justify-center shadow-md">
                           {item.badge > 9 ? '9+' : item.badge}
                         </span>
+                      )}
+
+                      {/* Premium Tooltip */}
+                      {isCollapsed && (
+                        <div className="absolute left-full ml-3 px-2.5 py-1.5 bg-[#0e1f42] text-white text-[11px] font-semibold rounded-md opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 whitespace-nowrap z-100 pointer-events-none shadow-xl border border-white/10 translate-x-1 group-hover:translate-x-0">
+                          <div className="absolute left-[-4px] top-1/2 -translate-y-1/2 w-2 h-2 bg-[#0e1f42] rotate-45" />
+                          {item.label}
+                        </div>
                       )}
                     </>
                   )}
@@ -368,38 +350,42 @@ const Sidebar = ({ sidebarState, toggleSidebar, closeMobileSidebar, isMobile, cu
             </div>
           </div>
 
-          {/* MY MANAGEMENTS Section - MATCHING HTML */}
+          {/* MY MANAGEMENTS Section */}
           <div className="nav-section mb-6">
             {!isCollapsed && (
               <div className="nav-section-title px-6 mb-3 text-xs font-semibold text-[#64748b] uppercase tracking-wider">
-                MY MANAGEMENTS
+                MANAGEMENT
               </div>
             )}
-            
+
             <div className="space-y-1 px-3">
               {navItems.management.map((item) => (
                 <NavLink
                   key={item.path}
                   to={item.path}
-                  // No native title to avoid double tooltip
                   onClick={handleNavClick}
-                  className={({ isActive }) => 
-                    `nav-link group flex items-center gap-3 ${isCollapsed ? 'px-0 py-3' : 'px-4 py-3'} rounded-lg transition-all duration-200 relative
-                    ${isCollapsed ? 'justify-center' : ''}
-                    ${isActive 
-                      ? 'bg-white/40 text-[#0e1f42] font-semibold backdrop-blur-sm' 
+                  className={({ isActive }) =>
+                    `group relative flex items-center gap-3 ${isCollapsed ? 'px-0 py-3 justify-center' : 'px-4 py-3'} rounded-lg transition-all duration-200
+                    ${isActive
+                      ? 'bg-white/40 text-[#0e1f42] font-semibold backdrop-blur-sm'
                       : 'text-[#334155] hover:bg-white/40 hover:text-[#0e1f42] backdrop-blur-sm'
                     }
                     ${isCollapsed ? 'mx-2' : 'mx-3'}`
                   }
-                  onMouseEnter={(e) => showTooltip(item.label, e)}
-                  onMouseLeave={hideTooltip}
                 >
                   {({ isActive }) => (
                     <>
-                      <i className={`fas fa-${item.icon} ${isCollapsed ? 'text-lg' : 'text-base'} w-5 text-center ${isActive ? 'text-[#9f7539]' : 'text-[#64748b]'}`}></i>
+                      <i className={`fas fa-${item.icon} ${isCollapsed ? 'text-lg' : 'text-base'} w-5 text-center ${isActive ? 'text-(--accent-color,#9f7539)' : 'text-[#64748b]'} transition-colors`}></i>
                       {!isCollapsed && (
                         <span className="nav-text font-medium text-sm">{item.label}</span>
+                      )}
+
+                      {/* Premium Tooltip */}
+                      {isCollapsed && (
+                        <div className="absolute left-full ml-3 px-2.5 py-1.5 bg-[#0e1f42] text-white text-[11px] font-semibold rounded-md opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 whitespace-nowrap z-100 pointer-events-none shadow-xl border border-white/10 translate-x-1 group-hover:translate-x-0">
+                          <div className="absolute left-[-4px] top-1/2 -translate-y-1/2 w-2 h-2 bg-[#0e1f42] rotate-45" />
+                          {item.label}
+                        </div>
                       )}
                     </>
                   )}
@@ -409,35 +395,31 @@ const Sidebar = ({ sidebarState, toggleSidebar, closeMobileSidebar, isMobile, cu
           </div>
         </nav>
 
-        {/* Sidebar Footer - User Profile with Glass effect */}
-        <div className="sidebar-footer p-6 border-t border-white/30 bg-white/60 backdrop-blur-sm">
-          {isExpanded ? (
+        {/* Sidebar Footer - User Profile */}
+        <div className="sidebar-footer p-5 border-t border-white/30 bg-white/60 backdrop-blur-sm">
+          {!isCollapsed ? (
             <>
               {/* Expanded View */}
               <div className="user-profile flex items-center gap-3 mb-4">
-                <div className="user-avatar w-10 h-10 rounded-full overflow-hidden border-2 border-white/40 shadow-sm">
+                <div className="user-avatar w-10 h-10 rounded-full overflow-hidden border-2 border-white shadow-sm ring-1 ring-(--accent-color,#9f7539)/20">
                   {user.profilePhoto ? (
-                    <img 
-                      src={user.profilePhoto} 
+                    <img
+                      src={user.profilePhoto}
                       alt={user.name}
                       className="w-full h-full object-cover"
-                      onError={(e) => {
-                        e.target.onerror = null;
-                        e.target.src = `https://ui-avatars.com/api/?name=${encodeURIComponent(user.name)}&background=9f7539&color=fff`;
-                      }}
                     />
                   ) : (
-                    <div className="w-full h-full bg-[#9f7539] flex items-center justify-center">
+                    <div className="w-full h-full bg-(--accent-color,#9f7539) flex items-center justify-center">
                       <i className="fas fa-user text-white"></i>
                     </div>
                   )}
                 </div>
-                
+
                 <div className="user-info flex-1 min-w-0">
                   <div className="user-name font-semibold text-[#334155] truncate text-sm">
                     {user.name || 'User'}
                   </div>
-                  <div className="user-role text-xs text-[#64748b] truncate">
+                  <div className="user-role text-[10px] text-[#64748b] uppercase tracking-wider font-bold">
                     Tenant
                   </div>
                 </div>
@@ -445,7 +427,7 @@ const Sidebar = ({ sidebarState, toggleSidebar, closeMobileSidebar, isMobile, cu
 
               <button
                 onClick={handleLogout}
-                className="logout-btn w-full flex items-center justify-center gap-2 px-4 py-3 bg-white/60 hover:bg-white/80 text-[#334155] hover:text-[#dc2626] rounded-lg border border-white/40 hover:border-[#dc2626]/30 transition-colors font-medium text-sm backdrop-blur-sm shadow-sm"
+                className="logout-btn w-full flex items-center justify-center gap-2 px-4 py-2.5 bg-red-50 hover:bg-red-100 text-red-600 rounded-lg border border-red-200 transition-all font-medium text-sm shadow-sm"
               >
                 <i className="fas fa-sign-out-alt"></i>
                 <span>Logout</span>
@@ -453,50 +435,47 @@ const Sidebar = ({ sidebarState, toggleSidebar, closeMobileSidebar, isMobile, cu
             </>
           ) : (
             <>
-              {/* Collapsed/Mobile View */}
-              <div className="flex flex-col items-center gap-3">
-                <div className="user-avatar w-8 h-8 rounded-full overflow-hidden border-2 border-white/40 shadow-sm">
-                  {user.profilePhoto ? (
-                    <img 
-                      src={user.profilePhoto} 
-                      alt={user.name}
-                      className="w-full h-full object-cover"
-                      onError={(e) => {
-                        e.target.onerror = null;
-                        e.target.src = `https://ui-avatars.com/api/?name=${encodeURIComponent(user.name)}&background=9f7539&color=fff`;
-                      }}
-                    />
-                  ) : (
-                    <div className="w-full h-full bg-[#9f7539] flex items-center justify-center">
-                      <i className="fas fa-user text-white text-xs"></i>
-                    </div>
-                  )}
+              {/* Collapsed View */}
+              <div className="flex flex-col items-center gap-4">
+                <div className="user-profile relative group">
+                  <div className="user-avatar w-9 h-9 rounded-full overflow-hidden border-2 border-white shadow-md ring-1 ring-(--accent-color,#9f7539)/20 group-hover:ring-(--accent-color,#9f7539)/40 transition-all">
+                    {user.profilePhoto ? (
+                      <img
+                        src={user.profilePhoto}
+                        alt={user.name}
+                        className="w-full h-full object-cover"
+                      />
+                    ) : (
+                      <div className="w-full h-full bg-(--accent-color,#9f7539) flex items-center justify-center">
+                        <i className="fas fa-user text-white text-xs"></i>
+                      </div>
+                    )}
+                  </div>
+
+                  {/* Avatar Tooltip */}
+                  <div className="absolute left-full ml-3 px-2.5 py-1.5 bg-[#0e1f42] text-white text-[11px] font-semibold rounded-md opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 whitespace-nowrap z-100 pointer-events-none shadow-xl border border-white/10 translate-x-1 group-hover:translate-x-0">
+                    <div className="absolute left-[-4px] top-1/2 -translate-y-1/2 w-2 h-2 bg-[#0e1f42] rotate-45" />
+                    {user.name || 'Profile'}
+                  </div>
                 </div>
-                
+
                 <button
                   onClick={handleLogout}
-                  className="p-2 rounded-lg hover:bg-white/40 text-[#64748b] hover:text-[#334155] transition-colors backdrop-blur-sm"
-                  title="Logout"
+                  className="group relative p-2.5 rounded-lg bg-red-50 hover:bg-red-500 text-red-600 hover:text-white border border-red-100 hover:border-red-500 transition-all shadow-sm"
                 >
                   <i className="fas fa-sign-out-alt text-sm"></i>
+
+                  {/* Logout Tooltip */}
+                  <div className="absolute left-full ml-3 px-2.5 py-1.5 bg-red-600 text-white text-[11px] font-semibold rounded-md opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 whitespace-nowrap z-100 pointer-events-none shadow-xl border border-white/10 translate-x-1 group-hover:translate-x-0">
+                    <div className="absolute left-[-4px] top-1/2 -translate-y-1/2 w-2 h-2 bg-red-600 rotate-45" />
+                    Logout
+                  </div>
                 </button>
               </div>
             </>
           )}
         </div>
       </aside>
-      {isCollapsed && tooltip.visible && (
-        <div
-          className="fixed z-50 pointer-events-none rounded bg-[#0e1f42] text-white text-xs px-2 py-1 shadow-sm"
-          style={{
-            top: tooltip.y,
-            left: tooltip.x + 8,
-            transform: 'translateY(-50%)'
-          }}
-        >
-          {tooltip.label}
-        </div>
-      )}
     </>
   );
 };

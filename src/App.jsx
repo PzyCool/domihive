@@ -40,6 +40,7 @@ import AdminContentPolicies from './components/admin/pages/AdminContentPolicies'
 import AdminAddNewProperty from './components/admin/pages/AdminAddNewProperty';
 import './App.css';
 import NotFound from './components/NotFound';
+import AdminPropertyDetails from './components/admin/pages/AdminPropertyDetails';
 
 function App() {
   return (
@@ -62,8 +63,8 @@ function App() {
         } />
 
         {/* Not found pages for testing */}
-        <Route path='*' element={<NotFound/>} />
-        
+        <Route path='*' element={<NotFound />} />
+
         {/* Auth pages without Header/Footer */}
         <Route path="/signup" element={<SignupPage />} />
         <Route path="/login" element={<LoginPage />} />
@@ -80,6 +81,8 @@ function App() {
 
           {/* Route for adding new properties */}
           <Route path="properties/add-new-property" element={<AdminAddNewProperty />} />
+          {/* Route for property details */}
+          <Route path="properties/unit/:unitId" element={<AdminPropertyDetails />} />
         </Route>
 
 

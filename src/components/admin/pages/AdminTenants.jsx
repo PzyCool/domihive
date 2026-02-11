@@ -1,52 +1,283 @@
-// src/components/admin/pages/AdminTenants.jsx
-import React from 'react';
+import { useMemo, useState } from 'react';
 import { useAdmin } from '../../../context/AdminContext';
+import { Users, Search, Download, UserPlus, Eye } from 'lucide-react';
 
 const AdminTenants = () => {
   const { tenants, setTenants } = useAdmin();
+
+  // Filters
+  const [search, setSearch] = useState("");
+  const [statusFilter, setStatusFilter] = useState("all");
+  const [sortBy, setSortBy] = useState("newest");
 
   const confirmMoveIn = (id) => {
     setTenants((prev) => prev.map((t) => (t.id === id ? { ...t, status: 'Active' } : t)));
   };
 
+  // Summary Data
+  const summaryStats = useMemo(() => {
+    const total = tenants.length;
+    const active = tenants.filter(t => t.status === 'Active').length;
+    const pending = tenants.filter(t => t.status === 'Move-in pending').length;
+    const reserved = tenants.filter(t => t.status === 'Reserved').length;
+
+    return [
+      {
+        label: "Total Tenants",
+        value: total,
+        meta: `${total} total`,
+        icon: <Users size={20} />,
+        color: "bg-gray-100 text-gray-700",
+      },
+      {
+        label: "Active Tenants",
+        value: active,
+        meta: `${active} active`,
+        icon: <Users size={20} />,
+        color: "bg-green-100 text-green-700",
+      },
+      {
+        label: "Move-in Pending",
+        value: pending,
+        meta: `${pending} pending`,
+        icon: <Users size={20} />,
+        color: "bg-amber-100 text-amber-700",
+      },
+      {
+        label: "Reserved",
+        value: reserved,
+        meta: `${reserved} reserved`,
+        icon: <Users size={20} />,
+        color: "bg-blue-100 text-blue-700",
+      },
+    ];
+  }, [tenants]);
+
+  // Filter + Sort Logic
+  const filteredTenants = useMemo(() => {
+    let list = [...tenants];
+
+    if (search.trim()) {
+      const q = search.toLowerCase();
+      list = list.filter(t =>
+        `${t.name} ${t.propertyTitle} ${t.email}`.toLowerCase().includes(q)
+      );
+    }
+
+    if (statusFilter !== "all") {
+      list = list.filter(t => t.status === statusFilter);
+    }
+
+    if (sortBy === "rent-desc") {
+      list.sort((a, b) => b.rent - a.rent);
+    } else if (sortBy === "rent-asc") {
+      list.sort((a, b) => a.rent - b.rent);
+    } else {
+      // newest by id for mock
+      list.sort((a, b) => b.id.localeCompare(a.id));
+    }
+
+    return list;
+  }, [tenants, search, statusFilter, sortBy]);
+
+  const statusBadge = (status) => {
+    if (status === 'Active') return 'bg-green-100 text-green-700';
+    if (status === 'Reserved') return 'bg-blue-100 text-blue-700';
+    return 'bg-amber-100 text-amber-700';
+  };
+
+  const paymentBadge = (status) => {
+    if (status === 'Paid') return 'bg-green-100 text-green-700';
+    if (status === 'Pending') return 'bg-amber-100 text-amber-700';
+    return 'bg-red-100 text-red-700';
+  };
+
   return (
-    <div>
-      <h1 className="text-2xl font-bold text-[#0e1f42] mb-4">Tenants</h1>
-      <div className="bg-white border border-gray-100 rounded-lg shadow p-4">
-        <div className="overflow-x-auto text-sm">
-          <table className="w-full border-collapse">
-            <thead>
-              <tr className="border-b">
-                <th className="py-2 pr-2 text-left">Tenant</th>
-                <th className="py-2 pr-2 text-left">Property</th>
-                <th className="py-2 pr-2 text-left">Lease</th>
-                <th className="py-2 pr-2 text-left">Status</th>
-                <th className="py-2 pr-2 text-left">Actions</th>
-              </tr>
-            </thead>
-            <tbody>
-              {tenants.map((tenant) => (
-                <tr key={tenant.id} className="border-b last:border-0">
-                  <td className="py-2 pr-2 font-semibold text-[#0e1f42]">{tenant.name}</td>
-                  <td className="py-2 pr-2 text-gray-700">{tenant.propertyTitle}</td>
-                  <td className="py-2 pr-2 text-gray-700">{tenant.leaseStart} → {tenant.leaseEnd}</td>
-                  <td className="py-2 pr-2">
-                    <span className={`px-2 py-1 rounded text-xs ${tenant.status === 'Active' ? 'bg-green-100 text-green-700' : 'bg-amber-100 text-amber-700'}`}>
-                      {tenant.status}
-                    </span>
-                  </td>
-                  <td className="py-2 pr-2">
-                    {tenant.status !== 'Active' && (
-                      <button onClick={() => confirmMoveIn(tenant.id)} className="text-[#0e1f42] hover:underline">
-                        Confirm Move-in
+    <div className="space-y-4">
+      {/* Header */}
+      <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+        <div>
+          <h1 className="text-2xl font-bold text-[#0e1f42]">Tenants Management</h1>
+          <p className="text-sm text-gray-600">
+            View and manage all active and pending tenants
+          </p>
+        </div>
+
+        <div className="flex flex-wrap items-center gap-2">
+          <button className="flex items-center gap-2 px-4 py-2 text-[#9F7539] border border-[#9F7539]/20 hover:border-[#9F7539]/50 font-semibold rounded-lg text-sm transition-all">
+            <Download size={16} /> Export
+          </button>
+          <button className="flex items-center gap-2 px-4 py-2 bg-[#9F7539] text-white font-semibold rounded-lg text-sm hover:bg-[#866230] transition-all">
+            <UserPlus size={16} /> Add Tenant
+          </button>
+        </div>
+      </div>
+
+      {/* SummaryCards */}
+      <div className="grid grid-cols-2 lg:grid-cols-4 gap-2 md:gap-4">
+        {summaryStats.map((card) => (
+          <div
+            key={card.label}
+            className="bg-white rounded-lg p-4 shadow border border-gray-100 flex items-center justify-between"
+          >
+            <div className="min-w-0">
+              <div className="text-xs sm:text-sm text-gray-500 truncate">{card.label}</div>
+              <div className="text-lg sm:text-2xl font-bold text-[#0e1f42]">{card.value}</div>
+              <div className="text-[10px] sm:text-xs text-gray-600 truncate">{card.meta}</div>
+            </div>
+            <div className={`${card.color} rounded-lg p-2 shrink-0 ml-2`}>{card.icon}</div>
+          </div>
+        ))}
+      </div>
+
+      {/* Filters */}
+      <div className="bg-white rounded-lg border border-gray-100 p-4 flex flex-col gap-3 lg:flex-row lg:items-center lg:justify-between">
+        <div className="relative w-full lg:max-w-sm">
+          <Search size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" />
+          <input
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
+            placeholder="Search tenant, property..."
+            className="w-full pl-9 pr-3 py-2 rounded-md border border-gray-200 text-sm outline-none focus:border-[#9F7539]"
+          />
+        </div>
+
+        <div className="flex flex-wrap gap-2">
+          <select
+            value={statusFilter}
+            onChange={(e) => setStatusFilter(e.target.value)}
+            className="px-3 py-2 rounded-md border border-gray-200 text-sm outline-none"
+          >
+            <option value="all">All Status</option>
+            <option value="Active">Active</option>
+            <option value="Move-in pending">Move-in Pending</option>
+            <option value="Reserved">Reserved</option>
+          </select>
+
+          <select
+            value={sortBy}
+            onChange={(e) => setSortBy(e.target.value)}
+            className="px-3 py-2 rounded-md border border-gray-200 text-sm outline-none"
+          >
+            <option value="newest">Sort: Newest</option>
+            <option value="rent-desc">Rent: High to Low</option>
+            <option value="rent-asc">Rent: Low to High</option>
+          </select>
+        </div>
+      </div>
+
+      {/* Desktop Table */}
+      <div className="hidden lg:block bg-white border border-gray-100 rounded-xl shadow-sm overflow-hidden">
+        <table className="w-full text-sm">
+          <thead className="bg-gray-50 text-gray-600 text-xs uppercase tracking-wider">
+            <tr>
+              <th className="py-4 px-4 text-left font-semibold">Tenant</th>
+              <th className="py-4 px-4 text-left font-semibold">Property & Unit</th>
+              <th className="py-4 px-4 text-left font-semibold">Rent</th>
+              <th className="py-4 px-4 text-left font-semibold">Lease Period</th>
+              <th className="py-4 px-4 text-left font-semibold">Status</th>
+              <th className="py-4 px-4 text-left font-semibold">Payment</th>
+              <th className="py-4 px-4 text-right font-semibold">Actions</th>
+            </tr>
+          </thead>
+          <tbody className="divide-y divide-gray-100">
+            {filteredTenants.map((tenant) => (
+              <tr key={tenant.id} className="hover:bg-gray-50 transition-colors">
+                <td className="py-4 px-4">
+                  <div className="font-semibold text-[#0e1f42]">{tenant.name}</div>
+                  <div className="text-[11px] text-gray-500">{tenant.email}</div>
+                </td>
+                <td className="py-4 px-4">
+                  <div className="text-gray-700 font-medium">{tenant.propertyTitle}</div>
+                  <div className="text-[11px] text-gray-500">Unit {tenant.unitNumber}</div>
+                </td>
+                <td className="py-4 px-4 font-medium text-sm text-gray-700">
+                  ₦{tenant.rent?.toLocaleString()}
+                </td>
+                <td className="py-4 px-4 text-xs text-gray-6">
+                  <div>{tenant.leaseStart}</div>
+                  <div className="text-gray-400">to {tenant.leaseEnd}</div>
+                </td>
+                <td className="py-4 px-4">
+                  <span className={`px-2.5 py-1 whitespace-nowrap rounded-full text-[10px] font-bold ${statusBadge(tenant.status)}`}>
+                    {tenant.status}
+                  </span>
+                </td>
+                <td className="py-4 px-4">
+                  <span className={`px-2.5 py-1 whitespace-nowrap rounded-full text-[10px] font-bold ${paymentBadge(tenant.paymentStatus)}`}>
+                    {tenant.paymentStatus || 'Pending'}
+                  </span>
+                </td>
+                <td className="py-4 px-4 text-right">
+                  <div className="flex justify-end items-center gap-2">
+                    {tenant.status === 'Move-in pending' && (
+                      <button
+                        onClick={() => confirmMoveIn(tenant.id)}
+                        className="text-xs font-semibold text-green-600 hover:text-green-700"
+                      >
+                        Confirm
                       </button>
                     )}
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
+                    <button className="p-2 hover:bg-gray-100 rounded-lg text-gray-400 hover:text-[#9F7539] transition-all">
+                      <Eye size={18} />
+                    </button>
+                  </div>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+
+      {/* Mobile/Tablet Card View */}
+      <div className="lg:hidden space-y-3">
+        {filteredTenants.map((tenant) => (
+          <div key={tenant.id} className="bg-white p-4 rounded-xl border border-gray-100 shadow-sm space-y-4">
+            <div className="flex justify-between items-start">
+              <div>
+                <h3 className="font-bold text-[#0e1f42]">{tenant.name}</h3>
+                <p className="text-xs text-gray-500">{tenant.email}</p>
+              </div>
+              <span className={`px-2 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wider ${statusBadge(tenant.status)}`}>
+                {tenant.status}
+              </span>
+            </div>
+
+            <div className="grid grid-cols-2 gap-3 text-xs">
+              <div className="p-2 bg-gray-50 rounded-lg border border-gray-100">
+                <p className="text-gray-400 mb-1">Property</p>
+                <p className="font-semibold text-gray-700 truncate">{tenant.propertyTitle}</p>
+                <p className="text-[10px] text-gray-500">Unit {tenant.unitNumber}</p>
+              </div>
+              <div className="p-2 bg-gray-50 rounded-lg border border-gray-100">
+                <p className="text-gray-400 mb-1">Rent</p>
+                <p className="font-semibold text-gray-700">₦{tenant.rent?.toLocaleString()}</p>
+                <span className={`text-[9px] font-bold ${tenant.paymentStatus === 'Paid' ? 'text-green-600' : 'text-amber-600'}`}>
+                  {tenant.paymentStatus}
+                </span>
+              </div>
+            </div>
+
+            <div className="flex items-center justify-between text-xs pt-1 border-t border-gray-50">
+              <div className="text-gray-500">
+                Lease: <span className="font-medium">{tenant.leaseStart}</span> → <span className="font-medium">{tenant.leaseEnd}</span>
+              </div>
+              <div className="flex gap-2">
+                {tenant.status === 'Move-in pending' && (
+                  <button
+                    onClick={() => confirmMoveIn(tenant.id)}
+                    className="px-3 py-1.5 bg-green-50 text-green-600 font-bold rounded-lg text-[11px]"
+                  >
+                    Confirm
+                  </button>
+                )}
+                <button className="p-2 border border-gray-100 rounded-lg text-gray-400">
+                  <Eye size={16} />
+                </button>
+              </div>
+            </div>
+          </div>
+        ))}
       </div>
     </div>
   );

@@ -29,7 +29,7 @@ const AdminDashboard = () => {
     },
     {
       label: 'Occupied Units',
-      value: tenants.filter(t => t.status === 'Active').length / tenants.length * 100 + '%',
+      value: tenants.length > 0 ? Math.round((tenants.filter(t => t.status === 'Active').length / tenants.length) * 100) + '%' : '0%',
       meta: `${tenants.filter(t => t.status === 'Active').length} of ${tenants.length} units`,
       icon: <User />,
       color: 'bg-green-100 text-green-700'
@@ -55,7 +55,7 @@ const AdminDashboard = () => {
     <div>
       <h1 className="text-2xl font-bold text-[#0e1f42] mb-2">Dashboard Overview</h1>
       <p className="text-sm text-gray-600 mb-8">Welcome back Adebayo. Here's what's happening with your properties today.</p>
-      <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-8">
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-2 md:gap-4 mb-8">
         {summaryCards.map((card) => (
           <div key={card.label} className="bg-white rounded-lg p-4 shadow border border-gray-100 flex items-center justify-between">
             <div>
@@ -118,7 +118,7 @@ const AdminDashboard = () => {
 
                 <div className="flex flex-col items-end gap-1">
                   <span
-                    className={`text-[10px] px-2 py-0.5 rounded-full font-medium ${statusStyles[item.status] || "bg-gray-100 text-gray-700"
+                    className={`text-[10px] capitalize px-2 py-0.5 rounded-full font-medium ${statusStyles[item.status] || "bg-gray-100 text-gray-700"
                       }`}
                   >
                     {item.status}

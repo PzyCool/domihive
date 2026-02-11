@@ -93,7 +93,7 @@ const AdminAddNewProperty = () => {
 
     return (
         <div className="space-y-4">
-            {/* Header / breadcrumbs */}
+            {/* Header */}
             <div className="flex items-start justify-between">
                 <div>
                     <div className="flex items-center gap-2 text-xs text-gray-500">
@@ -113,7 +113,7 @@ const AdminAddNewProperty = () => {
 
             {/* Form layout */}
             <div className="space-y-4">
-                {/* Basic Information */}
+                {/* Basic Info */}
                 <Section title="Basic Information">
                     <div className="space-y-3">
                         <div>
