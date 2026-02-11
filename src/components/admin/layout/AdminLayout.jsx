@@ -239,8 +239,13 @@ const AdminTopbar = ({ isCollapsed, setIsMobileOpen }) => {
             </div>
           )}
         </div>
+<<<<<<< HEAD
       </div>
     </header>
+=======
+    </div>
+  </header>
+>>>>>>> 00bc0d1d79d86c082331d508d20188c880a5503e
   );
 };
 
