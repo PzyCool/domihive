@@ -48,6 +48,7 @@ const AdminTopbar = () => (
       </div>
     </div>
   </header>
+
 );
 
 const AdminLayout = () => {
@@ -62,6 +63,7 @@ const AdminLayout = () => {
           </main>
         </div>
       </div>
+      <div></div>
     </AdminProvider>
   );
 };
