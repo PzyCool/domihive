@@ -145,11 +145,18 @@ const AdminTopbar = () => {
           )}
         </div>
       </div>
+<<<<<<< HEAD
     </header>
   );
 };
 
 
+=======
+    </div>
+  </header>
+
+);
+>>>>>>> d020668d38189e158500f0b9a33f31b664b0fb3e
 
 const AdminLayout = () => {
   return (
@@ -163,6 +170,7 @@ const AdminLayout = () => {
           </main>
         </div>
       </div>
+      <div></div>
     </AdminProvider>
   );
 };
