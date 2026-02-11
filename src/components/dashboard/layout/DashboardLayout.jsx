@@ -81,7 +81,7 @@ const DashboardLayout = () => {
   };
 
   return (
-    <div className="dashboard-layout flex min-h-screen bg-[var(--light-gray)]">
+    <div className="dashboard-layout flex min-h-screen bg-(--light-gray)">
       {/* Sidebar - fixed position */}
       <Sidebar
         sidebarState={sidebarState}

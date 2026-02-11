@@ -37,7 +37,9 @@ import AdminInspections from './components/admin/pages/AdminInspections';
 import AdminApplications from './components/admin/pages/AdminApplications';
 import AdminTenants from './components/admin/pages/AdminTenants';
 import AdminContentPolicies from './components/admin/pages/AdminContentPolicies';
+import AdminAddNewProperty from './components/admin/pages/AdminAddNewProperty';
 import './App.css';
+import NotFound from './components/NotFound';
 
 function App() {
   return (
@@ -58,6 +60,9 @@ function App() {
             <Footer />
           </>
         } />
+
+        {/* Not found pages for testing */}
+        <Route path='*' element={<NotFound/>} />
         
         {/* Auth pages without Header/Footer */}
         <Route path="/signup" element={<SignupPage />} />
@@ -72,6 +77,9 @@ function App() {
           <Route path="applications" element={<AdminApplications />} />
           <Route path="tenants" element={<AdminTenants />} />
           <Route path="content-policies" element={<AdminContentPolicies />} />
+
+          {/* Route for adding new properties */}
+          <Route path="properties/add-new-property" element={<AdminAddNewProperty />} />
         </Route>
 
 

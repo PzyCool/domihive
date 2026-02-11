@@ -64,6 +64,22 @@ const defaultApplications = [
     propertyTitle: '3 Bedroom Luxury Apartment',
     submittedAt: '2025-01-18T10:00:00Z',
     status: 'Submitted'
+  },
+  {
+    id: 'app-002',
+    applicant: 'Jane Doe',
+    propertyId: 'prop-002',
+    propertyTitle: 'Modern 2-Bed Duplex',
+    submittedAt: '2025-01-18T10:00:00Z',
+    status: 'Under Review'
+  },
+  {
+    id: 'app-003',
+    applicant: 'Janet Emma',
+    propertyId: 'prop-003',
+    propertyTitle: 'Modern 13-Room Mansion',
+    submittedAt: '2025-01-18T10:00:00Z',
+    status: 'Under Review'
   }
 ];
 
@@ -97,8 +113,66 @@ const defaultTenants = [
     leaseEnd: '2026-02-01',
     status: 'Move-in pending',
     rent: 2800000
+  },
+  {
+    id: 'tenant-002',
+    name: 'Tenant 2',
+    propertyId: 'prop-002',
+    propertyTitle: 'Modern 2-Bed Duplex',
+    leaseStart: '2025-02-01',
+    leaseEnd: '2026-02-01',
+    status: 'Active',
+    rent: 1800000
   }
 ];
+
+// added recent activities data
+const defaultRecentActivities = [
+  {
+    id: 'act001',
+    title: 'Application Approved',
+    details: 'Chioma Okeke application for 3 Bedroom Luxury Apartment has been approved.',
+    time: '2 hours ago',
+    status: 'approved'
+  },
+  {
+    id: 'act002',
+    title: 'Inspection Verified',
+    details: 'Inspection for Modern 2-Bed Duplex has been verified by the agent.',
+    time: '3 hours ago',
+    status: 'verified'
+  },
+  {
+    id: 'act003',
+    title: 'Maintenance Completed',
+    details: 'Plumbing repair at Ocean View Apartment has been completed.',
+    time: '5 hours ago',
+    status: 'completed'
+  },
+  {
+    id: 'act004',
+    title: 'Inspection In Progress',
+    details: 'Inspection for Lekki Studio Apartment is currently ongoing.',
+    time: '1 hour ago',
+    status: 'in progress'
+  },
+  {
+    id: 'act005',
+    title: 'New Application Received',
+    details: 'Tunde Balogun submitted a new application for 2 Bedroom Flat in Yaba.',
+    time: '20 minutes ago',
+    status: 'new'
+  },
+  {
+    id: 'act006',
+    title: 'Payment Pending',
+    details: 'Rent payment for Banana Island Penthouse is awaiting confirmation.',
+    time: '4 hours ago',
+    status: 'pending'
+  }
+];
+
+
 
 export const AdminProvider = ({ children }) => {
   const [properties, setProperties] = useState(defaultProperties);
@@ -108,6 +182,7 @@ export const AdminProvider = ({ children }) => {
   const [applications, setApplications] = useState(defaultApplications);
   const [tenants, setTenants] = useState(defaultTenants);
   const [policies, setPolicies] = useState(defaultPolicies);
+  const [recentActivities, setRecentActivities] = useState(defaultRecentActivities);
 
   const value = useMemo(
     () => ({
@@ -124,9 +199,11 @@ export const AdminProvider = ({ children }) => {
       tenants,
       setTenants,
       policies,
-      setPolicies
+      setPolicies,
+      recentActivities,
+      setRecentActivities
     }),
-    [properties, locations, slots, inspections, applications, tenants, policies]
+    [properties, locations, slots, inspections, applications, tenants, policies, recentActivities]
   );
 
   return <AdminContext.Provider value={value}>{children}</AdminContext.Provider>;
