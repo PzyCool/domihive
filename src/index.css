@@ -31,6 +31,36 @@ body.dashboard-themed .text-gray-500 {
   color: var(--text-muted, #6c757d) !important;
 }
 
+/* Admin sidebar scrollbar */
+.admin-sidebar ::-webkit-scrollbar {
+  width: 8px;
+}
+.admin-sidebar ::-webkit-scrollbar-track {
+  background: transparent;
+}
+.admin-sidebar ::-webkit-scrollbar-thumb {
+  background: var(--accent-color, #9F7539);
+  border-radius: 999px;
+}
+.admin-sidebar {
+  scrollbar-color: var(--accent-color, #9F7539) transparent;
+  scrollbar-width: thin;
+}
+.admin-sidebar {
+  box-shadow: 0 4px 10px rgba(14,31,66,0.05);
+}
+.admin-topbar {
+  box-shadow: 0 3px 8px rgba(14,31,66,0.04);
+}
+.admin-layout > .admin-page-wrapper {
+  background: #fff;
+  border-radius: 14px;
+  box-shadow: 0 12px 30px rgba(14,31,66,0.10);
+}
+.admin-page-container {
+  margin: 16px;
+}
+
 /* Theme presets (for stronger overrides when data-theme is set) */
 :root[data-theme="light"] {
   --page-bg: #f8f9fa;
@@ -1811,11 +1841,3 @@ body.dashboard-themed[data-theme="true-black"] .sidebar-footer .logout-btn:hover
 .no-scrollbar\:\:-webkit-scrollbar {
   display: none; /* Chrome, Safari, Opera */
 }
-
-
-
-
-
-
-
-
