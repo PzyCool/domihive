@@ -382,6 +382,77 @@ const defaultRecentActivities = [
   }
 ];
 
+const defaultMaintenanceRequests = [
+  {
+    id: 'MNT-001',
+    priority: 'Critical',
+    status: 'In Progress',
+    category: 'Plumbing',
+    propertyId: 'prop-001',
+    propertyTitle: 'DomiHive Residences',
+    unitNumber: 'A-102',
+    tenant: 'Chioma Okeke',
+    createdAt: '2 hours ago',
+    description: 'Leaking pipe in the kitchen causing flooding.',
+    photos: [
+      "https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?w=400&h=300&fit=crop",
+      "https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?w=400&h=300&fit=crop",
+      "https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?w=400&h=300&fit=crop",
+    ]
+  },
+  {
+    id: 'MNT-006',
+    priority: 'Low',
+    status: 'Open',
+    category: 'Plumbing',
+    propertyId: 'prop-001',
+    propertyTitle: 'DomiHive Residences',
+    unitNumber: 'A-102',
+    tenant: 'Bartholomew',
+    createdAt: '2 hours ago',
+    description: 'The AC in the master bedroom is not cooling.',
+    photos: []
+  },
+  {
+    id: 'MNT-002',
+    priority: 'High',
+    status: 'Open',
+    category: 'Electrical',
+    propertyId: 'prop-002',
+    propertyTitle: 'Lagos Heights',
+    unitNumber: 'B-205',
+    tenant: 'Emeka Okonkwo',
+    createdAt: '4 hours ago',
+    description: 'Multiple power outlets in the living room are not working.',
+    photos: []
+  },
+  {
+    id: 'MNT-003',
+    priority: 'Medium',
+    status: 'Completed',
+    category: 'HVAC',
+    propertyId: 'prop-003',
+    propertyTitle: 'Victoria Garden',
+    unitNumber: 'C-301',
+    tenant: 'Tunde Adebayo',
+    createdAt: '1 day ago',
+    description: 'Air conditioning unit needs regular servicing.',
+    photos: []
+  },
+  {
+    id: 'MNT-004',
+    priority: 'Low',
+    status: 'In Progress',
+    category: 'Painting',
+    propertyId: 'prop-001',
+    propertyTitle: 'DomiHive Residences',
+    unitNumber: 'A-201',
+    tenant: 'Amaka Eze',
+    createdAt: '3 days ago',
+    description: 'Touch up painting required in the hallway.',
+    photos:[]
+  }
+];
 
 
 export const AdminProvider = ({ children }) => {
@@ -393,6 +464,7 @@ export const AdminProvider = ({ children }) => {
   const [tenants, setTenants] = useState(defaultTenants);
   const [policies, setPolicies] = useState(defaultPolicies);
   const [recentActivities, setRecentActivities] = useState(defaultRecentActivities);
+  const [maintenanceRequests, setMaintenanceRequests] = useState(defaultMaintenanceRequests);
 
   const value = useMemo(
     () => ({
@@ -411,9 +483,11 @@ export const AdminProvider = ({ children }) => {
       policies,
       setPolicies,
       recentActivities,
-      setRecentActivities
+      setRecentActivities,
+      maintenanceRequests,
+      setMaintenanceRequests
     }),
-    [properties, locations, slots, inspections, applications, tenants, policies, recentActivities]
+    [properties, locations, slots, inspections, applications, tenants, policies, recentActivities, maintenanceRequests]
   );
 
   return <AdminContext.Provider value={value}>{children}</AdminContext.Provider>;

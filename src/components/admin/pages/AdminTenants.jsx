@@ -27,28 +27,28 @@ const AdminTenants = () => {
         value: total,
         meta: `${total} total`,
         icon: <Users size={20} />,
-        color: "bg-gray-100 text-gray-700",
+        color: "bg-gray-100 text-gray-700 dark:bg-gray-800 dark:text-gray-300",
       },
       {
         label: "Active Tenants",
         value: active,
         meta: `${active} active`,
         icon: <Users size={20} />,
-        color: "bg-green-100 text-green-700",
+        color: "bg-green-100 text-green-700 dark:bg-green-500/10 dark:text-green-400",
       },
       {
         label: "Move-in Pending",
         value: pending,
         meta: `${pending} pending`,
         icon: <Users size={20} />,
-        color: "bg-amber-100 text-amber-700",
+        color: "bg-amber-100 text-amber-700 dark:bg-amber-500/10 dark:text-amber-400",
       },
       {
         label: "Reserved",
         value: reserved,
         meta: `${reserved} reserved`,
         icon: <Users size={20} />,
-        color: "bg-blue-100 text-blue-700",
+        color: "bg-blue-100 text-blue-700 dark:bg-blue-500/10 dark:text-blue-400",
       },
     ];
   }, [tenants]);
@@ -81,15 +81,15 @@ const AdminTenants = () => {
   }, [tenants, search, statusFilter, sortBy]);
 
   const statusBadge = (status) => {
-    if (status === 'Active') return 'bg-green-100 text-green-700';
-    if (status === 'Reserved') return 'bg-blue-100 text-blue-700';
-    return 'bg-amber-100 text-amber-700';
+    if (status === 'Active') return 'bg-green-100 text-green-700 dark:bg-green-500/10 dark:text-green-400';
+    if (status === 'Reserved') return 'bg-blue-100 text-blue-700 dark:bg-blue-500/10 dark:text-blue-400';
+    return 'bg-amber-100 text-amber-700 dark:bg-amber-500/10 dark:text-amber-400';
   };
 
   const paymentBadge = (status) => {
-    if (status === 'Paid') return 'bg-green-100 text-green-700';
-    if (status === 'Pending') return 'bg-amber-100 text-amber-700';
-    return 'bg-red-100 text-red-700';
+    if (status === 'Paid') return 'bg-green-100 text-green-700 dark:bg-green-500/10 dark:text-green-400';
+    if (status === 'Pending') return 'bg-amber-100 text-amber-700 dark:bg-amber-500/10 dark:text-amber-400';
+    return 'bg-red-100 text-red-700 dark:bg-red-500/10 dark:text-red-400';
   };
 
   return (
@@ -97,17 +97,17 @@ const AdminTenants = () => {
       {/* Header */}
       <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
         <div>
-          <h1 className="text-2xl font-bold text-[#0e1f42]">Tenants Management</h1>
-          <p className="text-sm text-gray-600">
+          <h1 className="text-2xl font-bold text-[#0e1f42] dark:text-white">Tenants Management</h1>
+          <p className="text-sm text-gray-600 dark:text-gray-400">
             View and manage all active and pending tenants
           </p>
         </div>
 
         <div className="flex flex-wrap items-center gap-2">
-          <button className="flex items-center gap-2 px-4 py-2 text-[#9F7539] border border-[#9F7539]/20 hover:border-[#9F7539]/50 font-semibold rounded-lg text-sm transition-all">
+          <button className="flex items-center gap-2 px-4 py-2 text-[#9F7539] border border-[#9F7539]/20 hover:border-[#9F7539]/50 dark:hover:border-[#9F7539]/40 font-semibold rounded-lg text-sm transition-all cursor-pointer">
             <Download size={16} /> Export
           </button>
-          <button className="flex items-center gap-2 px-4 py-2 bg-[#9F7539] text-white font-semibold rounded-lg text-sm hover:bg-[#866230] transition-all">
+          <button className="flex items-center gap-2 px-4 py-2 bg-[#9F7539] text-white font-semibold rounded-lg text-sm hover:bg-[#866230] transition-all cursor-pointer">
             <UserPlus size={16} /> Add Tenant
           </button>
         </div>
@@ -118,12 +118,12 @@ const AdminTenants = () => {
         {summaryStats.map((card) => (
           <div
             key={card.label}
-            className="bg-white rounded-lg p-4 shadow border border-gray-100 flex items-center justify-between"
+            className="bg-white dark:bg-[#111827] rounded-lg p-4 shadow border border-gray-100 dark:border-white/5 flex items-center justify-between"
           >
             <div className="min-w-0">
-              <div className="text-xs sm:text-sm text-gray-500 truncate">{card.label}</div>
-              <div className="text-lg sm:text-2xl font-bold text-[#0e1f42]">{card.value}</div>
-              <div className="text-[10px] sm:text-xs text-gray-600 truncate">{card.meta}</div>
+              <div className="text-xs sm:text-sm text-gray-500 dark:text-gray-400 truncate">{card.label}</div>
+              <div className="text-lg sm:text-2xl font-bold text-[#0e1f42] dark:text-white">{card.value}</div>
+              <div className="text-[10px] sm:text-xs text-gray-600 dark:text-gray-400 truncate">{card.meta}</div>
             </div>
             <div className={`${card.color} rounded-lg p-2 shrink-0 ml-2`}>{card.icon}</div>
           </div>
@@ -131,14 +131,14 @@ const AdminTenants = () => {
       </div>
 
       {/* Filters */}
-      <div className="bg-white rounded-lg border border-gray-100 p-4 flex flex-col gap-3 lg:flex-row lg:items-center lg:justify-between">
+      <div className="bg-white dark:bg-[#111827] rounded-lg border border-gray-100 dark:border-white/5 p-4 flex flex-col gap-3 lg:flex-row lg:items-center lg:justify-between">
         <div className="relative w-full lg:max-w-sm">
           <Search size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" />
           <input
             value={search}
             onChange={(e) => setSearch(e.target.value)}
             placeholder="Search tenant, property..."
-            className="w-full pl-9 pr-3 py-2 rounded-md border border-gray-200 text-sm outline-none focus:border-[#9F7539]"
+            className="w-full pl-9 pr-3 py-2 rounded-md border border-gray-200 dark:border-white/10 bg-transparent dark:text-white text-sm outline-none focus:border-[#9F7539]"
           />
         </div>
 
@@ -146,57 +146,57 @@ const AdminTenants = () => {
           <select
             value={statusFilter}
             onChange={(e) => setStatusFilter(e.target.value)}
-            className="px-3 py-2 rounded-md border border-gray-200 text-sm outline-none"
+            className="px-3 py-2 rounded-md border border-gray-200 dark:border-white/10 bg-transparent dark:text-white text-sm outline-none cursor-pointer"
           >
-            <option value="all">All Status</option>
-            <option value="Active">Active</option>
-            <option value="Move-in pending">Move-in Pending</option>
-            <option value="Reserved">Reserved</option>
+            <option value="all" className="dark:bg-[#111827]">All Status</option>
+            <option value="Active" className="dark:bg-[#111827]">Active</option>
+            <option value="Move-in pending" className="dark:bg-[#111827]">Move-in Pending</option>
+            <option value="Reserved" className="dark:bg-[#111827]">Reserved</option>
           </select>
 
           <select
             value={sortBy}
             onChange={(e) => setSortBy(e.target.value)}
-            className="px-3 py-2 rounded-md border border-gray-200 text-sm outline-none"
+            className="px-3 py-2 rounded-md border border-gray-200 dark:border-white/10 bg-transparent dark:text-white text-sm outline-none cursor-pointer"
           >
-            <option value="newest">Sort: Newest</option>
-            <option value="rent-desc">Rent: High to Low</option>
-            <option value="rent-asc">Rent: Low to High</option>
+            <option value="newest" className="dark:bg-[#111827]">Sort: Newest</option>
+            <option value="rent-desc" className="dark:bg-[#111827]">Rent: High to Low</option>
+            <option value="rent-asc" className="dark:bg-[#111827]">Rent: Low to High</option>
           </select>
         </div>
       </div>
 
       {/* Desktop Table */}
-      <div className="hidden lg:block bg-white border border-gray-100 rounded-xl shadow-sm overflow-hidden">
+      <div className="hidden lg:block bg-white dark:bg-[#111827] border border-gray-100 dark:border-white/5 rounded-xl shadow-sm overflow-hidden transition-colors">
         <table className="w-full text-sm">
-          <thead className="bg-gray-50 text-gray-600 text-xs uppercase tracking-wider">
+          <thead className="bg-gray-50 dark:bg-gray-900/50 text-gray-600 dark:text-gray-400 text-[11px] ">
             <tr>
-              <th className="py-4 px-4 text-left font-semibold">Tenant</th>
-              <th className="py-4 px-4 text-left font-semibold">Property & Unit</th>
-              <th className="py-4 px-4 text-left font-semibold">Rent</th>
-              <th className="py-4 px-4 text-left font-semibold">Lease Period</th>
-              <th className="py-4 px-4 text-left font-semibold">Status</th>
-              <th className="py-4 px-4 text-left font-semibold">Payment</th>
-              <th className="py-4 px-4 text-right font-semibold">Actions</th>
+              <th className="px-4 py-3 font-semibold text-gray-500 dark:text-gray-400 uppercase text-[10px] tracking-wider text-left">Tenant</th>
+              <th className="px-4 py-3 font-semibold text-gray-500 dark:text-gray-400 uppercase text-[10px] tracking-wider text-left">Property & Unit</th>
+              <th className="px-4 py-3 font-semibold text-gray-500 dark:text-gray-400 uppercase text-[10px] tracking-wider text-left">Rent</th>
+              <th className="px-4 py-3 font-semibold text-gray-500 dark:text-gray-400 uppercase text-[10px] tracking-wider whitespace-nowrap text-left">Lease Period</th>
+              <th className="px-4 py-3 font-semibold text-gray-500 dark:text-gray-400 uppercase text-[10px] tracking-wider text-left">Status</th>
+              <th className="px-4 py-3 font-semibold text-gray-500 dark:text-gray-400 uppercase text-[10px] tracking-wider text-left">Payment</th>
+              <th className="px-4 py-3 font-semibold text-gray-500 dark:text-gray-400 uppercase text-[10px] tracking-wider text-right">Actions</th>
             </tr>
           </thead>
-          <tbody className="divide-y divide-gray-100">
+          <tbody className="divide-y divide-gray-100 dark:divide-white/5">
             {filteredTenants.map((tenant) => (
-              <tr key={tenant.id} className="hover:bg-gray-50 transition-colors">
+              <tr key={tenant.id} className="hover:bg-gray-50 dark:hover:bg-white/5 transition-colors">
                 <td className="py-4 px-4">
-                  <div className="font-semibold text-[#0e1f42]">{tenant.name}</div>
-                  <div className="text-[11px] text-gray-500">{tenant.email}</div>
+                  <div className="font-semibold text-[#0e1f42] dark:text-white">{tenant.name}</div>
+                  <div className="text-[11px] text-gray-500 dark:text-gray-400">{tenant.email}</div>
                 </td>
                 <td className="py-4 px-4">
-                  <div className="text-gray-700 font-medium">{tenant.propertyTitle}</div>
-                  <div className="text-[11px] text-gray-500">Unit {tenant.unitNumber}</div>
+                  <div className="text-gray-700 dark:text-gray-300 font-medium line-clamp-1">{tenant.propertyTitle}</div>
+                  <div className="text-[11px] text-gray-500 dark:text-gray-400">Unit {tenant.unitNumber}</div>
                 </td>
-                <td className="py-4 px-4 font-medium text-sm text-gray-700">
+                <td className="py-4 px-4 font-medium text-xs text-gray-700 dark:text-gray-300">
                   ₦{tenant.rent?.toLocaleString()}
                 </td>
-                <td className="py-4 px-4 text-xs text-gray-6">
+                <td className="py-4 px-4 text-xs text-gray-600 dark:text-gray-400 whitespace-nowrap">
                   <div>{tenant.leaseStart}</div>
-                  <div className="text-gray-400">to {tenant.leaseEnd}</div>
+                  <div className="text-gray-400 dark:text-gray-500">to {tenant.leaseEnd}</div>
                 </td>
                 <td className="py-4 px-4">
                   <span className={`px-2.5 py-1 whitespace-nowrap rounded-full text-[10px] font-bold ${statusBadge(tenant.status)}`}>
@@ -213,12 +213,12 @@ const AdminTenants = () => {
                     {tenant.status === 'Move-in pending' && (
                       <button
                         onClick={() => confirmMoveIn(tenant.id)}
-                        className="text-xs font-semibold text-green-600 hover:text-green-700"
+                        className="text-xs font-semibold text-green-600 dark:text-green-400 hover:text-green-700 dark:hover:text-green-300 cursor-pointer"
                       >
                         Confirm
                       </button>
                     )}
-                    <button className="p-2 hover:bg-gray-100 rounded-lg text-gray-400 hover:text-[#9F7539] transition-all">
+                    <button className="p-2 hover:bg-gray-100 dark:hover:bg-white/5 rounded-lg text-gray-400 dark:text-gray-500 hover:text-[#9F7539] transition-all cursor-pointer">
                       <Eye size={18} />
                     </button>
                   </div>
@@ -232,11 +232,11 @@ const AdminTenants = () => {
       {/* Mobile/Tablet Card View */}
       <div className="lg:hidden space-y-3">
         {filteredTenants.map((tenant) => (
-          <div key={tenant.id} className="bg-white p-4 rounded-xl border border-gray-100 shadow-sm space-y-4">
+          <div key={tenant.id} className="bg-white dark:bg-[#111827] p-4 rounded-xl border border-gray-100 dark:border-white/5 shadow-sm space-y-4">
             <div className="flex justify-between items-start">
               <div>
-                <h3 className="font-bold text-[#0e1f42]">{tenant.name}</h3>
-                <p className="text-xs text-gray-500">{tenant.email}</p>
+                <h3 className="font-bold text-[#0e1f42] dark:text-white">{tenant.name}</h3>
+                <p className="text-xs text-gray-500 dark:text-gray-400">{tenant.email}</p>
               </div>
               <span className={`px-2 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wider ${statusBadge(tenant.status)}`}>
                 {tenant.status}
@@ -244,34 +244,34 @@ const AdminTenants = () => {
             </div>
 
             <div className="grid grid-cols-2 gap-3 text-xs">
-              <div className="p-2 bg-gray-50 rounded-lg border border-gray-100">
-                <p className="text-gray-400 mb-1">Property</p>
-                <p className="font-semibold text-gray-700 truncate">{tenant.propertyTitle}</p>
-                <p className="text-[10px] text-gray-500">Unit {tenant.unitNumber}</p>
+              <div className="p-2 bg-gray-50 dark:bg-gray-900/50 rounded-lg border border-gray-100 dark:border-white/5">
+                <p className="text-gray-400 dark:text-gray-500 mb-1">Property</p>
+                <p className="font-semibold text-gray-700 dark:text-gray-300 truncate">{tenant.propertyTitle}</p>
+                <p className="text-[10px] text-gray-500 dark:text-gray-400">Unit {tenant.unitNumber}</p>
               </div>
-              <div className="p-2 bg-gray-50 rounded-lg border border-gray-100">
-                <p className="text-gray-400 mb-1">Rent</p>
-                <p className="font-semibold text-gray-700">₦{tenant.rent?.toLocaleString()}</p>
-                <span className={`text-[9px] font-bold ${tenant.paymentStatus === 'Paid' ? 'text-green-600' : 'text-amber-600'}`}>
+              <div className="p-2 bg-gray-50 dark:bg-gray-900/50 rounded-lg border border-gray-100 dark:border-white/5">
+                <p className="text-gray-400 dark:text-gray-500 mb-1">Rent</p>
+                <p className="font-semibold text-gray-700 dark:text-gray-300">₦{tenant.rent?.toLocaleString()}</p>
+                <span className={`text-[9px] font-bold ${tenant.paymentStatus === 'Paid' ? 'text-green-600 dark:text-green-400' : 'text-amber-600 dark:text-amber-400'}`}>
                   {tenant.paymentStatus}
                 </span>
               </div>
             </div>
 
-            <div className="flex items-center justify-between text-xs pt-1 border-t border-gray-50">
-              <div className="text-gray-500">
-                Lease: <span className="font-medium">{tenant.leaseStart}</span> → <span className="font-medium">{tenant.leaseEnd}</span>
+            <div className="flex items-center justify-between text-xs pt-1 border-t border-gray-50 dark:border-white/5">
+              <div className="text-gray-500 dark:text-gray-400">
+                Lease: <span className="font-medium dark:text-gray-300">{tenant.leaseStart}</span> → <span className="font-medium dark:text-gray-300">{tenant.leaseEnd}</span>
               </div>
               <div className="flex gap-2">
                 {tenant.status === 'Move-in pending' && (
                   <button
                     onClick={() => confirmMoveIn(tenant.id)}
-                    className="px-3 py-1.5 bg-green-50 text-green-600 font-bold rounded-lg text-[11px]"
+                    className="px-3 py-1.5 bg-green-50 dark:bg-green-500/10 text-green-600 dark:text-green-400 font-bold rounded-lg text-[11px] cursor-pointer hover:bg-green-100 transition-colors"
                   >
                     Confirm
                   </button>
                 )}
-                <button className="p-2 border border-gray-100 rounded-lg text-gray-400">
+                <button className="p-2 border border-gray-100 dark:border-white/10 rounded-lg text-gray-400 dark:text-gray-500 hover:text-[#9F7539] transition-all cursor-pointer">
                   <Eye size={16} />
                 </button>
               </div>

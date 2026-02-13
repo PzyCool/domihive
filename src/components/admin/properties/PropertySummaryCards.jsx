@@ -13,28 +13,28 @@ const PropertySummaryCards = ({ properties, allUnits }) => {
             value: properties.length,
             meta: `${properties.length} properties`,
             icon: <Building size={20} />,
-            color: "bg-gray-100 text-gray-700",
+            color: "bg-gray-100 text-gray-700 dark:bg-gray-800 dark:text-gray-300",
         },
         {
             label: "Total Units",
             value: totalUnits,
             meta: `${availableUnits} available units`,
             icon: <House size={20} />,
-            color: "bg-green-100 text-green-700",
+            color: "bg-green-100 text-green-700 dark:bg-green-500/10 dark:text-green-400",
         },
         {
             label: "Occupied Units",
             value: occupiedUnits,
             meta: `${occupiedUnits} occupied units`,
             icon: <House size={20} />,
-            color: "bg-blue-100 text-blue-700",
+            color: "bg-blue-100 text-blue-700 dark:bg-blue-500/10 dark:text-blue-400",
         },
         {
             label: "Occupancy Rate",
             value: `${occupancyRate}%`,
             meta: `${occupancyRate}% occupied`,
             icon: <House size={20} />,
-            color: "bg-amber-100 text-amber-700",
+            color: "bg-amber-100 text-amber-700 dark:bg-amber-500/10 dark:text-amber-400",
         },
     ];
 
@@ -43,14 +43,14 @@ const PropertySummaryCards = ({ properties, allUnits }) => {
             {stats.map((card) => (
                 <div
                     key={card.label}
-                    className="bg-white rounded-lg p-4 shadow border border-gray-100 flex items-center justify-between"
+                    className="bg-white dark:bg-[#111827] rounded-lg p-4 shadow border border-gray-100 dark:border-white/5 flex items-center justify-between transition-colors"
                 >
                     <div>
-                        <div className="text-sm text-gray-500">{card.label}</div>
-                        <div className="text-2xl font-bold text-[#0e1f42]">{card.value}</div>
-                        <div className="text-xs text-gray-600">{card.meta}</div>
+                        <div className="text-sm text-gray-500 dark:text-gray-400">{card.label}</div>
+                        <div className="text-2xl font-bold text-[#0e1f42] dark:text-white">{card.value}</div>
+                        <div className="text-xs text-gray-600 dark:text-gray-400">{card.meta}</div>
                     </div>
-                    <div className={`${card.color} rounded-lg p-2`}>
+                    <div className={`${card.color} rounded-lg p-2 shrink-0`}>
                         {card.icon}
                     </div>
                 </div>

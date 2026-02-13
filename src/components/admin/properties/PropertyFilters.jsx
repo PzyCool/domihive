@@ -19,23 +19,23 @@ const PropertyFilters = ({
     locationsList
 }) => {
     return (
-        <div className="bg-white rounded-lg border border-gray-100">
-            <div className="px-4 py-3 border-b border-gray-100 flex items-center justify-between">
+        <div className="bg-white dark:bg-[#111827] rounded-lg border border-gray-100 dark:border-white/5 transition-colors">
+            <div className="px-4 py-3 border-b border-gray-100 dark:border-white/5 flex items-center justify-between">
                 <div className="flex items-center gap-2">
-                    <SlidersHorizontal size={16} className="text-gray-500" />
-                    <p className="text-sm font-semibold text-[#0e1f42]">Filters</p>
+                    <SlidersHorizontal size={16} className="text-gray-500 dark:text-gray-400" />
+                    <p className="text-sm font-semibold text-[#0e1f42] dark:text-white">Filters</p>
                 </div>
 
                 <div className="flex items-center gap-2">
                     <button
                         onClick={resetFilters}
-                        className="text-xs font-medium text-gray-600 hover:text-gray-900 flex items-center gap-1"
+                        className="text-xs font-medium text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white flex items-center gap-1 cursor-pointer"
                     >
                         <X size={14} /> Reset
                     </button>
                     <button
                         onClick={() => setFiltersOpen((v) => !v)}
-                        className="text-xs font-semibold text-[#9F7539]"
+                        className="text-xs font-semibold text-[#9F7539] dark:hover:text-[#9F7539]/80 cursor-pointer"
                     >
                         {filtersOpen ? "Hide" : "Show"}
                     </button>
@@ -54,7 +54,7 @@ const PropertyFilters = ({
                             value={search}
                             onChange={(e) => setSearch(e.target.value)}
                             placeholder="Search units..."
-                            className="w-full pl-9 pr-3 py-2 rounded-md border border-gray-200 text-sm outline-none focus:border-[#9F7539]"
+                            className="w-full pl-9 pr-3 py-2 rounded-md border border-gray-200 dark:border-white/10 dark:placeholder-gray-500 bg-transparent dark:text-white text-sm outline-none focus:border-[#9F7539]"
                         />
                     </div>
 
@@ -63,13 +63,13 @@ const PropertyFilters = ({
                         <select
                             value={unitStatus}
                             onChange={(e) => setUnitStatus(e.target.value)}
-                            className="px-3 py-2 rounded-md border border-gray-200 text-sm w-full lg:w-auto"
+                            className="px-3 py-2 rounded-md border border-gray-200 dark:border-white/10 bg-transparent dark:text-white text-sm w-full lg:w-auto outline-none cursor-pointer"
                         >
-                            <option value="all">All Status</option>
-                            <option value="available">Available</option>
-                            <option value="occupied">Occupied</option>
-                            <option value="reserved">Reserved</option>
-                            <option value="maintenance">Maintenance</option>
+                            <option value="all" className="dark:bg-[#111827]">All Status</option>
+                            <option value="available" className="dark:bg-[#111827]">Available</option>
+                            <option value="occupied" className="dark:bg-[#111827]">Occupied</option>
+                            <option value="reserved" className="dark:bg-[#111827]">Reserved</option>
+                            <option value="maintenance" className="dark:bg-[#111827]">Maintenance</option>
                         </select>
 
                         <select
@@ -78,33 +78,33 @@ const PropertyFilters = ({
                                 setStateFilter(e.target.value);
                                 setLocationFilter("all");
                             }}
-                            className="px-3 py-2 rounded-md border border-gray-200 text-sm w-full lg:w-auto"
+                            className="px-3 py-2 rounded-md border border-gray-200 dark:border-white/10 bg-transparent dark:text-white text-sm w-full lg:w-auto outline-none cursor-pointer"
                         >
-                            <option value="all">All States</option>
+                            <option value="all" className="dark:bg-[#111827]">All States</option>
                             {statesList.map((s) => (
-                                <option key={s}>{s}</option>
+                                <option key={s} className="dark:bg-[#111827]">{s}</option>
                             ))}
                         </select>
 
                         <select
                             value={locationFilter}
                             onChange={(e) => setLocationFilter(e.target.value)}
-                            className="px-3 py-2 rounded-md border border-gray-200 text-sm w-full lg:w-auto"
+                            className="px-3 py-2 rounded-md border border-gray-200 dark:border-white/10 bg-transparent dark:text-white text-sm w-full lg:w-auto outline-none cursor-pointer"
                         >
-                            <option value="all">All Locations</option>
+                            <option value="all" className="dark:bg-[#111827]">All Locations</option>
                             {locationsList.map((l) => (
-                                <option key={l}>{l}</option>
+                                <option key={l} className="dark:bg-[#111827]">{l}</option>
                             ))}
                         </select>
 
                         <select
                             value={sortBy}
                             onChange={(e) => setSortBy(e.target.value)}
-                            className="px-3 py-2 rounded-md border border-gray-200 text-sm w-full lg:w-auto"
+                            className="px-3 py-2 rounded-md border border-gray-200 dark:border-white/10 bg-transparent dark:text-white text-sm w-full lg:w-auto outline-none cursor-pointer"
                         >
-                            <option value="newest">Sort: Newest</option>
-                            <option value="rent-asc">Rent: Low → High</option>
-                            <option value="rent-desc">Rent: High → Low</option>
+                            <option value="newest" className="dark:bg-[#111827]">Sort: Newest</option>
+                            <option value="rent-asc" className="dark:bg-[#111827]">Rent: Low → High</option>
+                            <option value="rent-desc" className="dark:bg-[#111827]">Rent: High → Low</option>
                         </select>
                     </div>
                 </div>

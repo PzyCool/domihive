@@ -78,37 +78,37 @@ const AdminApplications = () => {
         value: total,
         meta: `${total} applications`,
         icon: <FilePlusCorner size={20} />,
-        color: "bg-gray-100 text-gray-700",
+        color: "bg-gray-100 text-gray-700 dark:bg-gray-800 dark:text-gray-300",
       },
       {
         label: "Under Review",
         value: underReview,
         meta: `${underReview} applications`,
         icon: <FilePlusCorner size={20} />,
-        color: "bg-amber-100 text-amber-700",
+        color: "bg-amber-100 text-amber-700 dark:bg-amber-500/10 dark:text-amber-400",
       },
       {
         label: "Approved",
         value: approved,
         meta: `${approved} applications`,
         icon: <FilePlusCorner size={20} />,
-        color: "bg-green-100 text-green-700",
+        color: "bg-green-100 text-green-700 dark:bg-green-500/10 dark:text-green-400",
       },
       {
         label: "Rejected",
         value: rejected,
         meta: `${rejected} applications`,
         icon: <FilePlusCorner size={20} />,
-        color: "bg-red-100 text-red-700",
+        color: "bg-red-100 text-red-700 dark:bg-red-500/10 dark:text-red-400",
       },
     ];
   }, [applications]);
 
   const statusBadge = (status) => {
-    if (status === "Approved") return "bg-green-100 text-green-700";
-    if (status === "Rejected") return "bg-red-100 text-red-700";
-    if (status === "Submitted") return "bg-gray-100 text-gray-700";
-    return "bg-amber-100 text-amber-700"; // Under Review or others
+    if (status === "Approved") return "bg-green-100 text-green-700 dark:bg-green-500/10 dark:text-green-400";
+    if (status === "Rejected") return "bg-red-100 text-red-700 dark:bg-red-500/10 dark:text-red-400";
+    if (status === "Submitted") return "bg-gray-100 text-gray-700 dark:bg-gray-800 dark:text-gray-300";
+    return "bg-amber-100 text-amber-700 dark:bg-amber-500/10 dark:text-amber-400"; // Under Review or others
   };
 
   return (
@@ -116,17 +116,17 @@ const AdminApplications = () => {
       {/* Header */}
       <div className="flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
         <div>
-          <h1 className="text-2xl font-bold text-[#0e1f42] mt-2">Application Queue</h1>
-          <p className="text-sm text-gray-600">
+          <h1 className="text-2xl font-bold text-[#0e1f42] dark:text-white mt-2">Application Queue</h1>
+          <p className="text-sm text-gray-600 dark:text-gray-400">
             Manage tenants application and track unit status
           </p>
         </div>
 
         <div className="flex flex-wrap items-center gap-2 text-sm">
-          <button className="flex items-center gap-2 px-4 py-2 text-(--accent-color) border border-(--accent-color)/20 hover:border-(--accent-color)/50 cursor-pointer transition duration-300 font-semibold rounded-lg">
+          <button className="flex items-center gap-2 px-4 py-2 text-(--accent-color) border border-(--accent-color)/20 hover:border-(--accent-color)/50 dark:hover:border-(--accent-color)/40 cursor-pointer transition duration-300 font-semibold rounded-lg">
             <Download size={16} /> Export List
           </button>
-          <button className="flex items-center gap-2 px-4 py-2 bg-(--accent-color) text-white cursor-pointer transition duration-300 font-semibold rounded-lg">
+          <button className="flex items-center gap-2 px-4 py-2 bg-(--accent-color) text-white hover:bg-(--accent-color)/90 cursor-pointer transition duration-300 font-semibold rounded-lg">
             <UserPlus size={16} /> Assign Reviewer
           </button>
         </div>
@@ -137,12 +137,12 @@ const AdminApplications = () => {
         {applicaionSummary.map((card) => (
           <div
             key={card.label}
-            className="bg-white rounded-lg p-4 shadow border border-gray-100 flex items-center justify-between"
+            className="bg-white dark:bg-[#111827] rounded-lg p-4 shadow border border-gray-100 dark:border-white/5 flex items-center justify-between"
           >
             <div>
-              <div className="text-sm text-gray-500">{card.label}</div>
-              <div className="text-2xl font-bold text-[#0e1f42]">{card.value}</div>
-              <div className="text-xs text-gray-600">{card.meta}</div>
+              <div className="text-sm text-gray-500 dark:text-gray-400">{card.label}</div>
+              <div className="text-2xl font-bold text-[#0e1f42] dark:text-white">{card.value}</div>
+              <div className="text-xs text-gray-600 dark:text-gray-400">{card.meta}</div>
             </div>
             <div className={`${card.color} rounded-lg p-2`}>{card.icon}</div>
           </div>
@@ -150,7 +150,7 @@ const AdminApplications = () => {
       </div>
 
       {/* Filters */}
-      <div className="bg-white rounded-lg border border-gray-200 p-4 flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
+      <div className="bg-white dark:bg-[#111827] rounded-lg border border-gray-200 dark:border-white/10 p-4 flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
         {/* Search */}
         <div className="relative w-full md:max-w-sm">
           <Search size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" />
@@ -158,7 +158,7 @@ const AdminApplications = () => {
             value={search}
             onChange={(e) => setSearch(e.target.value)}
             placeholder="Search applicant, property..."
-            className="w-full pl-9 pr-3 py-2 rounded-md border border-gray-200 text-sm outline-none focus:border-[#9F7539]"
+            className="w-full pl-9 pr-3 py-2 rounded-md border border-gray-200 dark:border-white/10 bg-transparent dark:text-white text-sm outline-none focus:border-[#9F7539]"
           />
         </div>
 
@@ -167,38 +167,38 @@ const AdminApplications = () => {
           <select
             value={statusFilter}
             onChange={(e) => setStatusFilter(e.target.value)}
-            className="px-3 py-2 rounded-md border border-gray-200 text-sm"
+            className="px-3 py-2 rounded-md border border-gray-200 dark:border-white/10 bg-transparent dark:text-white text-sm"
           >
-            <option value="all">All Status</option>
-            <option value="Submitted">Submitted</option>
-            <option value="Under Review">Under Review</option>
-            <option value="Approved">Approved</option>
-            <option value="Rejected">Rejected</option>
+            <option value="all" className="dark:bg-[#111827]">All Status</option>
+            <option value="Submitted" className="dark:bg-[#111827]">Submitted</option>
+            <option value="Under Review" className="dark:bg-[#111827]">Under Review</option>
+            <option value="Approved" className="dark:bg-[#111827]">Approved</option>
+            <option value="Rejected" className="dark:bg-[#111827]">Rejected</option>
           </select>
 
           {/* Sort */}
           <select
             value={sortBy}
             onChange={(e) => setSortBy(e.target.value)}
-            className="px-3 py-2 rounded-md border border-gray-200 text-sm"
+            className="px-3 py-2 rounded-md border border-gray-200 dark:border-white/10 bg-transparent dark:text-white text-sm"
           >
-            <option value="newest">Sort: Newest</option>
-            <option value="oldest">Sort: Oldest</option>
-            <option value="sla">Sort: SLA (Urgent first)</option>
+            <option value="newest" className="dark:bg-[#111827]">Sort: Newest</option>
+            <option value="oldest" className="dark:bg-[#111827]">Sort: Oldest</option>
+            <option value="sla" className="dark:bg-[#111827]">Sort: SLA (Urgent first)</option>
           </select>
 
-          <div className="text-xs text-gray-500 flex items-center px-2">
-            Showing <span className="font-semibold text-[#0e1f42] mx-1">{filteredRows.length}</span>
+          <div className="text-xs text-gray-500 dark:text-gray-400 flex items-center px-2">
+            Showing <span className="font-semibold text-[#0e1f42] dark:text-white mx-1">{filteredRows.length}</span>
             applications
           </div>
         </div>
       </div>
 
       {/* Desktop table */}
-      <div className="hidden md:block bg-white border border-gray-200 rounded-xl shadow-sm overflow-hidden">
+      <div className="hidden md:block bg-white dark:bg-[#111827] border border-gray-200 dark:border-white/10 rounded-xl shadow-sm overflow-hidden">
         <div className="overflow-x-auto">
           <table className="w-full text-sm">
-            <thead className="bg-gray-50 text-gray-600 text-xs uppercase tracking-wide">
+            <thead className="bg-gray-50 dark:bg-gray-900/50 text-gray-600 dark:text-gray-400 text-xs uppercase tracking-wide">
               <tr>
                 <th className="py-3 px-4 text-left font-semibold">Applicant</th>
                 <th className="py-3 px-4 text-left font-semibold">Property</th>
@@ -209,17 +209,17 @@ const AdminApplications = () => {
               </tr>
             </thead>
 
-            <tbody className="divide-y divide-gray-100">
+            <tbody className="divide-y divide-gray-100 dark:divide-white/5">
               {filteredRows.map((app) => (
-                <tr key={app.id} className="hover:bg-gray-50 transition-colors">
+                <tr key={app.id} className="hover:bg-gray-50 dark:hover:bg-white/5 transition-colors">
                   <td className="py-3 px-4 text-xs">
-                    <div className="font-semibold text-[#0e1f42]">{app.applicant}</div>
-                    <div className="text-xs text-gray-500">ID: {app.id}</div>
+                    <div className="font-semibold text-[#0e1f42] dark:text-white">{app.applicant}</div>
+                    <div className="text-xs text-gray-500 dark:text-gray-400">ID: {app.id}</div>
                   </td>
 
-                  <td className="py-3 px-4 text-gray-700 text-xs">{app.propertyTitle}</td>
+                  <td className="py-3 px-4 text-gray-700 dark:text-gray-300 text-xs">{app.propertyTitle}</td>
 
-                  <td className="py-3 px-4 text-gray-600 text-xs">
+                  <td className="py-3 px-4 text-gray-600 dark:text-gray-400 text-xs">
                     {new Date(app.submittedAt).toLocaleString()}
                   </td>
 
@@ -249,19 +249,19 @@ const AdminApplications = () => {
                     <div className="flex justify-end gap-2">
                       <button
                         onClick={() => updateStatus(app.id, "Under Review")}
-                        className="px-3 py-1.5 rounded-md border border-gray-200 text-gray-700 text-xs font-medium hover:bg-gray-50"
+                        className="px-3 py-1.5 rounded-md border border-gray-200 dark:border-white/10 text-gray-700 dark:text-gray-300 text-xs font-medium hover:bg-gray-50 dark:hover:bg-white/5"
                       >
                         Review
                       </button>
                       <button
                         onClick={() => updateStatus(app.id, "Approved")}
-                        className="px-3 py-1.5 rounded-md bg-green-50 text-green-700 text-xs font-semibold hover:bg-green-100"
+                        className="px-3 py-1.5 rounded-md bg-green-50 dark:bg-green-500/10 text-green-700 dark:text-green-400 text-xs font-semibold hover:bg-green-100 dark:hover:bg-green-500/20"
                       >
                         Approve
                       </button>
                       <button
                         onClick={() => updateStatus(app.id, "Rejected")}
-                        className="px-3 py-1.5 rounded-md bg-red-50 text-red-600 text-xs font-semibold hover:bg-red-100"
+                        className="px-3 py-1.5 rounded-md bg-red-50 dark:bg-red-500/10 text-red-600 dark:text-red-400 text-xs font-semibold hover:bg-red-100 dark:hover:bg-red-500/20"
                       >
                         Reject
                       </button>
@@ -287,13 +287,13 @@ const AdminApplications = () => {
         {filteredRows.map((app) => (
           <div
             key={app.id}
-            className="bg-white border border-gray-200 rounded-xl shadow-sm p-4"
+            className="bg-white dark:bg-[#111827] border border-gray-200 dark:border-white/10 rounded-xl shadow-sm p-4"
           >
             {/* Top row */}
             <div className="flex items-start justify-between gap-3">
               <div>
-                <p className="font-semibold text-[#0e1f42]">{app.applicant}</p>
-                <p className="text-xs text-gray-500">ID: {app.id}</p>
+                <p className="font-semibold text-[#0e1f42] dark:text-white">{app.applicant}</p>
+                <p className="text-xs text-gray-500 dark:text-gray-400">ID: {app.id}</p>
               </div>
 
               <span className={`px-2.5 py-1 rounded-full text-[11px] font-semibold ${statusBadge(app.status)}`}>
@@ -303,21 +303,21 @@ const AdminApplications = () => {
 
             {/* Property */}
             <div className="mt-3">
-              <p className="text-xs text-gray-500">Property</p>
-              <p className="text-sm text-gray-700">{app.propertyTitle}</p>
+              <p className="text-xs text-gray-500 dark:text-gray-400">Property</p>
+              <p className="text-sm text-gray-700 dark:text-gray-300">{app.propertyTitle}</p>
             </div>
 
             {/* Submitted + SLA */}
             <div className="mt-3 grid grid-cols-2 gap-3">
               <div>
-                <p className="text-xs text-gray-500">Submitted</p>
-                <p className="text-xs text-gray-700">
+                <p className="text-xs text-gray-500 dark:text-gray-400">Submitted</p>
+                <p className="text-xs text-gray-700 dark:text-gray-300">
                   {new Date(app.submittedAt).toLocaleString()}
                 </p>
               </div>
 
               <div className="text-right">
-                <p className="text-xs text-gray-500">SLA</p>
+                <p className="text-xs text-gray-500 dark:text-gray-400">SLA</p>
                 <p
                   className={`text-xs font-medium ${app.isOverdue
                     ? "text-red-600"
@@ -335,21 +335,21 @@ const AdminApplications = () => {
             <div className="mt-4 grid grid-cols-3 gap-2">
               <button
                 onClick={() => updateStatus(app.id, "Under Review")}
-                className="py-2 rounded-lg border border-gray-200 text-xs font-semibold text-gray-700"
+                className="py-2 rounded-lg border border-gray-200 dark:border-white/10 text-xs font-semibold text-gray-700 dark:text-gray-300 dark:hover:bg-white/5 transition-colors"
               >
                 Review
               </button>
 
               <button
                 onClick={() => updateStatus(app.id, "Approved")}
-                className="py-2 rounded-lg bg-green-50 text-green-700 text-xs font-semibold"
+                className="py-2 rounded-lg bg-green-50 dark:bg-green-500/10 text-green-700 dark:text-green-400 text-xs font-semibold hover:bg-green-100 dark:hover:bg-green-500/20 transition-colors"
               >
                 Approve
               </button>
 
               <button
                 onClick={() => updateStatus(app.id, "Rejected")}
-                className="py-2 rounded-lg bg-red-50 text-red-600 text-xs font-semibold"
+                className="py-2 rounded-lg bg-red-50 dark:bg-red-500/10 text-red-600 dark:text-red-400 text-xs font-semibold hover:bg-red-100 dark:hover:bg-red-500/20 transition-colors"
               >
                 Reject
               </button>

@@ -41,6 +41,12 @@ import AdminAddNewProperty from './components/admin/pages/AdminAddNewProperty';
 import './App.css';
 import NotFound from './components/NotFound';
 import AdminPropertyDetails from './components/admin/pages/AdminPropertyDetails';
+import AdminClients from './components/admin/pages/AdminClients';
+import AdminPayments from './components/admin/pages/AdminPayments';
+import AdminMaintenance from './components/admin/pages/AdminMaintenance';
+import AdminMaintenanceDetails from './components/admin/pages/AdminMaintenanceDetails';
+import AdminReports from './components/admin/pages/AdminReports';
+import AdminSettings from './components/admin/pages/AdminSettings';
 
 function App() {
   return (
@@ -78,6 +84,12 @@ function App() {
           <Route path="applications" element={<AdminApplications />} />
           <Route path="tenants" element={<AdminTenants />} />
           <Route path="content-policies" element={<AdminContentPolicies />} />
+          <Route path="clients" element={<AdminClients />} />
+          <Route path="payments" element={<AdminPayments />} />
+          <Route path="maintenance" element={<AdminMaintenance />} />
+          <Route path="maintenance/:requestId" element={<AdminMaintenanceDetails />} />
+          <Route path="reports" element={<AdminReports />} />
+          <Route path="settings" element={<AdminSettings />} />
 
           {/* Route for adding new properties */}
           <Route path="properties/add-new-property" element={<AdminAddNewProperty />} />
