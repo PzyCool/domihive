@@ -454,9 +454,181 @@ const defaultMaintenanceRequests = [
   }
 ];
 
+const defaultClients = [
+  {
+    id: 'client-001',
+    name: 'Mrs. Adunni Lagos',
+    avatar: 'https://randomuser.me/api/portraits/women/44.jpg',
+    email: 'adunni.lagos@email.com',
+    phone: '+234 801 234 5678',
+    clientSince: 'Jan 2026',
+    totalProperties: 8,
+    occupiedUnits: 6,
+    occupancyPct: 75,
+    contractStatus: 'Active',
+    managementFeePercent: 10,
+    managementFeeValue: '₦48k/month avg'
+  },
+  {
+    id: 'client-002',
+    name: 'Chief Emeka Okonkwo',
+    avatar: 'https://randomuser.me/api/portraits/men/32.jpg',
+    email: 'emeka.okonkwo@email.com',
+    phone: '+234 802 345 6789',
+    clientSince: 'Dec 2025',
+    totalProperties: 5,
+    occupiedUnits: 5,
+    occupancyPct: 100,
+    contractStatus: 'Active',
+    managementFeePercent: 12,
+    managementFeeValue: '₦72k/month avg'
+  },
+  {
+    id: 'client-003',
+    name: 'Dr. Fatima Abdullahi',
+    avatar: 'https://randomuser.me/api/portraits/women/68.jpg',
+    email: 'fatima.abdullahi@email.com',
+    phone: '+234 803 456 7890',
+    clientSince: 'Nov 2025',
+    totalProperties: 12,
+    occupiedUnits: 9,
+    occupancyPct: 75,
+    contractStatus: 'Active',
+    managementFeePercent: 8,
+    managementFeeValue: '₦54k/month avg'
+  },
+  {
+    id: 'client-004',
+    name: 'Mr. Tunde Adebayo',
+    avatar: 'https://randomuser.me/api/portraits/men/45.jpg',
+    email: 'tunde.adebayo@email.com',
+    phone: '+234 804 567 8901',
+    clientSince: 'Oct 2025',
+    totalProperties: 3,
+    occupiedUnits: 2,
+    occupancyPct: 67,
+    contractStatus: 'Expires Soon',
+    managementFeePercent: 15,
+    managementFeeValue: '₦36k/month avg'
+  },
+  {
+    id: 'client-005',
+    name: 'Mrs. Chioma Okeke',
+    avatar: 'https://randomuser.me/api/portraits/women/12.jpg',
+    email: 'chioma.okeke@email.com',
+    phone: '+234 805 678 9012',
+    clientSince: 'Sep 2025',
+    totalProperties: 6,
+    occupiedUnits: 4,
+    occupancyPct: 67,
+    contractStatus: 'Active',
+    managementFeePercent: 12,
+    managementFeeValue: '₦42k/month avg'
+  },
+  {
+    id: 'client-006',
+    name: 'Engr. Bola Adesanya',
+    avatar: 'https://randomuser.me/api/portraits/women/36.jpg',
+    email: 'bola.adesanya@email.com',
+    phone: '+234 806 789 0123',
+    clientSince: 'Aug 2025',
+    totalProperties: 4,
+    occupiedUnits: 3,
+    occupancyPct: 75,
+    contractStatus: 'Expired',
+    managementFeePercent: 10,
+    managementFeeValue: '₦38k/month avg'
+  },
+  {
+    id: 'client-007',
+    name: 'Mr. Ahmed Ibrahim',
+    avatar: 'https://randomuser.me/api/portraits/men/22.jpg',
+    email: 'ahmed.ibrahim@email.com',
+    phone: '+234 807 890 1234',
+    clientSince: 'Jul 2025',
+    totalProperties: 7,
+    occupiedUnits: 5,
+    occupancyPct: 71,
+    contractStatus: 'Active',
+    managementFeePercent: 9,
+    managementFeeValue: '₦51k/month avg'
+  },
+  {
+    id: 'client-008',
+    name: 'Mrs. Grace Nnenna',
+    avatar: 'https://randomuser.me/api/portraits/women/53.jpg',
+    email: 'grace.nnenna@email.com',
+    phone: '+234 808 901 2345',
+    clientSince: 'Jun 2025',
+    totalProperties: 9,
+    occupiedUnits: 8,
+    occupancyPct: 89,
+    contractStatus: 'Active',
+    managementFeePercent: 11,
+    managementFeeValue: '₦68k/month avg'
+  },
+  {
+    id: 'client-009',
+    name: 'Dr. Kemi Adeyemi',
+    avatar: 'https://randomuser.me/api/portraits/women/74.jpg',
+    email: 'kemi.adeyemi@email.com',
+    phone: '+234 809 012 3456',
+    clientSince: 'May 2025',
+    totalProperties: 2,
+    occupiedUnits: 1,
+    occupancyPct: 50,
+    contractStatus: 'Active',
+    managementFeePercent: 13,
+    managementFeeValue: '₦26k/month avg'
+  },
+  {
+    id: 'client-010',
+    name: 'Mr. David Okafor',
+    avatar: 'https://randomuser.me/api/portraits/men/19.jpg',
+    email: 'david.okafor@email.com',
+    phone: '+234 810 123 4567',
+    clientSince: 'Apr 2025',
+    totalProperties: 15,
+    occupiedUnits: 12,
+    occupancyPct: 80,
+    contractStatus: 'Active',
+    managementFeePercent: 10,
+    managementFeeValue: '₦84k/month avg'
+  },
+  {
+    id: 'client-011',
+    name: 'Mrs. Blessing Nwankwo',
+    avatar: 'https://randomuser.me/api/portraits/women/29.jpg',
+    email: 'blessing.nwankwo@email.com',
+    phone: '+234 811 234 5678',
+    clientSince: 'Mar 2025',
+    totalProperties: 6,
+    occupiedUnits: 5,
+    occupancyPct: 83,
+    contractStatus: 'Expires Soon',
+    managementFeePercent: 12,
+    managementFeeValue: '₦45k/month avg'
+  },
+  {
+    id: 'client-012',
+    name: 'Prof. Samuel Ogundipe',
+    avatar: 'https://randomuser.me/api/portraits/men/55.jpg',
+    email: 'samuel.ogundipe@email.com',
+    phone: '+234 812 345 6789',
+    clientSince: 'Feb 2025',
+    totalProperties: 10,
+    occupiedUnits: 7,
+    occupancyPct: 70,
+    contractStatus: 'Active',
+    managementFeePercent: 9,
+    managementFeeValue: '₦58k/month avg'
+  }
+];
+
 
 export const AdminProvider = ({ children }) => {
   const [properties, setProperties] = useState(defaultProperties);
+  const [clients, setClients] = useState(defaultClients);
   const [locations, setLocations] = useState(defaultLocations);
   const [slots, setSlots] = useState(defaultSlots);
   const [inspections, setInspections] = useState(defaultInspections);
@@ -470,6 +642,8 @@ export const AdminProvider = ({ children }) => {
     () => ({
       properties,
       setProperties,
+      clients,
+      setClients,
       locations,
       setLocations,
       slots,
@@ -487,7 +661,7 @@ export const AdminProvider = ({ children }) => {
       maintenanceRequests,
       setMaintenanceRequests
     }),
-    [properties, locations, slots, inspections, applications, tenants, policies, recentActivities, maintenanceRequests]
+    [properties, clients, locations, slots, inspections, applications, tenants, policies, recentActivities, maintenanceRequests]
   );
 
   return <AdminContext.Provider value={value}>{children}</AdminContext.Provider>;
