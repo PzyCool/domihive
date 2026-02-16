@@ -1,6 +1,7 @@
 import React, { useMemo, useState } from "react";
 import { useAdmin } from "../../../context/AdminContext";
 import { Eye, Pencil, Plus, Search } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 
 const statusStyles = {
   Active: "bg-green-100 text-green-700",
@@ -10,6 +11,7 @@ const statusStyles = {
 
 const AdminClients = () => {
   const { clients } = useAdmin();
+  const navigate = useNavigate();
   const [statusFilter, setStatusFilter] = useState("All");
   const [query, setQuery] = useState("");
 
@@ -83,7 +85,11 @@ const AdminClients = () => {
             </thead>
             <tbody>
               {filtered.map((client) => (
-                <tr key={client.id} className="border-t border-gray-100 dark:border-white/10">
+                <tr
+                  key={client.id}
+                  className="border-t border-gray-100 dark:border-white/10 hover:bg-gray-50/60 dark:hover:bg-white/5 cursor-pointer"
+                  onClick={() => navigate(`/admin/clients/${client.id}`)}
+                >
                   <td className="px-5 py-4">
                     <div className="flex items-center gap-3">
                       <img
@@ -123,10 +129,10 @@ const AdminClients = () => {
                   </td>
                   <td className="px-5 py-4">
                     <div className="flex items-center gap-3 text-gray-500 dark:text-gray-400">
-                      <button className="hover:text-[#9F7539]" aria-label="View">
+                      <button className="hover:text-[#9F7539]" aria-label="View" onClick={(e) => { e.stopPropagation(); navigate(`/admin/clients/${client.id}`); }}>
                         <Eye size={16} />
                       </button>
-                      <button className="hover:text-[#9F7539]" aria-label="Edit">
+                      <button className="hover:text-[#9F7539]" aria-label="Edit" onClick={(e) => e.stopPropagation()}>
                         <Pencil size={16} />
                       </button>
                     </div>

@@ -42,11 +42,14 @@ import './App.css';
 import NotFound from './components/NotFound';
 import AdminPropertyDetails from './components/admin/pages/AdminPropertyDetails';
 import AdminClients from './components/admin/pages/AdminClients';
+import AdminClientDetail from './components/admin/pages/AdminClientDetail';
+import AdminClientPortfolio from './components/admin/pages/AdminClientPortfolio';
 import AdminPayments from './components/admin/pages/AdminPayments';
 import AdminMaintenance from './components/admin/pages/AdminMaintenance';
 import AdminMaintenanceDetails from './components/admin/pages/AdminMaintenanceDetails';
 import AdminReports from './components/admin/pages/AdminReports';
 import AdminSettings from './components/admin/pages/AdminSettings';
+import AdminCreateContract from './components/admin/pages/AdminCreateContract';
 
 function App() {
   return (
@@ -85,6 +88,9 @@ function App() {
           <Route path="tenants" element={<AdminTenants />} />
           <Route path="content-policies" element={<AdminContentPolicies />} />
           <Route path="clients" element={<AdminClients />} />
+          <Route path="clients/:clientId" element={<AdminClientDetail />} />
+          <Route path="clients/:clientId/portfolio" element={<AdminClientPortfolio />} />
+          <Route path="clients/:clientId/contracts/new" element={<AdminCreateContract />} />
           <Route path="payments" element={<AdminPayments />} />
           <Route path="maintenance" element={<AdminMaintenance />} />
           <Route path="maintenance/:requestId" element={<AdminMaintenanceDetails />} />
