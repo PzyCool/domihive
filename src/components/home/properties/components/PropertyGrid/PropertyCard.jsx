@@ -67,7 +67,7 @@ const PropertyCard = ({ property, onViewDetails, onToggleFavorite, onBookNowClic
     <div 
       className="property-card w-full max-w-none md:max-w-[640px] md:min-h-[300px] bg-white rounded-xl shadow-md border border-gray-200 overflow-hidden hover:shadow-lg transition-all duration-300 hover:translate-y-[-2px] cursor-pointer group flex flex-col"
     >
-      <div className="relative h-48 md:h-[190px] flex-shrink-0">
+      <div className="relative h-48 md:h-[190px] shrink-0">
         <img
           src={property.images?.[currentImageIndex] || 'https://images.unsplash.com/photo-1560448204-603b3fc33ddc?w=800&h=600&fit=crop'}
           alt={property.title}
@@ -96,7 +96,7 @@ const PropertyCard = ({ property, onViewDetails, onToggleFavorite, onBookNowClic
           <i className={`fas fa-heart ${isFavorite ? 'text-[#9f7539]' : 'text-gray-500'} text-base`}></i>
         </button>
         
-        <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent p-4">
+        <div className="absolute bottom-0 left-0 right-0 bg-linear-to-t from-black/80 via-black/40 to-transparent p-4">
           <div className="flex items-end justify-between">
             <div>
               <div className="text-2xl font-bold text-white leading-tight">

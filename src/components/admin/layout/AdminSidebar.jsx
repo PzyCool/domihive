@@ -30,7 +30,7 @@ const navItems = [
     { to: '/admin/tenants', label: 'Tenants', icon: House },
     { to: '/admin/payments', label: 'Payments', icon: Wallet },
     { to: '/admin/maintenance', label: 'Maintenance', icon: Wrench },
-    { to: '/admin/reports', label: 'Reports', icon: ChartLine },
+    // { to: '/admin/reports', label: 'Reports', icon: ChartLine },
     { to: '/admin/settings', label: 'Settings', icon: Settings },
 ];
 

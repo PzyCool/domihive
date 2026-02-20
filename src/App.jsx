@@ -42,7 +42,11 @@ import './App.css';
 import NotFound from './components/NotFound';
 import AdminPropertyDetails from './components/admin/pages/AdminPropertyDetails';
 import AdminClients from './components/admin/pages/AdminClients';
+import AdminClientDetails from './components/admin/pages/AdminClientDetails';
+import AdminEditClient from "./components/admin/pages/AdminEditClient";
+import AdminPaymentDetails from "./components/admin/pages/AdminPaymentDetails";
 import AdminPayments from './components/admin/pages/AdminPayments';
+import AdminTenantDetails from "./components/admin/pages/AdminTenantDetails";
 import AdminMaintenance from './components/admin/pages/AdminMaintenance';
 import AdminMaintenanceDetails from './components/admin/pages/AdminMaintenanceDetails';
 import AdminReports from './components/admin/pages/AdminReports';
@@ -83,9 +87,13 @@ function App() {
           <Route path="inspections" element={<AdminInspections />} />
           <Route path="applications" element={<AdminApplications />} />
           <Route path="tenants" element={<AdminTenants />} />
+          <Route path="tenants/:tenantId" element={<AdminTenantDetails />} />
           <Route path="content-policies" element={<AdminContentPolicies />} />
           <Route path="clients" element={<AdminClients />} />
+          <Route path="clients/:clientId" element={<AdminClientDetails />} />
+          <Route path="clients/:clientId/edit" element={<AdminEditClient />} />
           <Route path="payments" element={<AdminPayments />} />
+          <Route path="payments/:paymentId" element={<AdminPaymentDetails />} />
           <Route path="maintenance" element={<AdminMaintenance />} />
           <Route path="maintenance/:requestId" element={<AdminMaintenanceDetails />} />
           <Route path="reports" element={<AdminReports />} />

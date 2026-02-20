@@ -74,14 +74,10 @@ const AdminMaintenanceDetails = () => {
                     <h1 className="text-2xl font-bold text-[#0e1f42] dark:text-white">Maintenance Request Details</h1>
                     <p className="text-sm text-gray-500 dark:text-gray-400">View and manage all aspects of this maintenance request.</p>
                 </div>
-                <div className="flex items-center gap-3">
-                    <button className="px-4 py-2 border border-gray-200 dark:border-white/10 rounded-lg text-sm font-semibold text-gray-600 dark:text-gray-300 flex items-center gap-2 hover:bg-gray-50 dark:hover:bg-white/5 transition-colors cursor-pointer">
-                        <Edit2 size={16} /> Edit Request
-                    </button>
-                    <button className="px-4 py-2 bg-[#9F7539] text-white rounded-lg text-sm font-semibold flex items-center gap-2 hover:bg-[#866330] transition-colors cursor-pointer">
-                        <UserPlus size={16} /> Assign Contractor
-                    </button>
-                </div>
+
+                <button className="px-4 py-2 bg-[#9F7539] text-white rounded-lg text-sm font-semibold flex items-center gap-2 hover:bg-[#866330] transition-colors cursor-pointer">
+                    <UserPlus size={16} /> Assign Contractor
+                </button>
             </div>
 
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">

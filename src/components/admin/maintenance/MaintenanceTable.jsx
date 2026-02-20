@@ -1,5 +1,5 @@
 import React from 'react';
-import { Eye, Edit, MoreHorizontal, Download } from 'lucide-react';
+import { Eye, Download } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 
 const MaintenanceTable = ({ requests }) => {
@@ -80,9 +80,7 @@ const MaintenanceTable = ({ requests }) => {
                                             >
                                                 <Eye size={16} />
                                             </button>
-                                            <button className="p-1.5 text-gray-400 dark:text-gray-500 hover:text-green-600 dark:hover:text-green-400 hover:bg-green-50 dark:hover:bg-green-900/20 rounded-lg transition-colors cursor-pointer" title="Edit Request">
-                                                <Edit size={16} />
-                                            </button>
+
                                         </div>
                                     </td>
                                 </tr>
@@ -143,9 +141,6 @@ const MaintenanceTable = ({ requests }) => {
                                 className="flex items-center gap-2 text-xs font-semibold text-gray-600 dark:text-gray-400 bg-gray-50 dark:bg-white/5 px-4 py-2 rounded-lg transition-colors active:bg-gray-100 dark:active:bg-white/10 cursor-pointer"
                             >
                                 <Eye size={16} /> Details
-                            </button>
-                            <button className="flex items-center gap-2 text-xs font-semibold text-white bg-[#9F7539] px-4 py-2 rounded-lg transition-colors active:bg-[#866330] cursor-pointer">
-                                <Edit size={16} /> Update
                             </button>
                         </div>
                     </div>

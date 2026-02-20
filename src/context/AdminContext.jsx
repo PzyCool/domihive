@@ -23,6 +23,7 @@ const defaultProperties = [
     address: "Plot 23, Adeyinka Road",
     estateType: "Estate Managed",
     amenities: ["Security", "Parking", "Water Supply", "Generator"],
+    clientId: "client-1",
 
     // Units inside this property
     units: [
@@ -76,6 +77,45 @@ const defaultProperties = [
         lastInspection: "2025-02-14",
         notes: "Reserved — awaiting payment confirmation.",
       },
+      {
+        id: "u-101",
+        number: "Unit 1",
+        type: "3 Bedroom Apartment",
+        status: "occupied",
+        tenant: "John Doe",
+        rent: 450000,
+        revenue: 450000,
+        dueDate: "2024-05-15"
+      },
+      {
+        id: "u-102",
+        number: "Unit 2",
+        type: "3 Bedroom Apartment",
+        status: "occupied",
+        tenant: "Jane Smith",
+        rent: 450000,
+        revenue: 450000,
+        dueDate: "2024-06-01"
+      },
+      {
+        id: "u-103",
+        number: "Unit 3",
+        type: "3 Bedroom Apartment",
+        status: "occupied",
+        tenant: "Robert Brown",
+        rent: 450000,
+        revenue: 450000,
+        dueDate: "2024-04-20"
+      },
+      {
+        id: "u-104",
+        number: "Unit 4",
+        type: "3 Bedroom Apartment",
+        status: "vacant",
+        rent: 450000,
+        revenue: 0,
+        dueDate: "-"
+      }
 
     ],
   },
@@ -99,6 +139,7 @@ const defaultProperties = [
     address: "12 Adeola Odeku Street",
     estateType: "Non Estate",
     amenities: ["Parking", "Security", "Water Supply"],
+    clientId: "client-2",
 
     units: [
       {
@@ -118,6 +159,26 @@ const defaultProperties = [
         notes: "Brand new listing (Draft).",
       },
 
+      {
+        id: "u-201",
+        number: "Unit A",
+        type: "Duplex",
+        status: "occupied",
+        tenant: "Alice Williams",
+        rent: 1200000,
+        revenue: 1200000,
+        dueDate: "2024-08-10"
+      },
+      {
+        id: "u-202",
+        number: "Unit B",
+        type: "Duplex",
+        status: "occupied",
+        tenant: "Michael Scott",
+        rent: 1200000,
+        revenue: 1200000,
+        dueDate: "2024-09-12"
+      },
       {
         id: "unit-102",
         unitNumber: "D-2",
@@ -296,6 +357,9 @@ const defaultTenants = [
     id: 'tenant-001',
     name: 'Jane Smith',
     email: 'janesmith@gmail.com',
+    phone: '+234 812 345 6789',
+    image: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=100&h=100&fit=crop',
+    occupation: 'Creative Director',
     propertyId: 'prop-001',
     propertyTitle: '3 Bedroom Luxury Apartment',
     unitId: 'unit-001',
@@ -304,12 +368,23 @@ const defaultTenants = [
     leaseStart: '2025-02-01',
     leaseEnd: '2026-02-01',
     status: 'Move-in pending',
-    paymentStatus: 'Paid'
+    paymentStatus: 'Paid',
+    emergencyContact: {
+      name: 'Michael Smith',
+      phone: '+234 802 000 1122',
+      relationship: 'Brother'
+    },
+    billingHistory: [
+      { id: 'PAY-001', date: '2025-02-01', amount: 2800000, type: 'Rent', status: 'Paid' }
+    ]
   },
   {
     id: 'tenant-002',
     name: 'Tunde Balogun',
     email: 'tunde.balogun@example.com',
+    phone: '+234 803 777 8899',
+    image: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100&h=100&fit=crop',
+    occupation: 'Software Architect',
     propertyId: 'prop-002',
     propertyTitle: 'Modern 2-Bed Duplex',
     unitId: 'unit-102',
@@ -318,12 +393,23 @@ const defaultTenants = [
     leaseStart: '2025-02-01',
     leaseEnd: '2026-02-01',
     status: 'Active',
-    paymentStatus: 'Paid'
+    paymentStatus: 'Paid',
+    emergencyContact: {
+      name: 'Sarah Balogun',
+      phone: '+234 809 333 4455',
+      relationship: 'Spouse'
+    },
+    billingHistory: [
+      { id: 'PAY-002', date: '2025-02-01', amount: 1900000, type: 'Rent', status: 'Paid' }
+    ]
   },
   {
     id: 'tenant-003',
     name: 'Chioma Okeke',
     email: 'chioma.okeke@example.com',
+    phone: '+234 814 222 3344',
+    image: 'https://images.unsplash.com/photo-1531123897727-8f129e1688ce?w=100&h=100&fit=crop',
+    occupation: 'Senior Accountant',
     propertyId: 'prop-001',
     propertyTitle: '3 Bedroom Luxury Apartment',
     unitId: 'unit-003',
@@ -332,7 +418,15 @@ const defaultTenants = [
     leaseStart: '2025-03-01',
     leaseEnd: '2026-03-01',
     status: 'Reserved',
-    paymentStatus: 'Pending'
+    paymentStatus: 'Pending',
+    emergencyContact: {
+      name: 'John Okeke',
+      phone: '+234 810 555 6677',
+      relationship: 'Father'
+    },
+    billingHistory: [
+      { id: 'PAY-003', date: '2025-03-01', amount: 600000, type: 'Service Fee', status: 'Pending' }
+    ]
   }
 ];
 
@@ -450,10 +544,185 @@ const defaultMaintenanceRequests = [
     tenant: 'Amaka Eze',
     createdAt: '3 days ago',
     description: 'Touch up painting required in the hallway.',
-    photos:[]
+    photos: []
   }
 ];
 
+const defaultClients = [
+  {
+    id: 'client-1',
+    name: 'Mrs. Adunni Lagos',
+    image: 'https://images.unsplash.com/photo-1531123897727-8f129e1688ce?w=100&h=100&fit=crop',
+    joinedDate: 'Jan 2026',
+    email: 'adunni.lagos@email.com',
+    phone: '+234 801 234 5678',
+    totalProperties: 8,
+    occupiedUnits: 6,
+    totalUnits: 8,
+    status: 'Active',
+    managementFee: 10,
+    avgMonthlyFee: 48000
+  },
+  {
+    id: "client-1",
+    name: "Chukwudi Okonkwo",
+    email: "chukwudi.okonkwo@email.com",
+    phone: "+234 803 567 8901",
+    location: "Lagos, Nigeria",
+    image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=1974&auto=format&fit=crop",
+    joinedDate: "Jan 2026",
+    totalProperties: 2,
+    totalUnits: 8,
+    occupiedUnits: 7,
+    status: "Active",
+    managementFee: 10,
+    avgMonthlyFee: 380000,
+    subtitle: "Full management client with active properties",
+    isVerified: true,
+    bankDetails: {
+      bankName: "GTBank",
+      accountNumber: "0123456789"
+    },
+    contractSummary: {
+      type: "Full Management",
+      duration: "5 years (Jan 2026 - Dec 2030)",
+      maintenanceWallet: 50000,
+      maintenanceRemaining: 32000,
+      rentIncrement: "Every 3 years",
+      nextIncrement: "Jan 2029"
+    }
+  },
+  {
+    id: 'client-2',
+    name: 'Chief Emeka Okonkwo',
+    image: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100&h=100&fit=crop',
+    joinedDate: 'Dec 2025',
+    email: 'emeka.okonkwo@email.com',
+    phone: '+234 802 345 6789',
+    totalProperties: 5,
+    occupiedUnits: 5,
+    totalUnits: 5,
+    status: 'Active',
+    managementFee: 12,
+    avgMonthlyFee: 72000
+  },
+  {
+    id: 'client-3',
+    name: 'Dr. Fatima Abdullahi',
+    image: 'https://images.unsplash.com/photo-1567532939604-b6c5b0adcc2c?w=100&h=100&fit=crop',
+    joinedDate: 'Nov 2025',
+    email: 'fatima.abdullahi@email.com',
+    phone: '+234 803 456 7890',
+    totalProperties: 12,
+    occupiedUnits: 9,
+    totalUnits: 12,
+    status: 'Active',
+    managementFee: 8,
+    avgMonthlyFee: 54000
+  },
+  {
+    id: 'client-4',
+    name: 'Mr. Tunde Adebayo',
+    image: 'https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=100&h=100&fit=crop',
+    joinedDate: 'Oct 2025',
+    email: 'tunde.adebayo@email.com',
+    phone: '+234 804 567 8901',
+    totalProperties: 3,
+    occupiedUnits: 2,
+    totalUnits: 3,
+    status: 'Expires Soon',
+    managementFee: 15,
+    avgMonthlyFee: 36000
+  },
+  {
+    id: 'client-5',
+    name: 'Mrs. Chioma Okeke',
+    image: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=100&h=100&fit=crop',
+    joinedDate: 'Sep 2025',
+    email: 'chioma.okeke@email.com',
+    phone: '+234 805 678 9012',
+    totalProperties: 6,
+    occupiedUnits: 4,
+    totalUnits: 6,
+    status: 'Active',
+    managementFee: 12,
+    avgMonthlyFee: 42000
+  },
+  {
+    id: 'client-6',
+    name: 'Engr. Bola Adesanya',
+    image: 'https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=100&h=100&fit=crop',
+    joinedDate: 'Aug 2025',
+    email: 'bola.adesanya@email.com',
+    phone: '+234 806 789 0123',
+    totalProperties: 4,
+    occupiedUnits: 3,
+    totalUnits: 4,
+    status: 'Expired',
+    managementFee: 10,
+    avgMonthlyFee: 38000
+  }
+];
+
+
+const defaultPayments = [
+  {
+    id: 'PAY-001',
+    tenant: 'Jane Smith',
+    tenantId: 'tenant-001',
+    propertyTitle: '3 Bedroom Luxury Apartment',
+    propertyId: 'prop-001',
+    amount: 2800000,
+    status: 'Paid',
+    date: '2025-02-01',
+    type: 'Rent',
+    paymentMethod: 'Bank Transfer',
+    reference: 'REF-832910',
+    invoiceId: 'INV-2025-001'
+  },
+  {
+    id: 'PAY-002',
+    tenant: 'Tunde Balogun',
+    tenantId: 'tenant-002',
+    propertyTitle: 'Modern 2-Bed Duplex',
+    propertyId: 'prop-002',
+    amount: 1900000,
+    status: 'Paid',
+    date: '2025-02-01',
+    type: 'Rent',
+    paymentMethod: 'Card',
+    reference: 'REF-112233',
+    invoiceId: 'INV-2025-002'
+  },
+  {
+    id: 'PAY-003',
+    tenant: 'Chioma Okeke',
+    tenantId: 'tenant-003',
+    propertyTitle: '3 Bedroom Luxury Apartment',
+    propertyId: 'prop-001',
+    amount: 600000,
+    status: 'Pending',
+    date: '2025-03-01',
+    type: 'Service Fee',
+    paymentMethod: 'Pending Transfer',
+    reference: 'REF-998877',
+    invoiceId: 'INV-2025-003'
+  },
+  {
+    id: 'PAY-004',
+    tenant: 'Amaka Eze',
+    tenantId: 'tenant-004',
+    propertyTitle: 'Modern 2-Bed Duplex',
+    propertyId: 'prop-002',
+    amount: 1800000,
+    status: 'Overdue',
+    date: '2025-01-15',
+    type: 'Rent',
+    paymentMethod: 'None',
+    reference: '-',
+    invoiceId: 'INV-2024-150'
+  }
+];
 
 export const AdminProvider = ({ children }) => {
   const [properties, setProperties] = useState(defaultProperties);
@@ -465,6 +734,8 @@ export const AdminProvider = ({ children }) => {
   const [policies, setPolicies] = useState(defaultPolicies);
   const [recentActivities, setRecentActivities] = useState(defaultRecentActivities);
   const [maintenanceRequests, setMaintenanceRequests] = useState(defaultMaintenanceRequests);
+  const [clients, setClients] = useState(defaultClients);
+  const [payments, setPayments] = useState(defaultPayments);
 
   const value = useMemo(
     () => ({
@@ -485,10 +756,15 @@ export const AdminProvider = ({ children }) => {
       recentActivities,
       setRecentActivities,
       maintenanceRequests,
-      setMaintenanceRequests
+      setMaintenanceRequests,
+      clients,
+      setClients,
+      payments,
+      setPayments
     }),
-    [properties, locations, slots, inspections, applications, tenants, policies, recentActivities, maintenanceRequests]
+    [properties, locations, slots, inspections, applications, tenants, policies, recentActivities, maintenanceRequests, clients, payments]
   );
+
 
   return <AdminContext.Provider value={value}>{children}</AdminContext.Provider>;
 };

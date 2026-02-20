@@ -54,6 +54,28 @@ body.dashboard-themed .text-gray-500 {
   margin: 16px;
 }
 
+
+/* tables in admin */
+.table-scrollbar {
+  overflow-x: scroll;
+}
+
+.table-scrollbar::-webkit-scrollbar {
+  height: 8px;
+  width: 8px;
+}
+.table-scrollbar::-webkit-scrollbar-track {
+  background: #9f7539;
+  border-radius: 8px;
+
+}
+.table-scrollbar::-webkit-scrollbar-thumb {
+  background: #9f7539;
+}
+.table-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: #9f7539;
+}
+
 /* Theme presets (for stronger overrides when data-theme is set) */
 :root[data-theme="light"] {
   --page-bg: #f8f9fa;

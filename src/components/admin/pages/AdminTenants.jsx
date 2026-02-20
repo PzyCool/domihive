@@ -1,6 +1,7 @@
 import { useMemo, useState } from 'react';
 import { useAdmin } from '../../../context/AdminContext';
 import { Users, Search, Download, UserPlus, Eye } from 'lucide-react';
+import { Link } from 'react-router-dom';
 
 const AdminTenants = () => {
   const { tenants, setTenants } = useAdmin();
@@ -218,9 +219,12 @@ const AdminTenants = () => {
                         Confirm
                       </button>
                     )}
-                    <button className="p-2 hover:bg-gray-100 dark:hover:bg-white/5 rounded-lg text-gray-400 dark:text-gray-500 hover:text-[#9F7539] transition-all cursor-pointer">
+                    <Link
+                      to={`/admin/tenants/${tenant.id}`}
+                      className="p-2 hover:bg-gray-100 dark:hover:bg-white/5 rounded-lg text-gray-400 dark:text-gray-500 hover:text-[#9F7539] transition-all cursor-pointer"
+                    >
                       <Eye size={18} />
-                    </button>
+                    </Link>
                   </div>
                 </td>
               </tr>
@@ -271,9 +275,12 @@ const AdminTenants = () => {
                     Confirm
                   </button>
                 )}
-                <button className="p-2 border border-gray-100 dark:border-white/10 rounded-lg text-gray-400 dark:text-gray-500 hover:text-[#9F7539] transition-all cursor-pointer">
+                <Link
+                  to={`/admin/tenants/${tenant.id}`}
+                  className="p-2 border border-gray-100 dark:border-white/10 rounded-lg text-gray-400 dark:text-gray-500 hover:text-[#9F7539] transition-all cursor-pointer"
+                >
                   <Eye size={16} />
-                </button>
+                </Link>
               </div>
             </div>
           </div>
