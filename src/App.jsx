@@ -51,6 +51,7 @@ import AdminMaintenanceDetails from './components/admin/pages/AdminMaintenanceDe
 import AdminReports from './components/admin/pages/AdminReports';
 import AdminSettings from './components/admin/pages/AdminSettings';
 import AdminCreateContract from './components/admin/pages/AdminCreateContract';
+import AdminPaymentDetails from './components/admin/pages/AdminPaymentDetails';
 
 function App() {
   return (

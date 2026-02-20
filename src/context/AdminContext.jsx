@@ -1,6 +1,5 @@
 import React, { createContext, useContext, useMemo, useState } from 'react';
 
-// Simple Admin store using mock state; later can be replaced with API
 const AdminContext = createContext(null);
 const defaultProperties = [
   // property 1
@@ -746,6 +745,64 @@ const defaultClients = [
   }
 ];
 
+const defaultPayments = [
+  {
+    id: 'PAY-001',
+    tenant: 'Jane Smith',
+    tenantId: 'tenant-001',
+    propertyTitle: '3 Bedroom Luxury Apartment',
+    propertyId: 'prop-001',
+    amount: 2800000,
+    status: 'Paid',
+    date: '2025-02-01',
+    type: 'Rent',
+    paymentMethod: 'Bank Transfer',
+    reference: 'REF-832910',
+    invoiceId: 'INV-2025-001'
+  },
+  {
+    id: 'PAY-002',
+    tenant: 'Tunde Balogun',
+    tenantId: 'tenant-002',
+    propertyTitle: 'Modern 2-Bed Duplex',
+    propertyId: 'prop-002',
+    amount: 1900000,
+    status: 'Paid',
+    date: '2025-02-01',
+    type: 'Rent',
+    paymentMethod: 'Card',
+    reference: 'REF-112233',
+    invoiceId: 'INV-2025-002'
+  },
+  {
+    id: 'PAY-003',
+    tenant: 'Chioma Okeke',
+    tenantId: 'tenant-003',
+    propertyTitle: '3 Bedroom Luxury Apartment',
+    propertyId: 'prop-001',
+    amount: 600000,
+    status: 'Pending',
+    date: '2025-03-01',
+    type: 'Service Fee',
+    paymentMethod: 'Pending Transfer',
+    reference: 'REF-998877',
+    invoiceId: 'INV-2025-003'
+  },
+  {
+    id: 'PAY-004',
+    tenant: 'Amaka Eze',
+    tenantId: 'tenant-004',
+    propertyTitle: 'Modern 2-Bed Duplex',
+    propertyId: 'prop-002',
+    amount: 1800000,
+    status: 'Overdue',
+    date: '2025-01-15',
+    type: 'Rent',
+    paymentMethod: 'None',
+    reference: '-',
+    invoiceId: 'INV-2024-150'
+  }
+];
 
 export const AdminProvider = ({ children }) => {
   const [properties, setProperties] = useState(defaultProperties);
@@ -758,7 +815,6 @@ export const AdminProvider = ({ children }) => {
   const [policies, setPolicies] = useState(defaultPolicies);
   const [recentActivities, setRecentActivities] = useState(defaultRecentActivities);
   const [maintenanceRequests, setMaintenanceRequests] = useState(defaultMaintenanceRequests);
-  // const [clients, setClients] = useState(defaultClients);
   const [payments, setPayments] = useState(defaultPayments);
 
   const value = useMemo(
@@ -783,12 +839,10 @@ export const AdminProvider = ({ children }) => {
       setRecentActivities,
       maintenanceRequests,
       setMaintenanceRequests,
-      clients,
-      setClients,
       payments,
       setPayments
     }),
-    [properties, clients, locations, slots, inspections, applications, tenants, policies, recentActivities, maintenanceRequests]
+    [properties, clients, locations, slots, inspections, applications, tenants, policies, recentActivities, maintenanceRequests, payments]
   );
 
 
