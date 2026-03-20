@@ -121,31 +121,6 @@ export const ApplicationsProvider = ({ children }) => {
 
     let createdOrUpdated;
     setApplications((prev) => {
-      const existingIndex = prev.findIndex(
-        (app) =>
-          (app.property?.id || app.property?.propertyId) === propertyId &&
-          !['CANCELLED', 'REJECTED'].includes(app.status)
-      );
-
-      if (existingIndex >= 0) {
-        const updated = {
-          ...prev[existingIndex],
-          status: 'INSPECTION_SCHEDULED',
-          inspectionDate: inspectionDateLabel,
-          inspectionDateISO,
-          inspectionUnlockAtISO,
-          attendees: Number(booking?.numberOfPeople || 1),
-          bookingId: booking?.bookingId || prev[existingIndex].bookingId,
-          bookingDateISO: booking?.bookingDate || nowISO,
-          updatedAtISO: nowISO,
-          updatedAt: 'Just now'
-        };
-        const clone = [...prev];
-        clone.splice(existingIndex, 1);
-        createdOrUpdated = updated;
-        return [updated, ...clone];
-      }
-
       const newApp = {
         id: `APP-${Date.now().toString().slice(-6)}`,
         status: 'INSPECTION_SCHEDULED',
