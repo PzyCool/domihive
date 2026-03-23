@@ -216,20 +216,20 @@ const UnifiedActionsPanel = ({
       )}
 
       {pendingItemsOverride.length > 0 && (
-        <div className="mb-6 border border-[#e2e8f0] rounded-xl p-4 bg-[#f8fafc]">
+        <div className="pending-items-wrap mb-6 border border-[#e2e8f0] rounded-xl p-4 bg-[#f8fafc]">
           <div className="flex items-center justify-between mb-3">
-            <h4 className="text-sm font-semibold text-[#0e1f42]">Pending Items</h4>
-            <span className="text-xs text-[#64748b]">Synced tasks</span>
+            <h4 className="pending-items-title text-sm font-semibold text-[#0e1f42]">Pending Items</h4>
+            <span className="pending-items-subtitle text-xs text-[#64748b]">Synced tasks</span>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
             {pendingItemsOverride.map((item) => (
               <button
                 key={item.id}
                 onClick={() => navigate(item.path)}
-                className="text-left border border-[#e2e8f0] rounded-lg p-2 bg-white hover:border-[#9f7539]/40 transition-colors"
+                className="pending-item-card text-left border border-[#e2e8f0] rounded-lg p-2 bg-white hover:border-[#9f7539]/40 transition-colors"
               >
-                <div className="text-xs text-[#64748b]">{item.label}</div>
-                <div className="font-semibold text-[#0e1f42]">{item.value}</div>
+                <div className="pending-item-label text-xs text-[#64748b]">{item.label}</div>
+                <div className="pending-item-value font-semibold text-[#0e1f42]">{item.value}</div>
               </button>
             ))}
           </div>

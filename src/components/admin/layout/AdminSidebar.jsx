@@ -16,6 +16,9 @@ import {
   LogOut,
   ChevronRight,
   ChevronLeft,
+  Wrench,
+  Image,
+  Clock3,
 } from 'lucide-react';
 
 const navSections = [
@@ -23,20 +26,42 @@ const navSections = [
     title: 'MAIN',
     items: [
       { to: '/admin', label: 'Dashboard', icon: LayoutDashboard, end: true },
-      { to: '/admin/clients', label: 'Clients', icon: Users },
       { to: '/admin/contracts', label: 'Contracts', icon: ScrollText },
+      { to: '/admin/clients', label: 'Clients', icon: Users },
       { to: '/admin/properties', label: 'Properties', icon: Building2 },
+      { to: '/admin/tenants', label: 'Tenants', icon: House },
     ],
   },
   {
-    title: 'OPERATIONS',
+    title: 'OPERATIONS CORE',
     items: [
       { to: '/admin/locations-filters', label: 'Locations & Filters', icon: MapPinned },
       { to: '/admin/inspection-slots', label: 'Inspection Slots', icon: CalendarClock },
       { to: '/admin/inspections', label: 'Inspections', icon: ClipboardCheck },
+    ],
+  },
+  {
+    title: 'APPLICATION REVIEWS',
+    items: [
       { to: '/admin/applications', label: 'Applications', icon: FileText },
-      { to: '/admin/tenants', label: 'Tenants', icon: House },
+    ],
+  },
+  {
+    title: 'MAINTENANCE TEAM',
+    items: [
+      { label: 'Maintenance Operations', icon: Wrench, comingSoon: true },
+    ],
+  },
+  {
+    title: 'LEGAL & DOC CONTRACTS',
+    items: [
       { to: '/admin/content-policies', label: 'Content & Policies', icon: FileText },
+    ],
+  },
+  {
+    title: 'MEDIA OPERATIONS',
+    items: [
+      { label: 'Media Operations', icon: Image, comingSoon: true },
     ],
   },
 ];
@@ -140,6 +165,30 @@ const AdminSidebar = ({ sidebarState, toggleSidebar, closeMobileSidebar, isMobil
               <div className="space-y-1 px-3">
                 {section.items.map((item) => {
                   const Icon = item.icon;
+                  if (item.comingSoon) {
+                    return (
+                      <div
+                        key={`${section.title}-${item.label}`}
+                        onMouseEnter={(e) => showTooltip(e, item.label)}
+                        onMouseLeave={hideTooltip}
+                        className={`group relative flex items-center gap-3 ${isCollapsed ? 'px-0 py-3 justify-center' : 'px-4 py-3'} rounded-lg transition-all duration-200
+                        text-[#64748b] dark:text-gray-400 bg-white/20 dark:bg-white/[0.03]
+                        ${isCollapsed ? 'mx-2' : 'mx-3'}`}
+                      >
+                        <Icon size={isCollapsed ? 18 : 16} className="text-[#64748b] dark:text-gray-400" />
+                        {!isCollapsed && (
+                          <>
+                            <span className="font-medium text-sm">{item.label}</span>
+                            <span className="ml-auto inline-flex items-center gap-1 text-[10px] px-2 py-1 rounded-full bg-amber-100/70 dark:bg-amber-900/30 text-amber-700 dark:text-amber-300">
+                              <Clock3 size={10} />
+                              Soon
+                            </span>
+                          </>
+                        )}
+                      </div>
+                    );
+                  }
+
                   return (
                     <NavLink
                       key={item.to}

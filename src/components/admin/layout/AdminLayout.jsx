@@ -66,7 +66,7 @@ const AdminLayout = () => {
             isMobile={isMobile}
           />
 
-          <main className="admin-page-container flex-1 overflow-auto md:p-4">
+          <main className="admin-page-container no-scrollbar flex-1 overflow-auto md:p-4">
             <Outlet />
           </main>
         </div>

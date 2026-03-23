@@ -5,10 +5,6 @@
 
 @variant dark (&:where(.dark, .dark *));
 
-html {
-  scrollbar-gutter: stable;
-}
-
 body {
   font-family: "Manrope", sans-serif;
   background: #ffffff;
@@ -1655,6 +1651,65 @@ body.dashboard-themed[data-theme="true-black"] .unified-actions-panel .border {
 
 body.dashboard-themed[data-theme="dark-gray"]
   .unified-actions-panel
+  .pending-items-wrap,
+body.dashboard-themed[data-theme="true-black"]
+  .unified-actions-panel
+  .pending-items-wrap {
+  background: rgba(255, 255, 255, 0.04) !important;
+  border-color: rgba(255, 255, 255, 0.12) !important;
+}
+
+body.dashboard-themed[data-theme="dark-gray"]
+  .unified-actions-panel
+  .pending-item-card,
+body.dashboard-themed[data-theme="true-black"]
+  .unified-actions-panel
+  .pending-item-card {
+  background: rgba(255, 255, 255, 0.08) !important;
+  border-color: rgba(255, 255, 255, 0.14) !important;
+}
+
+body.dashboard-themed[data-theme="dark-gray"]
+  .unified-actions-panel
+  .pending-item-card:hover,
+body.dashboard-themed[data-theme="true-black"]
+  .unified-actions-panel
+  .pending-item-card:hover {
+  border-color: var(--accent-color, #9f7539) !important;
+}
+
+body.dashboard-themed[data-theme="dark-gray"]
+  .unified-actions-panel
+  .pending-items-title,
+body.dashboard-themed[data-theme="true-black"]
+  .unified-actions-panel
+  .pending-items-title,
+body.dashboard-themed[data-theme="dark-gray"]
+  .unified-actions-panel
+  .pending-item-value,
+body.dashboard-themed[data-theme="true-black"]
+  .unified-actions-panel
+  .pending-item-value {
+  color: var(--text-color, #f8fafc) !important;
+}
+
+body.dashboard-themed[data-theme="dark-gray"]
+  .unified-actions-panel
+  .pending-items-subtitle,
+body.dashboard-themed[data-theme="true-black"]
+  .unified-actions-panel
+  .pending-items-subtitle,
+body.dashboard-themed[data-theme="dark-gray"]
+  .unified-actions-panel
+  .pending-item-label,
+body.dashboard-themed[data-theme="true-black"]
+  .unified-actions-panel
+  .pending-item-label {
+  color: var(--text-muted, #cbd5e1) !important;
+}
+
+body.dashboard-themed[data-theme="dark-gray"]
+  .unified-actions-panel
   .bg-red-500,
 body.dashboard-themed[data-theme="true-black"]
   .unified-actions-panel
@@ -2502,6 +2557,6 @@ body.dashboard-themed[data-theme="true-black"]
   -ms-overflow-style: none; /* IE and Edge */
   scrollbar-width: none; /* Firefox */
 }
-.no-scrollbar\:\:-webkit-scrollbar {
+.no-scrollbar::-webkit-scrollbar {
   display: none; /* Chrome, Safari, Opera */
 }

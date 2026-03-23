@@ -137,7 +137,7 @@ const DashboardLayout = () => {
                     />
 
                     {/* Content Area - scrollable */}
-                    <main className="dashboard-content flex-1 overflow-auto">
+                    <main className="dashboard-content no-scrollbar flex-1 overflow-auto">
                       {guardToast && !isBlockedGuardToast(guardToast) && (
                         <div className="sticky top-0 z-[1190] px-4 md:px-6 pt-3">
                           <div className="mx-auto max-w-4xl rounded-xl border border-[#f59e0b]/35 bg-[#fff7ed] text-[#9a3412] px-4 py-2 text-sm font-medium shadow-sm">
