@@ -1,7 +1,10 @@
 // src/components/auth/utils/constants.js
+import iconImage from '../../../assets/domihive-lcon.png';
+import logoImage from '../../../assets/domihive-logo.png';
+
 const IMAGES = {
-  icon: "/src/assets/domihive-lcon.png",
-  logo: "/src/assets/domihive-logo.png"
+  icon: iconImage,
+  logo: logoImage
 };
 
 const SIGNUP_FEATURES = [

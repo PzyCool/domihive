@@ -329,7 +329,7 @@ const PropertyDetailsModal = ({ propertyId, isOpen, onClose }) => {
       </div>
       
       {/* Floating Call Button */}
-      {/* <FloatingCallButton phoneNumber="+2349010851071" /> */}
+      {/* <FloatingCallButton phoneNumber="+2349010851071" />  */}
     </div>
   );
 };

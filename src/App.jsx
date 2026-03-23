@@ -92,7 +92,15 @@ const RequireApplicationAccess = ({ mode, children }) => {
   }
 
   if (mode === 'payment' && !applicationStageGuards.canPay.has(status)) {
+    // Allow payment page during the start->payment transition and stale non-paid records.
+    if (status === 'INSPECTION_VERIFIED') {
+      return children;
+    }
+
     if (applicationStageGuards.canTrack.has(status)) {
+      if (!application?.payment) {
+        return children;
+      }
       return (
         <Navigate
           to={`/dashboard/rent/applications/${applicationId}/track`}
