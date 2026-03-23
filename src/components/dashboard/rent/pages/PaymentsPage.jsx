@@ -15,6 +15,7 @@ const PaymentsPage = () => {
   const [subTab, setSubTab] = useState('rent'); // rent | bills
   const [payPanel, setPayPanel] = useState(null); // { type: 'rent'|'bill', item }
   const [payMethod, setPayMethod] = useState(PayMethods[0]);
+  const [rentInlineInfo, setRentInlineInfo] = useState('');
 
   const property = properties.find((p) => p.propertyId === selectedPropertyId);
   const rentInfo = rents[selectedPropertyId];
@@ -39,6 +40,11 @@ const PaymentsPage = () => {
 
   const closePanel = () => {
     setPayPanel(null);
+  };
+
+  const showRentInlineInfo = (message) => {
+    setRentInlineInfo(message);
+    window.setTimeout(() => setRentInlineInfo(''), 2600);
   };
 
   const submitPayment = () => {
@@ -268,16 +274,27 @@ const PaymentsPage = () => {
           </div>
           <p className="text-2xl font-bold text-[#0e1f42]">₦{rentInfo.amount.toLocaleString()}</p>
           <p className="text-sm text-[#475467]">Next due: {rentInfo.nextDue}</p>
-          <div className="flex justify-end">
-            <button
-              onClick={() => handlePay('rent', rentInfo)}
-              className="px-4 py-2 rounded-full text-sm font-semibold text-white shadow-sm bg-gradient-to-r from-[var(--primary-color,#0e1f42)] to-[#1a2d5f] hover:from-[#1a2d5f] hover:to-[var(--primary-color,#0e1f42)] transition-colors"
-              disabled={!isDue(rentInfo.status)}
-            >
-              Pay Rent
-            </button>
+            <div className="flex justify-end">
+              <button
+              onClick={() => {
+                if (!isDue(rentInfo.status)) {
+                  showRentInlineInfo('Payment is not due yet. You can pay once the status changes to Due.');
+                  return;
+                }
+                handlePay('rent', rentInfo);
+              }}
+                className="px-4 py-2 rounded-full text-sm font-semibold text-white shadow-sm bg-gradient-to-r from-[var(--primary-color,#0e1f42)] to-[#1a2d5f] hover:from-[#1a2d5f] hover:to-[var(--primary-color,#0e1f42)] transition-colors"
+              >
+                Pay Rent
+              </button>
+            </div>
+            {rentInlineInfo && (
+              <p className="text-xs font-medium text-[#9a3412] bg-[#fff7ed] border border-[#f59e0b]/35 rounded-lg px-3 py-2">
+                <i className="fas fa-circle-info mr-2"></i>
+                {rentInlineInfo}
+              </p>
+            )}
           </div>
-        </div>
       ) : subTab === 'rent' ? (
         <p className="text-sm text-[#6c757d]">No rent info for this property.</p>
       ) : null}

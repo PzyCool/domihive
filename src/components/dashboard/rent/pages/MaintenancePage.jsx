@@ -1,17 +1,21 @@
-import React, { useMemo, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import React, { useEffect, useMemo, useState } from 'react';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { useMaintenance } from '../contexts/MaintenanceContext';
 import { useProperties } from '../contexts/PropertiesContext';
 import TicketCard from '../components/maintenance/TicketCard';
+
+const MAINTENANCE_DRAFT_KEY = 'domihive_maintenance_request_draft';
 
 const MaintenancePage = () => {
   const { tickets, addTicket } = useMaintenance();
   const { properties } = useProperties();
   const navigate = useNavigate();
+  const location = useLocation();
 
   const [activeTab, setActiveTab] = useState('new'); // new | active | tracking | history
   const [policyAgreed, setPolicyAgreed] = useState(false);
   const [successOpen, setSuccessOpen] = useState(false);
+  const [isDraftHydrated, setIsDraftHydrated] = useState(false);
 
   const [form, setForm] = useState({
     propertyId: '',
@@ -25,6 +29,47 @@ const MaintenancePage = () => {
     allowEntry: false,
     contactEmergency: false
   });
+
+  useEffect(() => {
+    try {
+      const raw = localStorage.getItem(MAINTENANCE_DRAFT_KEY);
+      if (raw) {
+        const parsed = JSON.parse(raw);
+        if (parsed?.form && typeof parsed.form === 'object') {
+          setForm((prev) => ({ ...prev, ...parsed.form }));
+        }
+        if (typeof parsed?.policyAgreed === 'boolean') {
+          setPolicyAgreed(parsed.policyAgreed);
+        }
+        if (typeof parsed?.activeTab === 'string') {
+          setActiveTab(parsed.activeTab);
+        }
+      }
+    } catch (_error) {
+      // ignore malformed draft
+    } finally {
+      setIsDraftHydrated(true);
+    }
+  }, []);
+
+  useEffect(() => {
+    const policyFromState = location.state?.policyAgreed;
+    if (policyFromState) {
+      setPolicyAgreed(true);
+      if (activeTab !== 'new') setActiveTab('new');
+      navigate(location.pathname, { replace: true, state: null });
+    }
+  }, [location, navigate, activeTab]);
+
+  useEffect(() => {
+    if (!isDraftHydrated) return;
+    const draft = {
+      form,
+      policyAgreed,
+      activeTab
+    };
+    localStorage.setItem(MAINTENANCE_DRAFT_KEY, JSON.stringify(draft));
+  }, [form, policyAgreed, activeTab, isDraftHydrated]);
 
   const activeTickets = useMemo(
     () => tickets.filter((t) => !['COMPLETED', 'CANCELLED'].includes(t.status)),
@@ -76,6 +121,7 @@ const MaintenancePage = () => {
       contactEmergency: false
     });
     setPolicyAgreed(false);
+    localStorage.removeItem(MAINTENANCE_DRAFT_KEY);
     setSuccessOpen(true);
     setActiveTab('active');
   };
@@ -355,7 +401,7 @@ const MaintenancePage = () => {
       </div>
 
       {successOpen && (
-        <div className="modal-backdrop fixed inset-0 z-50 flex items-center justify-center bg-black/40 px-4">
+        <div className="modal-backdrop fixed inset-0 z-[1400] flex items-center justify-center bg-black/40 px-4">
           <div className="bg-white rounded-2xl shadow-2xl w-full max-w-md p-6 text-center relative">
             <button onClick={() => setSuccessOpen(false)} className="absolute top-4 right-4 text-gray-500 hover:text-gray-800">
               <i className="fas fa-times"></i>

@@ -12,7 +12,7 @@ export default function Hero() {
       >
         {/* Left part of the hero section - text*/}
         <div className="flex items-center text-center md:items-start md:text-left flex-col gap-4 md:gap-5">
-          <h1 className="text-white text-3xl/10 md:text-5xl/15 font-black md:max-w-lg w-full">
+          <h1 className="text-white text-2xl/9 md:text-4xl/13 font-black md:max-w-lg w-full">
             Your Peace of Mind, Our Professional Promise
           </h1>
           <p className="text-[#9F7539] text-base md:text-xl font-semibold">

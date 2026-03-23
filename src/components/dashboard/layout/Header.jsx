@@ -3,6 +3,7 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import { useAuth } from '../../../context/AuthContext';
 import { useDashboard } from '../../../context/DashboardContext';
 import { useJourney } from '../rent/contexts/JourneyContext';
+import { lockBodyScroll, unlockBodyScroll } from '../../../utils/scrollLock';
 
 const Header = ({ toggleSidebar, isMobile }) => {
   const { user } = useAuth();
@@ -45,10 +46,9 @@ const Header = ({ toggleSidebar, isMobile }) => {
 
   useEffect(() => {
     if (!showNotificationsDrawer) return undefined;
-    const previousOverflow = document.body.style.overflow;
-    document.body.style.overflow = 'hidden';
+    lockBodyScroll();
     return () => {
-      document.body.style.overflow = previousOverflow || '';
+      unlockBodyScroll();
     };
   }, [showNotificationsDrawer]);
 

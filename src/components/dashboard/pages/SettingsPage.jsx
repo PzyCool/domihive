@@ -642,7 +642,7 @@ const SettingsPage = () => {
       </div>
 
       {showDeleteModal && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 px-4">
+        <div className="fixed inset-0 z-[1400] flex items-center justify-center bg-black/40 px-4">
           <div className="bg-[var(--card-bg,#ffffff)] rounded-lg shadow-xl w-full max-w-md p-5 space-y-4">
           <h3 className="text-lg font-semibold text-[var(--text-color,#0e1f42)]">Delete</h3>
           <p className="text-sm text-[var(--text-muted,#6c757d)]">

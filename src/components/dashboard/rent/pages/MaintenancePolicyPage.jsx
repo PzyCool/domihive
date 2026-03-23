@@ -31,7 +31,11 @@ const MaintenancePolicyPage = () => {
 
         <div className="flex justify-end">
           <button
-            onClick={() => navigate(-1, { state: { policyAgreed: true } })}
+            onClick={() =>
+              navigate('/dashboard/rent/maintenance', {
+                state: { policyAgreed: true }
+              })
+            }
             className="px-4 py-2 rounded-lg text-white font-semibold"
             style={{ backgroundColor: 'var(--accent-color, #9F7539)' }}
           >

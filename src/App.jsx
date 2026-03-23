@@ -105,7 +105,6 @@ const RequireApplicationAccess = ({ mode, children }) => {
         <Navigate
           to={`/dashboard/rent/applications/${applicationId}/track`}
           replace
-          state={{ guardToast: 'Payment already submitted for this application.' }}
         />
       );
     }

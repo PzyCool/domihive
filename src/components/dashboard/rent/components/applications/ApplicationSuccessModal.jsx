@@ -4,7 +4,7 @@ const ApplicationSuccessModal = ({ application, onClose, onTrack, onDashboard })
   if (!application) return null;
 
   return (
-    <div className="modal-backdrop fixed inset-0 z-50 flex items-center justify-center bg-black/40 px-4">
+    <div className="modal-backdrop fixed inset-0 z-[1400] flex items-center justify-center bg-black/40 px-4">
       <div className="bg-white rounded-3xl shadow-2xl max-w-xl w-full p-6 relative">
         <button
           onClick={onClose}

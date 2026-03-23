@@ -15,18 +15,23 @@ import { JourneyProvider } from '../rent/contexts/JourneyContext';
 const DashboardLayout = () => {
   const [sidebarState, setSidebarState] = useState('expanded'); // 'expanded' | 'collapsed'
   const [isMobile, setIsMobile] = useState(false);
-  const { user } = useAuth();
+  const { loading, isAuthenticated } = useAuth();
   const { currentDashboard } = useDashboard();
   const navigate = useNavigate();
   const location = useLocation();
   const [guardToast, setGuardToast] = useState('');
+  const isBlockedGuardToast = (message) => {
+    const normalized = String(message || '').trim().toLowerCase();
+    return normalized.includes('payment already submitted');
+  };
 
   // Check if user is authenticated
   useEffect(() => {
-    if (!user) {
+    if (loading) return;
+    if (!isAuthenticated) {
       navigate('/login');
     }
-  }, [user, navigate]);
+  }, [isAuthenticated, loading, navigate]);
 
   // Handle responsive sidebar
   useEffect(() => {
@@ -68,9 +73,12 @@ const DashboardLayout = () => {
   useEffect(() => {
     const message = location.state?.guardToast;
     if (!message) return undefined;
-    setGuardToast(message);
+    const safeMessage = isBlockedGuardToast(message) ? '' : message;
+    setGuardToast(safeMessage);
 
     navigate(location.pathname, { replace: true, state: null });
+
+    if (!safeMessage) return undefined;
 
     const timer = window.setTimeout(() => setGuardToast(''), 2600);
     return () => window.clearTimeout(timer);
@@ -93,6 +101,14 @@ const DashboardLayout = () => {
     if (sidebarState === 'expanded') return 'ml-64'; // w-64 = 256px
     return 'ml-20'; // w-20 = 80px when collapsed
   };
+
+  if (loading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-[var(--page-bg,#f8f9fa)]">
+        <div className="inline-block animate-spin rounded-full h-10 w-10 border-b-2 border-[var(--accent-color,#9f7539)]"></div>
+      </div>
+    );
+  }
 
   return (
     <ApplicationsProvider>
@@ -122,7 +138,7 @@ const DashboardLayout = () => {
 
                     {/* Content Area - scrollable */}
                     <main className="dashboard-content flex-1 overflow-auto">
-                      {guardToast && (
+                      {guardToast && !isBlockedGuardToast(guardToast) && (
                         <div className="sticky top-0 z-[1190] px-4 md:px-6 pt-3">
                           <div className="mx-auto max-w-4xl rounded-xl border border-[#f59e0b]/35 bg-[#fff7ed] text-[#9a3412] px-4 py-2 text-sm font-medium shadow-sm">
                             <i className="fas fa-circle-info mr-2"></i>

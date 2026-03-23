@@ -15,7 +15,7 @@ const TicketDetailsModal = ({ ticket, onClose }) => {
   if (!ticket) return null;
 
   return (
-    <div className="modal-backdrop fixed inset-0 z-50 flex items-start justify-center bg-black/40 overflow-auto px-4 py-8">
+    <div className="modal-backdrop fixed inset-0 z-[1400] flex items-start justify-center bg-black/40 overflow-auto px-4 py-8">
       <div className="bg-white rounded-2xl shadow-2xl w-full max-w-4xl p-6 relative">
         <button
           onClick={onClose}

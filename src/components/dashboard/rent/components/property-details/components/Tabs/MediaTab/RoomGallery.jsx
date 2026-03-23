@@ -1,5 +1,6 @@
 // src/dashboards/rent/components/property-details/components/tabs/MediaTab/RoomGallery.jsx
 import React, { useState } from 'react';
+import { lockBodyScroll, unlockBodyScroll } from '../../../../../../../../utils/scrollLock';
 
 const RoomGallery = ({ property }) => {
   const [selectedRoom, setSelectedRoom] = useState(null);
@@ -63,12 +64,12 @@ const RoomGallery = ({ property }) => {
   const openModal = (room, index = 0) => {
     setSelectedRoom(room);
     setModalImageIndex(index);
-    document.body.style.overflow = 'hidden';
+    lockBodyScroll();
   };
 
   const closeModal = () => {
     setSelectedRoom(null);
-    document.body.style.overflow = 'unset';
+    unlockBodyScroll();
   };
 
   const nextImage = () => {
@@ -143,7 +144,7 @@ const RoomGallery = ({ property }) => {
       {/* Modal for viewing all photos */}
       {selectedRoom && (
         <div 
-          className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black bg-opacity-75"
+          className="fixed inset-0 z-[1400] flex items-center justify-center p-4 bg-black bg-opacity-75"
           onClick={handleBackdropClick}
         >
           <div className="relative w-full max-w-4xl h-full max-h-[80vh] bg-white rounded-2xl overflow-hidden">

@@ -1,16 +1,16 @@
 // src/dashboards/rent/components/book-inspection/SuccessModal.jsx
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
+import { lockBodyScroll, unlockBodyScroll } from '../../../../../utils/scrollLock';
 
 const SuccessModal = ({ isOpen, onClose, bookingData }) => {
   const navigate = useNavigate();
 
   React.useEffect(() => {
     if (!isOpen) return undefined;
-    const previousOverflow = document.body.style.overflow;
-    document.body.style.overflow = 'hidden';
+    lockBodyScroll();
     return () => {
-      document.body.style.overflow = previousOverflow || '';
+      unlockBodyScroll();
     };
   }, [isOpen]);
 
