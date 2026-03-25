@@ -1,5 +1,6 @@
 import React, { useMemo } from "react";
 import { Link } from "react-router-dom";
+import { ChevronRight } from "lucide-react";
 import { useAdmin } from "../../../context/AdminContext";
 
 export default function AdminContracts() {
@@ -29,6 +30,14 @@ export default function AdminContracts() {
 
   return (
     <div className="space-y-4">
+      <div className="text-xs text-gray-500 dark:text-gray-400 flex items-center gap-2">
+        <Link to="/admin" className="hover:text-[#9F7539]">Admin</Link>
+        <ChevronRight size={13} />
+        <Link to="/admin/clients" className="hover:text-[#9F7539]">Clients</Link>
+        <ChevronRight size={13} />
+        <span className="text-gray-700 dark:text-gray-300 font-medium">Contracts</span>
+      </div>
+
       <div>
         <h1 className="text-xl sm:text-2xl font-bold text-[#0e1f42] dark:text-white">Contracts</h1>
         <p className="text-xs sm:text-sm text-gray-600 dark:text-gray-400">

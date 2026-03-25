@@ -44,7 +44,7 @@ const AdminClientPortfolio = () => {
   return (
     <div className="space-y-6">
       <div>
-        <div className="text-xs text-gray-500">
+        <div className="text-xs text-gray-500 dark:text-gray-400">
           <Link to="/admin/clients" className="hover:text-[#9F7539]">Clients</Link>
           <span className="px-1">&gt;</span>
           <Link to={`/admin/clients/${clientId}`} className="hover:text-[#9F7539]">
@@ -168,3 +168,4 @@ const AdminClientPortfolio = () => {
 };
 
 export default AdminClientPortfolio;
+

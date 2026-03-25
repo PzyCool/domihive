@@ -135,12 +135,6 @@ export default function AdminProperties() {
 
         <div className="flex items-center gap-2 w-full sm:w-auto">
           <button
-            onClick={() => navigate("/admin/units")}
-            className="border border-gray-200 dark:border-white/10 text-gray-700 dark:text-gray-300 px-4 py-2 rounded-md text-sm font-semibold"
-          >
-            View Units
-          </button>
-          <button
             onClick={() => navigate("/admin/add-property")}
             className="bg-[#9F7539] text-white px-4 py-2 rounded-md flex text-sm items-center justify-center gap-2 w-full sm:w-auto"
           >

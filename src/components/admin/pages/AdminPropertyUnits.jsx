@@ -154,10 +154,10 @@ export default function AdminPropertyUnits() {
           <h1 className="text-2xl font-bold text-[#0e1f42] dark:text-white">Property Units</h1>
         </div>
         <button
-          onClick={() => navigate(`/admin/properties/${property.id}`)}
-          className="border border-gray-200 dark:border-white/10 px-4 py-2 rounded-md text-sm font-semibold text-gray-700 dark:text-gray-300"
+          onClick={() => navigate(`/admin/properties/${property.id}/units/new`)}
+          className="border border-[#9F7539] bg-[#9F7539] px-4 py-2 rounded-md text-sm font-semibold text-white"
         >
-          Back to Property
+          Add New Unit
         </button>
       </div>
 
@@ -194,3 +194,4 @@ export default function AdminPropertyUnits() {
     </div>
   );
 }
+

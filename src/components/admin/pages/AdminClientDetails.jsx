@@ -296,3 +296,4 @@ const AdminClientDetails = () => {
 };
 
 export default AdminClientDetails;
+

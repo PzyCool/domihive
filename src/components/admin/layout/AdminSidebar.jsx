@@ -12,7 +12,6 @@ import {
   CalendarClock,
   ClipboardCheck,
   House,
-  ScrollText,
   LogOut,
   ChevronRight,
   ChevronLeft,
@@ -26,10 +25,8 @@ const navSections = [
     title: 'MAIN',
     items: [
       { to: '/admin', label: 'Dashboard', icon: LayoutDashboard, end: true },
-      { to: '/admin/contracts', label: 'Contracts', icon: ScrollText },
       { to: '/admin/clients', label: 'Clients', icon: Users },
       { to: '/admin/properties', label: 'Properties', icon: Building2 },
-      { to: '/admin/units', label: 'Units', icon: House },
       { to: '/admin/tenants', label: 'Tenants', icon: House },
     ],
   },

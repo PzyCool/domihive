@@ -18,6 +18,7 @@ export default function AdminPropertyDetails() {
 
             unitData = {
                 ...unit,
+                propertyId: prop.id,
                 propertyTitle: prop.title,
                 propertyImage: prop.image,
                 propertyLocation: `${prop.area}, ${prop.state}`,
@@ -39,7 +40,7 @@ export default function AdminPropertyDetails() {
                 <div className="flex items-center gap-2 text-xs text-gray-500 dark:text-gray-400">
                     <span
                         className="hover:text-gray-700 dark:hover:text-gray-200 cursor-pointer"
-                        onClick={() => navigate("/admin/units")}
+                        onClick={() => navigate(`/admin/properties/${unitData.propertyId}/units`)}
                     >
                         Units
                     </span>

@@ -64,7 +64,7 @@ const AdminClientDetail = () => {
     <div className="space-y-6">
       <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
         <div>
-          <div className="text-xs text-gray-500 mb-1">
+          <div className="text-xs text-gray-500 dark:text-gray-400 mb-1">
             <a href="/admin/clients" className="hover:text-[#9F7539]">Clients</a>
             <span className="px-1">&gt;</span>
             <span>Client Details</span>
@@ -250,7 +250,16 @@ const AdminClientDetail = () => {
 
       {activeTab === "contracts" && (
         <div className="bg-white dark:bg-[#111827] border border-gray-100 dark:border-white/10 rounded-xl p-4">
-          <div className="text-sm font-semibold text-[#0e1f42] dark:text-white mb-4">Client Contracts</div>
+          <div className="flex items-center justify-between mb-4">
+            <div className="text-sm font-semibold text-[#0e1f42] dark:text-white">Client Contracts</div>
+            <button
+              onClick={() => navigate("/admin/clients/contracts")}
+              className="inline-flex items-center gap-2 text-xs border border-gray-200 dark:border-white/10 px-3 py-1.5 rounded-md text-gray-700 dark:text-gray-200"
+            >
+              <Eye size={14} />
+              View All Contracts
+            </button>
+          </div>
           <div className="space-y-3">
             {contractRows.map((c) => (
               <div key={c.id} className="border border-gray-100 dark:border-white/10 rounded-lg p-3 flex flex-col md:flex-row md:items-center md:justify-between gap-3">
@@ -313,3 +322,4 @@ const AdminClientDetail = () => {
 };
 
 export default AdminClientDetail;
+
