@@ -30,7 +30,7 @@ const Section = ({ title, children }) => (
 
 export default function AdminAddNewProperty() {
   const navigate = useNavigate();
-  const { properties, setProperties, locations, clients } = useAdmin();
+  const { properties, setProperties, locations, clients, setClients } = useAdmin();
   const [form, setForm] = useState(initialForm);
 
   const areas = useMemo(
@@ -85,6 +85,17 @@ export default function AdminAddNewProperty() {
     };
 
     setProperties([newProperty, ...properties]);
+    setClients((prev) =>
+      prev.map((client) =>
+        client.id === form.clientId
+          ? {
+              ...client,
+              pendingPropertyAssignment: false,
+              pendingPropertyAssignmentNote: "",
+            }
+          : client
+      )
+    );
     navigate("/admin/properties");
   };
 

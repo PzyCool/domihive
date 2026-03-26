@@ -811,17 +811,17 @@ const defaultPayments = [
 ];
 
 export const AdminProvider = ({ children }) => {
-  const [properties, setProperties] = useState(defaultProperties);
-  const [clients, setClients] = useState(defaultClients);
+  const [properties, setProperties] = useState([]);
+  const [clients, setClients] = useState([]);
   const [locations, setLocations] = useState(defaultLocations);
-  const [slots, setSlots] = useState(defaultSlots);
-  const [inspections, setInspections] = useState(defaultInspections);
-  const [applications, setApplications] = useState(defaultApplications);
-  const [tenants, setTenants] = useState(defaultTenants);
+  const [slots, setSlots] = useState([]);
+  const [inspections, setInspections] = useState([]);
+  const [applications, setApplications] = useState([]);
+  const [tenants, setTenants] = useState([]);
   const [policies, setPolicies] = useState(defaultPolicies);
-  const [recentActivities, setRecentActivities] = useState(defaultRecentActivities);
-  const [maintenanceRequests, setMaintenanceRequests] = useState(defaultMaintenanceRequests);
-  const [payments, setPayments] = useState(defaultPayments);
+  const [recentActivities, setRecentActivities] = useState([]);
+  const [maintenanceRequests, setMaintenanceRequests] = useState([]);
+  const [payments, setPayments] = useState([]);
 
   const value = useMemo(
     () => ({

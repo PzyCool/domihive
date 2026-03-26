@@ -10,15 +10,43 @@ const statusStyles = {
 };
 
 const AdminClients = () => {
-  const { clients } = useAdmin();
+  const { clients, properties } = useAdmin();
   const navigate = useNavigate();
   const location = useLocation();
   const [statusFilter, setStatusFilter] = useState("All");
   const [query, setQuery] = useState("");
 
+  const clientsWithLiveStats = useMemo(() => {
+    return clients.map((client) => {
+      const linkedProperties = properties.filter((property) => property.clientId === client.id);
+      const totalProperties = linkedProperties.length;
+      const totalUnits = linkedProperties.reduce(
+        (sum, property) => sum + (property.units?.length || 0),
+        0
+      );
+      const occupiedUnits = linkedProperties.reduce(
+        (sum, property) =>
+          sum +
+          (property.units?.filter((unit) => String(unit.status || "").toLowerCase() === "occupied")
+            .length || 0),
+        0
+      );
+      const occupancyPct = totalUnits ? Math.round((occupiedUnits / totalUnits) * 100) : 0;
+      return {
+        ...client,
+        totalPropertiesLive: totalProperties,
+        totalUnitsLive: totalUnits,
+        occupiedUnitsLive: occupiedUnits,
+        occupancyPctLive: occupancyPct,
+        pendingPropertyAssignmentLive: totalProperties === 0,
+        noUnitsLinkedYetLive: totalProperties > 0 && totalUnits === 0,
+      };
+    });
+  }, [clients, properties]);
+
   const filtered = useMemo(() => {
     const q = query.trim().toLowerCase();
-    return clients.filter((c) => {
+    return clientsWithLiveStats.filter((c) => {
       const matchesStatus = statusFilter === "All" || c.contractStatus === statusFilter;
       const matchesQuery =
         !q ||
@@ -27,7 +55,7 @@ const AdminClients = () => {
         c.phone.toLowerCase().includes(q);
       return matchesStatus && matchesQuery;
     });
-  }, [clients, statusFilter, query]);
+  }, [clientsWithLiveStats, statusFilter, query]);
 
   return (
     <div className="space-y-5">
@@ -120,10 +148,10 @@ const AdminClients = () => {
                       <div>
                         <div className="font-semibold text-[#0e1f42] dark:text-white">{client.name}</div>
                         <div className="text-xs text-gray-500 dark:text-gray-400">Client since {client.clientSince}</div>
-                        {client.pendingPropertyAssignment && (
+                        {client.pendingPropertyAssignmentLive && (
                           <div className="text-[11px] mt-1 text-amber-700 dark:text-amber-300 inline-flex items-center gap-1">
                             <AlertTriangle size={12} />
-                            {client.pendingPropertyAssignmentNote || "Pending: create and link property"}
+                            {client.pendingPropertyAssignmentNote || "Pending: create a property for this client and link it"}
                           </div>
                         )}
                       </div>
@@ -133,12 +161,27 @@ const AdminClients = () => {
                     <div className="text-gray-700 dark:text-gray-200">{client.email}</div>
                     <div className="text-xs text-gray-500 dark:text-gray-400">{client.phone}</div>
                   </td>
-                  <td className="px-5 py-4 text-gray-700 dark:text-gray-200">{client.totalProperties}</td>
+                  <td className="px-5 py-4 text-gray-700 dark:text-gray-200">{client.totalPropertiesLive}</td>
                   <td className="px-5 py-4">
-                    <div className="text-gray-700 dark:text-gray-200">
-                      {client.occupiedUnits}/{client.totalProperties}
-                    </div>
-                    <div className="text-xs text-gray-500 dark:text-gray-400">{client.occupancyPct}% occupied</div>
+                    {client.noUnitsLinkedYetLive ? (
+                      <>
+                        <div className="text-amber-700 dark:text-amber-300 text-xs font-medium">
+                          No units added
+                        </div>
+                        <div className="text-xs text-gray-500 dark:text-gray-400">
+                          Please add units to this client property
+                        </div>
+                      </>
+                    ) : (
+                      <>
+                        <div className="text-gray-700 dark:text-gray-200">
+                          {client.occupiedUnitsLive}/{client.totalUnitsLive}
+                        </div>
+                        <div className="text-xs text-gray-500 dark:text-gray-400">
+                          {client.occupancyPctLive}% occupied
+                        </div>
+                      </>
+                    )}
                   </td>
                   <td className="px-5 py-4">
                     <span
@@ -176,7 +219,7 @@ const AdminClients = () => {
           </table>
         </div>
         <div className="flex items-center justify-between px-5 py-4 text-xs text-gray-500 dark:text-gray-400">
-          <span>Showing 1-{filtered.length} of {clients.length} clients</span>
+          <span>Showing 1-{filtered.length} of {clientsWithLiveStats.length} clients</span>
           <div className="flex items-center gap-2">
             <button className="px-3 py-1 border border-gray-200 dark:border-white/10 rounded-md text-gray-500 dark:text-gray-300">Previous</button>
             <button className="px-3 py-1 rounded-md bg-[#9F7539] text-white">1</button>

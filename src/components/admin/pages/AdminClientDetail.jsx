@@ -1,62 +1,90 @@
 import React, { useMemo, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
+import { Download, Plus, Pencil, Eye, MessageCircle } from "lucide-react";
 import { useAdmin } from "../../../context/AdminContext";
-import { Download, Plus, Pencil, Eye, FileText, MessageCircle } from "lucide-react";
-import { useNavigate } from "react-router-dom";
 
 const AdminClientDetail = () => {
   const { clientId } = useParams();
   const navigate = useNavigate();
   const { clients, properties } = useAdmin();
-  const client = clients.find((c) => c.id === clientId);
-  const portfolio = properties.slice(0, 2);
   const [activeTab, setActiveTab] = useState("overview");
 
-  const contractRows = useMemo(
-    () => [
-      {
-        id: "CTR-001",
-        type: client?.contractType || "Full Management",
-        duration: client?.contractDuration || "5 years (Jan 2026 - Dec 2030)",
-        status: client?.contractStatus || "Active",
-        remaining: "3 years 4 months",
-        fee: `${client?.managementFeePercent ?? 10}% of rent`
-      },
-      {
-        id: "CTR-002",
-        type: "Placement Only",
-        duration: "3 years (Jan 2024 - Dec 2026)",
-        status: "Expires Soon",
-        remaining: "9 months",
-        fee: "6% of rent"
-      }
-    ],
-    [client]
+  const client = clients.find((item) => item.id === clientId);
+
+  const portfolio = useMemo(
+    () => properties.filter((property) => property.clientId === clientId),
+    [properties, clientId]
   );
+
+  const portfolioStats = useMemo(() => {
+    const totalUnits = portfolio.reduce((sum, property) => sum + (property.units?.length || 0), 0);
+    const occupiedUnits = portfolio.reduce(
+      (sum, property) =>
+        sum +
+        (property.units?.filter((unit) => String(unit.status || "").toLowerCase() === "occupied").length || 0),
+      0
+    );
+    const occupancyPct = totalUnits ? Math.round((occupiedUnits / totalUnits) * 100) : 0;
+    const totalRevenueYtd = portfolio.reduce((sum, property) => {
+      const occupiedAnnual = (property.units || [])
+        .filter((unit) => String(unit.status || "").toLowerCase() === "occupied")
+        .reduce((acc, unit) => acc + Number(unit.rent || property.rent || 0), 0);
+      return sum + occupiedAnnual;
+    }, 0);
+
+    return { totalUnits, occupiedUnits, occupancyPct, totalRevenueYtd };
+  }, [portfolio]);
+
+  const managementFeePct = Number(client?.managementFeePercent || 0);
+  const managementFeesEarnedYtd = Math.round((portfolioStats.totalRevenueYtd * managementFeePct) / 100);
+  const hasLinkedProperties = portfolio.length > 0;
+  const hasUnitsInPortfolio = portfolioStats.totalUnits > 0;
+  const isPendingPropertyAssignment = !hasLinkedProperties;
+
+  const contractRows = useMemo(() => {
+    if (!client) return [];
+    return [
+      {
+        id: client.contractId || "CTR-PENDING",
+        type: client.contractType || "Full Management",
+        duration: client.contractDuration || "Not set",
+        status: client.contractStatus || "Draft",
+        remaining: isPendingPropertyAssignment ? "Pending activation" : "In progress",
+        fee: `${client.managementFeePercent ?? 0}% of rent`,
+      },
+    ];
+  }, [client, isPendingPropertyAssignment]);
 
   const financeRows = [
     {
       label: "Maintenance Wallet Balance",
-      amount: "₦500,000",
-      sub: "Top up yearly • next due Jan 2026"
+      amount: client?.maintenanceWallet || "N0",
+      sub: isPendingPropertyAssignment
+        ? "Pending: create and link first property"
+        : "Based on linked property operations",
     },
     {
       label: "Total Maintenance Spend (YTD)",
-      amount: "₦128,000",
-      sub: "Last 30 days: ₦24,000"
+      amount: "N0",
+      sub: "No maintenance records yet",
     },
     {
       label: "Management Fees Earned (YTD)",
-      amount: "₦456,000",
-      sub: "Average ₦38k/month"
-    }
+      amount: `N${managementFeesEarnedYtd.toLocaleString()}`,
+      sub: `${managementFeePct}% of linked occupied unit rent`,
+    },
   ];
 
-  const comms = [
-    { id: "msg-1", title: "Contract review notice", detail: "Reminder: contract review due in 45 days.", time: "2 hours ago" },
-    { id: "msg-2", title: "Maintenance wallet low", detail: "Wallet balance dropped below ₦50k.", time: "1 day ago" },
-    { id: "msg-3", title: "New tenant onboarded", detail: "Unit B-202 moved in successfully.", time: "3 days ago" }
-  ];
+  const comms = isPendingPropertyAssignment
+    ? [
+        {
+          id: "msg-1",
+          title: "Property assignment pending",
+          detail: "Create and link a property to activate this contract lifecycle.",
+          time: "Just now",
+        },
+      ]
+    : [];
 
   if (!client) return <div className="text-sm text-gray-500">Client not found.</div>;
 
@@ -78,7 +106,7 @@ const AdminClientDetail = () => {
           </button>
           <button
             className="inline-flex items-center gap-2 px-3 py-2 text-xs border border-[#9F7539] rounded-md text-[#9F7539] bg-transparent"
-            onClick={() => navigate(`/admin/clients/${clientId}/contracts/new`)}
+            onClick={() => navigate(`/admin/clients/contracts/new`)}
           >
             <Plus size={14} /> Create New Contract
           </button>
@@ -97,7 +125,7 @@ const AdminClientDetail = () => {
               <div className="text-xs text-gray-500 dark:text-gray-400">Property Owner • Client since {client.clientSince}</div>
               <div className="mt-2 inline-flex items-center gap-2">
                 <span className="text-[10px] px-2 py-0.5 rounded-full bg-green-100 text-green-700">ID Verified</span>
-                <span className="text-[10px] px-2 py-0.5 rounded-full bg-green-100 text-green-700">Active</span>
+                <span className="text-[10px] px-2 py-0.5 rounded-full bg-green-100 text-green-700">{client.contractStatus || "Draft"}</span>
               </div>
             </div>
           </div>
@@ -120,29 +148,29 @@ const AdminClientDetail = () => {
         <div className="bg-white dark:bg-[#111827] border border-gray-100 dark:border-white/10 rounded-xl p-5">
           <div className="flex items-center justify-between mb-4">
             <div className="text-sm font-semibold text-[#0e1f42] dark:text-white">Contract Summary</div>
-            <span className="text-[10px] px-2 py-0.5 rounded-full bg-green-100 text-green-700">{client.contractStatus}</span>
+            <span className="text-[10px] px-2 py-0.5 rounded-full bg-green-100 text-green-700">{client.contractStatus || "Draft"}</span>
           </div>
           <div className="space-y-3 text-sm text-gray-600 dark:text-gray-300">
             <div>
               <div className="text-xs text-gray-500 dark:text-gray-400">Contract Type</div>
-              <div className="font-medium">{client.contractType}</div>
+              <div className="font-medium">{client.contractType || "Full Management"}</div>
             </div>
             <div>
               <div className="text-xs text-gray-500 dark:text-gray-400">Contract Duration</div>
-              <div className="font-medium">{client.contractDuration}</div>
+              <div className="font-medium">{client.contractDuration || "Not set"}</div>
             </div>
             <div>
               <div className="text-xs text-gray-500 dark:text-gray-400">Management Fee</div>
-              <div className="font-medium">{client.managementFeePercent}% of rent</div>
+              <div className="font-medium">{client.managementFeePercent || 0}% of rent</div>
             </div>
             <div>
               <div className="text-xs text-gray-500 dark:text-gray-400">Maintenance Wallet</div>
-              <div className="font-medium">{client.maintenanceWallet}</div>
+              <div className="font-medium">{client.maintenanceWallet || "N0"}</div>
             </div>
             <div>
               <div className="text-xs text-gray-500 dark:text-gray-400">Rent Increment</div>
-              <div className="font-medium">{client.rentIncrement}</div>
-              <div className="text-xs text-gray-500 dark:text-gray-400">Next increment: {client.nextIncrement}</div>
+              <div className="font-medium">{client.rentIncrement || "Pending"}</div>
+              <div className="text-xs text-gray-500 dark:text-gray-400">Next increment: {client.nextIncrement || "Pending"}</div>
             </div>
           </div>
         </div>
@@ -152,35 +180,58 @@ const AdminClientDetail = () => {
         <div className="flex items-center justify-between mb-3">
           <h3 className="text-sm font-semibold text-[#0e1f42] dark:text-white">Properties Portfolio</h3>
           <span className="text-xs text-gray-500 dark:text-gray-400">
-            {client.totalProperties} Properties • {client.totalProperties} Total Units
+            {portfolio.length} Properties • {portfolioStats.totalUnits} Total Units
           </span>
         </div>
-        <div className="grid md:grid-cols-2 gap-4">
-          {portfolio.map((prop) => (
-            <div key={prop.id} className="bg-white dark:bg-[#111827] border border-gray-100 dark:border-white/10 rounded-xl overflow-hidden">
-              <img src={prop.image} alt={prop.title} className="h-60 w-full object-cover" />
-              <div className="p-4 space-y-2 min-h-[190px] relative">
-                <div className="font-semibold text-[#0e1f42] dark:text-white">{prop.title}</div>
-                <div className="text-xs text-gray-500 dark:text-gray-400 mt-1">{prop.location}, {prop.area}</div>
-                <div className="grid grid-cols-3 text-xs text-gray-500 dark:text-gray-400 pt-4 gap-y-2">
-                  <div><div className="font-semibold text-[#0e1f42] dark:text-white">4</div>Total Units</div>
-                  <div><div className="font-semibold text-[#0e1f42] dark:text-white">3</div>Occupied</div>
-                  <div><div className="font-semibold text-[#0e1f42] dark:text-white">₦180k</div>Monthly Revenue</div>
+        {portfolio.length === 0 ? (
+          <div className="bg-white dark:bg-[#111827] border border-gray-100 dark:border-white/10 rounded-xl p-6 text-sm text-gray-500 dark:text-gray-400">
+            No properties linked yet for this client.
+            <button
+              onClick={() => navigate("/admin/add-property")}
+              className="ml-2 text-[#9F7539] font-semibold hover:underline"
+            >
+              Create Property
+            </button>
+          </div>
+        ) : (
+          <div className="grid md:grid-cols-2 gap-4">
+            {portfolio.map((prop) => {
+              const totalUnits = prop.units?.length || 0;
+              const occupied = (prop.units || []).filter(
+                (unit) => String(unit.status || "").toLowerCase() === "occupied"
+              ).length;
+              const monthlyRevenue = (prop.units || [])
+                .filter((unit) => String(unit.status || "").toLowerCase() === "occupied")
+                .reduce((sum, unit) => sum + Math.round(Number(unit.rent || prop.rent || 0) / 12), 0);
+              const occPct = totalUnits ? Math.round((occupied / totalUnits) * 100) : 0;
+
+              return (
+                <div key={prop.id} className="bg-white dark:bg-[#111827] border border-gray-100 dark:border-white/10 rounded-xl overflow-hidden">
+                  <img src={prop.image} alt={prop.title} className="h-60 w-full object-cover" />
+                  <div className="p-4 space-y-2 min-h-[190px] relative">
+                    <div className="font-semibold text-[#0e1f42] dark:text-white">{prop.title}</div>
+                    <div className="text-xs text-gray-500 dark:text-gray-400 mt-1">{prop.location}, {prop.area}</div>
+                    <div className="grid grid-cols-3 text-xs text-gray-500 dark:text-gray-400 pt-4 gap-y-2">
+                      <div><div className="font-semibold text-[#0e1f42] dark:text-white">{totalUnits}</div>Total Units</div>
+                      <div><div className="font-semibold text-[#0e1f42] dark:text-white">{occupied}</div>Occupied</div>
+                      <div><div className="font-semibold text-[#0e1f42] dark:text-white">N{monthlyRevenue.toLocaleString()}</div>Monthly Revenue</div>
+                    </div>
+                    <div className="flex items-center justify-between pt-4">
+                      <span className="inline-flex text-[10px] px-2 py-0.5 rounded-full bg-green-100 text-green-700">{occPct}% Occupied</span>
+                      <button
+                        className="text-[#9F7539] hover:text-[#7a5a2c]"
+                        aria-label="View property details"
+                        onClick={() => navigate(`/admin/clients/${clientId}/portfolio`)}
+                      >
+                        <Eye size={16} />
+                      </button>
+                    </div>
+                  </div>
                 </div>
-                <div className="flex items-center justify-between pt-4">
-                  <span className="inline-flex text-[10px] px-2 py-0.5 rounded-full bg-green-100 text-green-700">75% Occupied</span>
-                  <button
-                    className="text-[#9F7539] hover:text-[#7a5a2c]"
-                    aria-label="View property details"
-                    onClick={() => navigate(`/admin/clients/${clientId}/portfolio`)}
-                  >
-                    <Eye size={16} />
-                  </button>
-                </div>
-              </div>
-            </div>
-          ))}
-        </div>
+              );
+            })}
+          </div>
+        )}
       </div>
 
       <div className="border-b border-gray-200 dark:border-white/10 flex items-center gap-6 text-sm">
@@ -188,7 +239,7 @@ const AdminClientDetail = () => {
           { key: "overview", label: "Overview" },
           { key: "contracts", label: "Contracts" },
           { key: "finance", label: "Financial History" },
-          { key: "communications", label: "Communications" }
+          { key: "communications", label: "Communications" },
         ].map((tab) => (
           <button
             key={tab.key}
@@ -209,40 +260,48 @@ const AdminClientDetail = () => {
           <div className="bg-white dark:bg-[#111827] border border-gray-100 dark:border-white/10 rounded-xl p-4">
             <div className="text-sm font-semibold text-[#0e1f42] dark:text-white mb-3">Key Metrics</div>
             <div className="space-y-3 text-sm text-gray-600 dark:text-gray-300">
-              <div className="flex items-center justify-between"><span>Total Revenue (YTD)</span><span className="font-semibold text-[#0e1f42] dark:text-white">₦4,560,000</span></div>
-              <div className="flex items-center justify-between"><span>Management Fees Earned</span><span className="font-semibold text-[#0e1f42] dark:text-white">₦456,000</span></div>
-              <div className="flex items-center justify-between"><span>Maintenance Spend</span><span className="font-semibold text-[#0e1f42] dark:text-white">₦18,000</span></div>
-              <div className="flex items-center justify-between"><span>Average Occupancy</span><span className="font-semibold text-green-600">87.5%</span></div>
+              <div className="flex items-center justify-between"><span>Total Revenue (YTD)</span><span className="font-semibold text-[#0e1f42] dark:text-white">N{portfolioStats.totalRevenueYtd.toLocaleString()}</span></div>
+              <div className="flex items-center justify-between"><span>Management Fees Earned</span><span className="font-semibold text-[#0e1f42] dark:text-white">N{managementFeesEarnedYtd.toLocaleString()}</span></div>
+              <div className="flex items-center justify-between"><span>Maintenance Spend</span><span className="font-semibold text-[#0e1f42] dark:text-white">N0</span></div>
+              <div className="flex items-center justify-between"><span>Average Occupancy</span><span className="font-semibold text-green-600">{portfolioStats.occupancyPct}%</span></div>
             </div>
           </div>
           <div className="bg-white dark:bg-[#111827] border border-gray-100 dark:border-white/10 rounded-xl p-4">
             <div className="text-sm font-semibold text-[#0e1f42] dark:text-white mb-3">Recent Activity</div>
-            <div className="space-y-3 text-sm text-gray-600 dark:text-gray-300">
-              <div>
-                <div className="font-medium text-[#0e1f42] dark:text-white">Rent Payment Received</div>
-                <div className="text-xs text-gray-500 dark:text-gray-400">Chukwudi Gardens Unit B-202 • 2 hours ago</div>
+            {portfolio.length === 0 ? (
+              <div className="text-sm text-gray-500 dark:text-gray-400">No activity yet for this client.</div>
+            ) : (
+              <div className="space-y-3 text-sm text-gray-600 dark:text-gray-300">
+                <div>
+                  <div className="font-medium text-[#0e1f42] dark:text-white">Properties Linked</div>
+                  <div className="text-xs text-gray-500 dark:text-gray-400">{portfolio.length} properties currently linked</div>
+                </div>
+                <div>
+                  <div className="font-medium text-[#0e1f42] dark:text-white">Occupied Units</div>
+                  <div className="text-xs text-gray-500 dark:text-gray-400">{portfolioStats.occupiedUnits} occupied units</div>
+                </div>
               </div>
-              <div>
-                <div className="font-medium text-[#0e1f42] dark:text-white">Maintenance Completed</div>
-                <div className="text-xs text-gray-500 dark:text-gray-400">Okonkwo Heights Unit A-101 • 1 day ago</div>
-              </div>
-              <div>
-                <div className="font-medium text-[#0e1f42] dark:text-white">New Tenant Onboarded</div>
-                <div className="text-xs text-gray-500 dark:text-gray-400">Okonkwo Heights Unit A-103 • 3 days ago</div>
-              </div>
-            </div>
+            )}
           </div>
           <div className="bg-white dark:bg-[#111827] border border-gray-100 dark:border-white/10 rounded-xl p-4">
             <div className="text-sm font-semibold text-[#0e1f42] dark:text-white mb-3">Next Actions</div>
             <div className="space-y-3 text-sm">
-              <div className="p-3 rounded-lg bg-amber-50 dark:bg-amber-500/10 text-amber-700 dark:text-amber-300">
-                <div className="font-medium">Contract Review Due</div>
-                <div className="text-xs">Annual contract review in 45 days</div>
-              </div>
-              <div className="p-3 rounded-lg bg-sky-50 dark:bg-sky-500/10 text-sky-700 dark:text-sky-300">
-                <div className="font-medium">Maintenance Wallet Low</div>
-                <div className="text-xs">₦32k remaining of ₦50k budget</div>
-              </div>
+              {isPendingPropertyAssignment ? (
+                <div className="p-3 rounded-lg bg-amber-50 dark:bg-amber-500/10 text-amber-700 dark:text-amber-300">
+                  <div className="font-medium">Property Assignment Pending</div>
+                  <div className="text-xs">Create a property and link it to this client.</div>
+                </div>
+              ) : !hasUnitsInPortfolio ? (
+                <div className="p-3 rounded-lg bg-amber-50 dark:bg-amber-500/10 text-amber-700 dark:text-amber-300">
+                  <div className="font-medium">No Units Added Yet</div>
+                  <div className="text-xs">Add units to the linked property to start occupancy tracking.</div>
+                </div>
+              ) : (
+                <div className="p-3 rounded-lg bg-sky-50 dark:bg-sky-500/10 text-sky-700 dark:text-sky-300">
+                  <div className="font-medium">Monitor Contract Operations</div>
+                  <div className="text-xs">Track occupancy, revenue and maintenance flow.</div>
+                </div>
+              )}
             </div>
           </div>
         </div>
@@ -261,17 +320,17 @@ const AdminClientDetail = () => {
             </button>
           </div>
           <div className="space-y-3">
-            {contractRows.map((c) => (
-              <div key={c.id} className="border border-gray-100 dark:border-white/10 rounded-lg p-3 flex flex-col md:flex-row md:items-center md:justify-between gap-3">
+            {contractRows.map((contract) => (
+              <div key={contract.id} className="border border-gray-100 dark:border-white/10 rounded-lg p-3 flex flex-col md:flex-row md:items-center md:justify-between gap-3">
                 <div>
-                  <div className="text-sm font-medium text-[#0e1f42] dark:text-white">{c.id} • {c.type}</div>
-                  <div className="text-xs text-gray-500 dark:text-gray-400">{c.duration}</div>
-                  <div className="text-xs text-gray-500 dark:text-gray-400">Fee: {c.fee}</div>
+                  <div className="text-sm font-medium text-[#0e1f42] dark:text-white">{contract.id} • {contract.type}</div>
+                  <div className="text-xs text-gray-500 dark:text-gray-400">{contract.duration}</div>
+                  <div className="text-xs text-gray-500 dark:text-gray-400">Fee: {contract.fee}</div>
                 </div>
                 <div className="flex items-center gap-3">
-                  <span className="text-xs px-2 py-1 rounded-full bg-gray-100 dark:bg-white/10 text-gray-600 dark:text-gray-300">{c.remaining} left</span>
-                  <span className={`text-xs px-2 py-1 rounded-full ${c.status === "Active" ? "bg-green-100 text-green-700" : c.status === "Expires Soon" ? "bg-amber-100 text-amber-700" : "bg-red-100 text-red-700"}`}>
-                    {c.status}
+                  <span className="text-xs px-2 py-1 rounded-full bg-gray-100 dark:bg-white/10 text-gray-600 dark:text-gray-300">{contract.remaining}</span>
+                  <span className={`text-xs px-2 py-1 rounded-full ${contract.status === "Active" ? "bg-green-100 text-green-700" : contract.status === "Expires Soon" ? "bg-amber-100 text-amber-700" : "bg-red-100 text-red-700"}`}>
+                    {contract.status}
                   </span>
                   <button className="text-[#9F7539] hover:text-[#7a5a2c]" aria-label="View Contract">
                     <Eye size={16} />
@@ -301,20 +360,24 @@ const AdminClientDetail = () => {
       {activeTab === "communications" && (
         <div className="bg-white dark:bg-[#111827] border border-gray-100 dark:border-white/10 rounded-xl p-4">
           <div className="text-sm font-semibold text-[#0e1f42] dark:text-white mb-4">Communications</div>
-          <div className="space-y-3">
-            {comms.map((msg) => (
-              <div key={msg.id} className="border border-gray-100 dark:border-white/10 rounded-lg p-3 flex items-start gap-3">
-                <div className="h-9 w-9 rounded-full bg-[#9F7539]/10 text-[#9F7539] flex items-center justify-center">
-                  <MessageCircle size={16} />
+          {comms.length === 0 ? (
+            <div className="text-sm text-gray-500 dark:text-gray-400">No communications yet for this client.</div>
+          ) : (
+            <div className="space-y-3">
+              {comms.map((msg) => (
+                <div key={msg.id} className="border border-gray-100 dark:border-white/10 rounded-lg p-3 flex items-start gap-3">
+                  <div className="h-9 w-9 rounded-full bg-[#9F7539]/10 text-[#9F7539] flex items-center justify-center">
+                    <MessageCircle size={16} />
+                  </div>
+                  <div className="flex-1">
+                    <div className="text-sm font-medium text-[#0e1f42] dark:text-white">{msg.title}</div>
+                    <div className="text-xs text-gray-500 dark:text-gray-400">{msg.detail}</div>
+                  </div>
+                  <div className="text-xs text-gray-400">{msg.time}</div>
                 </div>
-                <div className="flex-1">
-                  <div className="text-sm font-medium text-[#0e1f42] dark:text-white">{msg.title}</div>
-                  <div className="text-xs text-gray-500 dark:text-gray-400">{msg.detail}</div>
-                </div>
-                <div className="text-xs text-gray-400">{msg.time}</div>
-              </div>
-            ))}
-          </div>
+              ))}
+            </div>
+          )}
         </div>
       )}
     </div>
@@ -322,4 +385,3 @@ const AdminClientDetail = () => {
 };
 
 export default AdminClientDetail;
-
