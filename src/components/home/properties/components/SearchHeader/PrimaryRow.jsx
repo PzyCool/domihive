@@ -64,11 +64,11 @@ const PrimaryRow = ({
         </div>
 
         <div className="hidden md:flex items-center gap-3 justify-end">
-        {/* <ViewToggle
+        <ViewToggle
           currentView={viewType}
           onChange={handleViewChange}
-        /> */}
-        
+        />
+
         <ManagementDropdown
           value={filters.managementType || 'all'}
           onChange={handleManagementChange}

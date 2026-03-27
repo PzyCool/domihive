@@ -67,7 +67,7 @@ const parseParamsToState = (searchParams) => {
   nextFilters.amenities = parseList(searchParams.get('amenities'));
   nextFilters.advancedBedrooms = parseList(searchParams.get('advancedBedrooms'));
 
-  const nextViewType = searchParams.get('view') || VIEW_TYPES.GRID;
+  const nextViewType = searchParams.get('view') || VIEW_TYPES.LIST;
   const nextPage = Math.max(1, Number(searchParams.get('page') || '1'));
 
   return { nextFilters, nextViewType, nextPage };
@@ -99,7 +99,7 @@ const buildSearchParamsFromState = ({ filters, currentPage, viewType }) => {
     params.set('advancedBedrooms', filters.advancedBedrooms.join(','));
   }
 
-  if (viewType && viewType !== VIEW_TYPES.GRID) {
+  if (viewType && viewType !== VIEW_TYPES.LIST) {
     params.set('view', viewType);
   }
   if (currentPage > 1) {
